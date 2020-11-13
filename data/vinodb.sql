@@ -80,14 +80,14 @@ CREATE TABLE `vino__cellier` (
 -- Contenu de la table `vino__cellier`
 --
 
-INSERT INTO `vino__cellier` VALUES(1, 10, '0000-00-00', '', '', 0, 3, 0);
-INSERT INTO `vino__cellier` VALUES(2, 10, '0000-00-00', '', '', 0, 1, 0);
+INSERT INTO `vino__cellier` VALUES(1, 10, '2019-01-16', '', '', 0, 3, 0);
+INSERT INTO `vino__cellier` VALUES(2, 10, '2019-01-16', '', '', 0, 1, 0);
 INSERT INTO `vino__cellier` VALUES(3, 5, '2019-01-16', '2020', '2019-01-16', 22, 10, 1999);
-INSERT INTO `vino__cellier` VALUES(4, 5, '0000-00-00', '', '', 0, 1, 0);
-INSERT INTO `vino__cellier` VALUES(5, 5, '0000-00-00', '', '', 0, 1, 0);
-INSERT INTO `vino__cellier` VALUES(6, 0, '0000-00-00', '', '', 0, 1, 0);
-INSERT INTO `vino__cellier` VALUES(7, 0, '0000-00-00', '', '', 0, 1, 0);
-INSERT INTO `vino__cellier` VALUES(8, 5, '0000-00-00', '', '', 0, 10, 2000);
+INSERT INTO `vino__cellier` VALUES(4, 5, '2019-01-16', '', '', 0, 1, 0);
+INSERT INTO `vino__cellier` VALUES(5, 5, '2019-01-16', '', '', 0, 1, 0);
+INSERT INTO `vino__cellier` VALUES(6, 0, '2019-01-16', '', '', 0, 1, 0);
+INSERT INTO `vino__cellier` VALUES(7, 0, '2019-01-16', '', '', 0, 1, 0);
+INSERT INTO `vino__cellier` VALUES(8, 5, '2019-01-16', '', '', 0, 10, 2000);
 INSERT INTO `vino__cellier` VALUES(9, 3, '2019-01-26', 'non', '2019-01-26', 23.52, 1, 2015);
 
 -- --------------------------------------------------------
