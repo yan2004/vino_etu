@@ -10,11 +10,18 @@
 
 //const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
 const BaseURL = document.baseURI;
+
 console.log(BaseURL);
+
 window.addEventListener('load', function() {
+
     console.log("load");
+
     document.querySelectorAll(".btnBoire").forEach(function(element){
+
         console.log(element);
+
+        // requête ajax au click d'un des boutons "boire" de la page
         element.addEventListener("click", function(evt){
             let id = evt.target.parentElement.dataset.id;
             let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
@@ -27,8 +34,14 @@ window.addEventListener('load', function() {
                   throw new Error('Erreur');
                 }
               })
+              // traitement de la réponse
               .then(response => {
+
+                // **************************************************
+                // À faire pour l'affichage du changement de quantité!
                 console.debug(response);
+                // **************************************************
+
               }).catch(error => {
                 console.error(error);
               });
@@ -37,7 +50,10 @@ window.addEventListener('load', function() {
     });
 
     document.querySelectorAll(".btnAjouter").forEach(function(element){
+
         console.log(element);
+
+        // requête ajax au click d'un des boutons "ajouter" de la page
         element.addEventListener("click", function(evt){
             let id = evt.target.parentElement.dataset.id;
             let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
@@ -51,7 +67,12 @@ window.addEventListener('load', function() {
                 }
               })
               .then(response => {
+
+                // **************************************************
+                // À faire pour l'affichage du changement de quantité!
                 console.debug(response);
+                // **************************************************
+
               }).catch(error => {
                 console.error(error);
               });
@@ -59,17 +80,29 @@ window.addEventListener('load', function() {
 
     });
    
+    // concernant le formulaire d'ajout d'une bouteille
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
+
     console.log(inputNomBouteille);
+
     let liste = document.querySelector('.listeAutoComplete');
 
     if(inputNomBouteille){
+
       inputNomBouteille.addEventListener("keyup", function(evt){
+
         console.log(evt);
+
         let nom = inputNomBouteille.value;
+
+        // vider la liste de suggestions
         liste.innerHTML = "";
+
         if(nom){
+
+          // requête ajax pour générer les suggestions
           let requete = new Request(BaseURL+"index.php?requete=autocompleteBouteille", {method: 'POST', body: '{"nom": "'+nom+'"}'});
+
           fetch(requete)
               .then(response => {
                   if (response.status === 200) {
@@ -79,20 +112,21 @@ window.addEventListener('load', function() {
                   }
                 })
                 .then(response => {
+
                   console.log(response);
                   
-                 
+                  // création d'un "li" pour chaque suggestion dans le DOM
                   response.forEach(function(element){
                     liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
                   })
-                }).catch(error => {
+                })
+                .catch(error => {
                   console.error(error);
                 });
         }
-        
-        
       });
 
+      // création de l'objet "bouteille" avec tous les champs du form
       let bouteille = {
         nom : document.querySelector(".nom_bouteille"),
         millesime : document.querySelector("[name='millesime']"),
@@ -103,11 +137,16 @@ window.addEventListener('load', function() {
         notes : document.querySelector("[name='notes']"),
       };
 
-
       liste.addEventListener("click", function(evt){
+
         console.dir(evt.target)
+
         if(evt.target.tagName == "LI"){
+
+          // on va chercher l'id de la bouteille suggérée
           bouteille.nom.dataset.id = evt.target.dataset.id;
+
+          // on met le nom de la bouteille suggérée dans le champs "nom"
           bouteille.nom.innerHTML = evt.target.innerHTML;
           
           liste.innerHTML = "";
@@ -116,9 +155,14 @@ window.addEventListener('load', function() {
         }
       });
 
+      // gérer la soumission du formulaire d'ajout
       let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
+
       if(btnAjouter){
+
         btnAjouter.addEventListener("click", function(evt){
+
+          // toutes les valeurs de notre formulaire (données prêtes à être envoyées au back end)
           var param = {
             "id_bouteille":bouteille.nom.dataset.id,
             "date_achat":bouteille.date_achat.value,
@@ -128,7 +172,10 @@ window.addEventListener('load', function() {
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
           };
+
+          // requete ajax pour ajouter une bouteille dans le cellier
           let requete = new Request(BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
+
             fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
@@ -138,16 +185,18 @@ window.addEventListener('load', function() {
                     }
                   })
                   .then(response => {
+
+                    // ***************************************************
+                    // ajouter un traitement au succès de la requête
+                    // ***************************************************
+
+
                     console.log(response);
                   
                   }).catch(error => {
                     console.error(error);
                   });
-        
         });
       } 
   }
-    
-
 });
-

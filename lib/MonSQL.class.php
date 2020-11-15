@@ -24,10 +24,10 @@ class MonSQL {
 	 * @param void
 	 * @return void
 	 */
-	private function __construct($host, $user, $password, $database) 
-	{
+	// private function __construct($host, $user, $password, $database) 
+	// {
 		
-	}
+	// }
 
 	/**
 	 * Méthode qui crée l'unique instance de la classe
@@ -50,6 +50,5 @@ class MonSQL {
 
 		return self::$_instance;
 	}
-
 }
 ?>

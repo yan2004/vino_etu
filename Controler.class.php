@@ -20,7 +20,6 @@ class Controler
 		 */
 		public function gerer()
 		{
-			
 			switch ($_GET['requete']) {
 				case 'listeBouteille':
 					$this->listeBouteille();
@@ -43,17 +42,16 @@ class Controler
 			}
 		}
 
+
 		private function accueil()
 		{
 			$bte = new Bouteille();
             $data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
 			include("vues/cellier.php");
-			include("vues/pied.php");
-                  
+			include("vues/pied.php");      
 		}
 		
-
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
@@ -71,9 +69,9 @@ class Controler
 			//var_dump($body);
             $listeBouteille = $bte->autocomplete($body->nom);
             
-            echo json_encode($listeBouteille);
-                  
+            echo json_encode($listeBouteille);    
 		}
+
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
@@ -91,8 +89,6 @@ class Controler
 				include("vues/ajouter.php");
 				include("vues/pied.php");
 			}
-			
-            
 		}
 		
 		private function boireBouteilleCellier()
@@ -112,7 +108,6 @@ class Controler
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
 		}
-		
 }
 ?>
 

@@ -11,8 +11,14 @@
  * 
  */
 class Bouteille extends Modele {
+
 	const TABLE = 'vino__bouteille';
-    
+	
+	/**
+	 * Cette méthode permet d'obtenir la liste de toutes les bouteilles de notre catalogue
+	 * 
+	 * @return array toutes les rangées représentant chacune des bouteilles
+	 */
 	public function getListeBouteille()
 	{
 		
@@ -29,6 +35,13 @@ class Bouteille extends Modele {
 		return $rows;
 	}
 	
+	/**
+	 * Cette méthode permet d'obtenir la liste des bouteilles d'un cellier (en ce moment un seul)
+	 * 
+	 * @throws Exception Erreur de requête sur la base de données
+	 * 
+	 * @return array toutes les rangées représentant chacune des bouteilles du cellier
+	 */
 	public function getListeBouteilleCellier()
 	{
 		
@@ -71,9 +84,7 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 			 //$this->_db->error;
 		}
-		
-		
-		
+
 		return $rows;
 	}
 	
@@ -87,7 +98,7 @@ class Bouteille extends Modele {
 	 * 
 	 * @return array id et nom de la bouteille trouvée dans le catalogue
 	 */
-       
+
 	public function autocomplete($nom, $nb_resultat=10)
 	{
 		
@@ -115,7 +126,6 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de données", 1);
 			 
 		}
-		
 		
 		//var_dump($rows);
 		return $rows;
@@ -169,8 +179,5 @@ class Bouteille extends Modele {
 		return $res;
 	}
 }
-
-
-
 
 ?>
