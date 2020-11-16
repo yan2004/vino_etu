@@ -56,6 +56,7 @@ window.addEventListener('load', function() {
         // requête ajax au click d'un des boutons "ajouter" de la page
         element.addEventListener("click", function(evt){
             let id = evt.target.parentElement.dataset.id;
+
             let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
             fetch(requete)
@@ -163,14 +164,20 @@ window.addEventListener('load', function() {
         btnAjouter.addEventListener("click", function(evt){
 
           // toutes les valeurs de notre formulaire (données prêtes à être envoyées au back end)
+
+          // *******************************************************************************************************
+          // ICI L'ID_USER EST HARDCODÉ POUR L'INSTANT, CAR À CE STADE NOUS N'AVONS PAS ENCORE DE GESTION DE USER
+          // *******************************************************************************************************
+
           var param = {
             "id_bouteille":bouteille.nom.dataset.id,
             "date_achat":bouteille.date_achat.value,
             "garde_jusqua":bouteille.garde_jusqua.value,
-            "notes":bouteille.date_achat.value,
+            "notes":bouteille.notes.value,
             "prix":bouteille.prix.value,
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
+            "id_usager":1,                                // TODO : MODIFIER POUR QUE L'ID_USAGER CHANGE DYNAMIQUEMENT
           };
 
           // requete ajax pour ajouter une bouteille dans le cellier
@@ -178,6 +185,9 @@ window.addEventListener('load', function() {
 
             fetch(requete)
                 .then(response => {
+
+                  console.log(response);
+
                     if (response.status === 200) {
                       return response.json();
                     } else {

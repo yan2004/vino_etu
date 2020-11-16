@@ -32,6 +32,10 @@ class Bouteille extends Modele {
 			}
 		}
 		
+		// *******************************************************************************************************
+		// ici le retour va peut-être avoir un impact sur les données du front vu que j'ai modifié la table un peu 
+		// changements : il n'y a plus de champs "image" et il y a un champ id_type qui est un foreign key
+		// ***********************************************************************************************
 		return $rows;
 	}
 	
@@ -47,26 +51,27 @@ class Bouteille extends Modele {
 		
 		$rows = Array();
 		$requete ='SELECT 
-						c.id as id_bouteille_cellier,
+						c.id as id_bouteille_collection,
 						c.id_bouteille, 
 						c.date_achat, 
 						c.garde_jusqua, 
 						c.notes, 
 						c.prix, 
 						c.quantite,
-						c.millesime, 
+						c.millesime,
+						c.id_usager,
 						b.id,
-						b.nom, 
-						b.type, 
-						b.image, 
-						b.code_saq, 
-						b.url_saq, 
-						b.pays, 
+						b.nom,
+						b.url_image,
+						b.code_saq,
+						b.pays,
 						b.description,
+						b.url_saq,
+						b.id_type,
 						t.type 
-						from vino__cellier c 
+						from vino__bouteille__collection c 
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__type t ON t.id = b.type
+						INNER JOIN vino__type t ON t.id = b.id_type
 						'; 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -105,7 +110,8 @@ class Bouteille extends Modele {
 		$rows = Array();
 		$nom = $this->_db->real_escape_string($nom);
 		$nom = preg_replace("/\*/","%" , $nom);
-		 
+		
+
 		//echo $nom;
 		$requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
 		//var_dump($requete);
@@ -133,7 +139,7 @@ class Bouteille extends Modele {
 	
 	
 	/**
-	 * Cette méthode ajoute une ou des bouteilles au cellier
+	 * Cette méthode ajoute une ou des bouteilles au cellier avec les données provenant de l'utilisateur
 	 * 
 	 * @param Array $data Tableau des données représentants la bouteille.
 	 * 
@@ -141,17 +147,19 @@ class Bouteille extends Modele {
 	 */
 	public function ajouterBouteilleCellier($data)
 	{
-		//TODO : Valider les données.
-		//var_dump($data);	
-		
-		$requete = "INSERT INTO vino__cellier(id_bouteille,date_achat,garde_jusqua,notes,prix,quantite,millesime) VALUES (".
+		// TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
+
+		var_dump($data);	
+
+		$requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
 		"'".$data->id_bouteille."',".
 		"'".$data->date_achat."',".
 		"'".$data->garde_jusqua."',".
 		"'".$data->notes."',".
 		"'".$data->prix."',".
 		"'".$data->quantite."',".
-		"'".$data->millesime."')";
+		"'".$data->millesime."',".
+		"'".$data->id_usager."')";
 
         $res = $this->_db->query($requete);
         
@@ -170,9 +178,8 @@ class Bouteille extends Modele {
 	public function modifierQuantiteBouteilleCellier($id, $nombre)
 	{
 		//TODO : Valider les données.
-			
-			
-		$requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
+
+		$requete = "UPDATE vino__bouteille__collection SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
 		//echo $requete;
         $res = $this->_db->query($requete);
         

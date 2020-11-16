@@ -19,7 +19,7 @@ class SAQ extends Modele {
 
 	public function __construct() {
 		parent::__construct();
-		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, type, image, code_saq, pays, description, prix_saq, url_saq, url_img, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, url_image, code_saq, pays, description, prix_saq, url_saq, format, id_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 			// echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
 		}
 	}
@@ -116,12 +116,13 @@ class SAQ extends Modele {
 	 * @return object les informations d'une bouteille
 	 */
 	private function recupereInfo($noeud) {
+
 		
 		$info = new stdClass();
 		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		; // hum ...
+		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
-		$info -> url = $a_titre->getAttribute('href');
+		$info -> url_saq = $a_titre->getAttribute('href');
 		
 		$info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));	//TODO : Retirer le format de la bouteille du titre.
 		
@@ -155,8 +156,8 @@ class SAQ extends Modele {
 			}
 		}
 
-		// *******************************************************
-		// prix !! Problème du prix tronqué est potentiellement ici 
+		// *********************************************************************************************************
+		// prix !! Problème du prix tronqué est potentiellement ici - NON JE NE PENSE PAS FINALEMENT VOIR LIGNE 203
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'price') {
@@ -164,7 +165,7 @@ class SAQ extends Modele {
 				$info -> prix = trim($node -> textContent);
 			}
 		}
-		// *************************************************************
+		// *********************************************************************************************************
 
 		//var_dump($info);
 		return $info;
@@ -196,9 +197,17 @@ class SAQ extends Modele {
 			// Récupérer l'id de la bouteille qui a le code de la SAQ qu'on lui envoi
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
 
-			// si le code de la bouteille (SAQ) n'existe pas déjà dans la bd (nouvelle bouteille), on l'ajoute
+			// si le code de la bouteille (SAQ) n'existe pas déjà dans la bd (nouvelle bouteille), on ajoute la bouteille dans vino__bouteille
 			if ($rows -> num_rows < 1) {
-				$this -> stmt -> bind_param("sissssisss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
+				
+				// **************************************************************************************************************************************
+				// bug du prix_saq ici, je pense que c'est réglé (à suivre lorsqu'on testera Update.SAQ), c'était indiqué "i" au lieu de "d" pour double 
+				// **************************************************************************************************************************************
+
+				// TODO : TESTER POUR SAVOIR S'IL FAUT MODIFIER LE TYPE DE LA BD EN "DOUBLE" AU LIEU DE "FLOAT"
+				// Je ne pense pas parce qu'ils représentent tous 2 semblablement la même chose au final
+
+				$this -> stmt -> bind_param("sssssdssi", $bte -> nom, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url_saq, $bte -> desc -> format, $type);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
 				//var_dump($this->stmt);
