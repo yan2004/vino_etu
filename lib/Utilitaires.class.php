@@ -1,12 +1,6 @@
 <?php
 /**
- * Class MonSQL
- * Classe qui génère ma connection à MySQL à travers un singleton
- *
- *
- * @author Jonathan Martel
- * @version 1.0
- * @see : http://www.apprendre-php.com/tutoriels/tutoriel-45-singleton-instance-unique-d-une-classe.html
+ * Classe template pour l'affichage d'une table de datas dans le cadre d'un test unitaire
  *
  *
  */
@@ -14,9 +8,8 @@ class Utilitaires {
 	
 	/**
 	 * 
-	 *
-	 * @param void
-	 * @return Singleton
+	 * @param array $data 
+	 * @return string table html des données
 	 */
 	public static function afficheTable($data) {
 		$res = '';

@@ -1,13 +1,10 @@
 <?php
 /**
- * Class MonSQL
- * Classe qui génère ma connection à MySQL à travers un singleton
- *
+ * Class SAQ
+ * Classe qui permet d'aller récupérer des données du site de la SAQ
  *
  * @author Jonathan Martel
  * @version 1.0
- *
- *
  *
  */
 class SAQ extends Modele {
@@ -23,14 +20,20 @@ class SAQ extends Modele {
 	public function __construct() {
 		parent::__construct();
 		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, type, image, code_saq, pays, description, prix_saq, url_saq, url_img, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+<<<<<<< HEAD
 			//echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
+=======
+			// echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
+>>>>>>> 2b6b8c176949f72a539637fe35f8ae7b3e86e50c
 		}
 	}
 
 	/**
-	 * getProduits
+	 * Obtenir les informations des produits sur le site de la SAQ via requetes http avec curl
 	 * @param int $nombre
-	 * @param int $debut
+	 * @param int $page
+	 * 
+	 * @return int nombre de produits qui ont été récupérés
 	 */
 	public function getProduits($nombre = 24, $page = 1) {
 		$s = curl_init();
@@ -45,6 +48,7 @@ class SAQ extends Modele {
 		self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);
 		curl_close($s);
 
+		// création d'un DOM avec les infos récupérées du sites
 		$doc = new DOMDocument();
 		$doc -> recover = true;
 		$doc -> strictErrorChecking = false;
@@ -52,14 +56,19 @@ class SAQ extends Modele {
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 		
+		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
 			//var_dump($noeud -> getAttribute('class')) ;
 			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
 				//echo $this->get_inner_html($noeud);
+
+				// récupérer les informations pertinentes des "li"
 				$info = self::recupereInfo($noeud);
 				echo "<p>".$info->nom;
+
+				// ajouter les produits récupérés à la bd
 				$retour = $this -> ajouteProduit($info);
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
 				if ($retour -> succes == false) {
@@ -77,24 +86,44 @@ class SAQ extends Modele {
 		return $i;
 	}
 
-	private function get_inner_html($node) {
-		$innerHTML = '';
-		$children = $node -> childNodes;
-		foreach ($children as $child) {
-			$innerHTML .= $child -> ownerDocument -> saveXML($child);
-		}
+	/**
+	 * Récupérer le contenu des nodes
+	 * 
+	 * @param object $node
+	 * 
+	 * @return string contenu textuel du node
+	 */
+	// private function get_inner_html($node) {
+	// 	$innerHTML = '';
+	// 	$children = $node -> childNodes;
+	// 	foreach ($children as $child) {
+	// 		$innerHTML .= $child -> ownerDocument -> saveXML($child);
+	// 	}
 
-		return $innerHTML;
-	}
+	// 	return $innerHTML;
+	// }
+
+	/**
+	 * Supprimer les espaces dans une chaine
+	 * @param string $chaine
+	 */
 	private function nettoyerEspace($chaine)
 	{
 		return preg_replace('/\s+/', ' ',$chaine);
 	}
+
+	/**
+	 * Récupérer les informations d'une bouteille (provenant d'un "li") utiles à l'affichage
+	 * 
+	 * @param object $noeud
+	 * 
+	 * @return object les informations d'une bouteille
+	 */
 	private function recupereInfo($noeud) {
 		
 		$info = new stdClass();
 		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
-		;
+		; // hum ...
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 		$info -> url = $a_titre->getAttribute('href');
 		
@@ -119,7 +148,7 @@ class SAQ extends Modele {
 			}
 		}
 
-		//Code SAQ
+		// Code de la SAQ d'une bouteille
 		$aElements = $noeud -> getElementsByTagName("div");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'saq-code') {
@@ -127,37 +156,51 @@ class SAQ extends Modele {
 				{
 					$info -> desc -> code_SAQ = trim($aRes[0]);
 				}
-				
-				
-				
 			}
 		}
 
+		// *******************************************************
+		// prix !! Problème du prix tronqué est potentiellement ici 
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'price') {
+
 				$info -> prix = trim($node -> textContent);
 			}
 		}
+		// *************************************************************
+
 		//var_dump($info);
 		return $info;
 	}
 
+	/**
+	 * Rajouter les informations récupérées d'une bouteille à la base de données si elle n'y est pas déjà
+	 * 
+	 * @param object $bte
+	 * 
+	 * @return object réponse à savoir si on a pu ajouter le produit (bool), et si non pourquoi (string)
+	 */
 	private function ajouteProduit($bte) {
 		$retour = new stdClass();
 		$retour -> succes = false;
 		$retour -> raison = '';
 
 		//var_dump($bte);
-		// Récupère le type
+
+		// Récupérer l'id du type de la bouteille
 		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
 		
+		// si le type existe dans la base de données
 		if ($rows -> num_rows == 1) {
 			$type = $rows -> fetch_assoc();
 			//var_dump($type);
 			$type = $type['id'];
 
+			// Récupérer l'id de la bouteille qui a le code de la SAQ qu'on lui envoi
 			$rows = $this -> _db -> query("select id from vino__bouteille where code_saq = '" . $bte -> desc -> code_SAQ . "'");
+
+			// si le code de la bouteille (SAQ) n'existe pas déjà dans la bd (nouvelle bouteille), on l'ajoute
 			if ($rows -> num_rows < 1) {
 				$this -> stmt -> bind_param("sissssisss", $bte -> nom, $type, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url, $bte -> img, $bte -> desc -> format);
 				$retour -> succes = $this -> stmt -> execute();
@@ -173,8 +216,6 @@ class SAQ extends Modele {
 
 		}
 		return $retour;
-
 	}
-
 }
 ?>

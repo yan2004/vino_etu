@@ -1,6 +1,70 @@
-/********
+/****************************
  * Votre CSS
  ********/
+
+
+/* COULEURS */
+/*
+	#C3979F Tuscany
+	#511730 Tyrian Purple
+	#C6D8D3 Opal
+	#4F646F Cadet
+	#011C27 Rich Black FOGRA 29 (notre noir)
+*/
+
+/* FONTS */
+
+/* sans-serif */
+@font-face{
+    font-family: "HindMadurai-Regular";
+    src: url("../fonts/HindMadurai-Regular.ttf");
+}
+@font-face{
+    font-family: "HindMadurai-Medium";
+    src: url("../fonts/HindMadurai-Medium.ttf");
+}
+@font-face{
+    font-family: "HindMadurai-Bold";
+    src: url("../fonts/HindMadurai-Bold.ttf");
+}
+
+/* serif */
+@font-face{
+    font-family: "Lora-Regular";
+    src: url("../fonts/Lora-Regular.ttf");
+}
+@font-face{
+    font-family: "Lora-Italic";
+    src: url("../fonts/Lora-Italic.ttf");
+}
+@font-face{
+    font-family: "Lora-Medium";
+    src: url("../fonts/Lora-Medium.ttf");
+}
+@font-face{
+    font-family: "Lora-MediumItalic";
+    src: url("../fonts/Lora-MediumItalic.ttf");
+}
+@font-face{
+    font-family: "Lora-Bold";
+    src: url("../fonts/Lora-Bold.ttf");
+}
+@font-face{
+    font-family: "Lora-BoldItalic";
+    src: url("../fonts/Lora-BoldItalic.ttf");
+}
+
+/* slogan ou feature text "h1" peut-être "h2" à voir */
+@font-face{
+    font-family: "PoiretOne-Regular";
+    src: url("../fonts/PoiretOne-Regular.ttf");
+}
+
+
+/* MOBILE FIRST */
+
+/* Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { ... } */
 
 html, body {
 	height: 100%;
@@ -40,6 +104,17 @@ html, body {
 	
 }
 
+<<<<<<< HEAD
+=======
+/* @media all and (max-width:640px)
+{
+	footer
+	{
+		display:none;
+	}
+	
+} */
+>>>>>>> 2b6b8c176949f72a539637fe35f8ae7b3e86e50c
 
 /*
 footer
@@ -92,4 +167,21 @@ footer {
 		display:none;
 	}
 	
+}
+
+/* AUTRES FORMATS */
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }
