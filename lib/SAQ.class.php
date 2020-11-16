@@ -20,11 +20,7 @@ class SAQ extends Modele {
 	public function __construct() {
 		parent::__construct();
 		if (!($this -> stmt = $this -> _db -> prepare("INSERT INTO vino__bouteille(nom, type, image, code_saq, pays, description, prix_saq, url_saq, url_img, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
-<<<<<<< HEAD
-			//echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
-=======
 			// echo "Echec de la préparation : (" . $mysqli -> errno . ") " . $mysqli -> error;
->>>>>>> 2b6b8c176949f72a539637fe35f8ae7b3e86e50c
 		}
 	}
 
