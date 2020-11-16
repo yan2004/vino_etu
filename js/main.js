@@ -8,7 +8,7 @@
  *
  */
 
-//const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
+//const BaseURL = "http://localhost:8888/vino/vino_etu/";
 const BaseURL = document.baseURI;
 
 console.log(BaseURL);
