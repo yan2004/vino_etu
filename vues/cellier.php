@@ -1,7 +1,7 @@
 <div class="cellier">
 <?php
 foreach ($data as $cle => $bouteille) {
- 
+      
     ?>
     <div class="bouteille" data-quantite="">
         <div class="img">

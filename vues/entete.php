@@ -20,12 +20,20 @@
 	</head>
 	<body >
 		<header>
-			<h1>Un petit verre de vino ?</h1>
 			<nav>
-				<ul>
-					<li><a href="?requete=accueil">Mon cellier</a></li>
-					<li><a href="?requete=ajouterNouvelleBouteilleCellier">Ajouter une bouteille au cellier</a></li>
+				<input id="nav-toggle" type="checkbox">
+				<div class="logo"><a href="?requete=accueil"><strong>VINO</strong></a></div>
+				<ul class="links">
+					<!--<li><a href="?requete=accueil">MON CELLIER</a></li>-->
+					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>
+					<li><a href="?requete=monCompte">MON COMPTE</a></li>
+					<li><a href="?requete=deconnexion">DÉCONNEXION</a></li>
 				</ul>
+				<label for="nav-toggle" class="icon-burger">
+					<div class="line"></div>
+					<div class="line"></div>
+					<div class="line"></div>
+				</label>
 			</nav>
 		</header>
 		<main>
