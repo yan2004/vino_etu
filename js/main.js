@@ -15,15 +15,19 @@ console.log(BaseURL);
 
 window.addEventListener('load', function() {
 
-    console.log("load");
+    // console.log("load");
 
     document.querySelectorAll(".btnBoire").forEach(function(element){
 
-        console.log(element);
+        // console.log(element);
 
         // requête ajax au click d'un des boutons "boire" de la page
         element.addEventListener("click", function(evt){
+
             let id = evt.target.parentElement.dataset.id;
+
+            let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
+
             let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
             fetch(requete)
@@ -33,29 +37,30 @@ window.addEventListener('load', function() {
                 } else {
                   throw new Error('Erreur');
                 }
-              })
-              // traitement de la réponse
-              .then(response => {
+            })
+            // traitement de la réponse
+            .then(response => {
 
-                // **************************************************
-                // À faire pour l'affichage du changement de quantité!
-                console.debug(response);
-                // **************************************************
-
-              }).catch(error => {
-                console.error(error);
-              });
-        })
+              // update de la quantité sur la page
+              if(response.success){
+                eQuantite.innerHTML = `Quantité : ${response.quantite}`;
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        });
 
     });
 
     document.querySelectorAll(".btnAjouter").forEach(function(element){
 
-        console.log(element);
-
         // requête ajax au click d'un des boutons "ajouter" de la page
         element.addEventListener("click", function(evt){
+
             let id = evt.target.parentElement.dataset.id;
+
+            let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
 
             let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
@@ -66,25 +71,25 @@ window.addEventListener('load', function() {
                 } else {
                   throw new Error('Erreur');
                 }
-              })
-              .then(response => {
+            })
+            .then(response => {
 
-                // **************************************************
-                // À faire pour l'affichage du changement de quantité!
-                console.debug(response);
-                // **************************************************
-
-              }).catch(error => {
-                console.error(error);
-              });
-        })
+              // update de la quantité sur la page
+              if(response.success){
+                eQuantite.innerHTML = `Quantité : ${response.quantite}`;
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        });
 
     });
    
     // concernant le formulaire d'ajout d'une bouteille
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
-    console.log(inputNomBouteille);
+    // console.log(inputNomBouteille);
 
     let liste = document.querySelector('.listeAutoComplete');
 
@@ -92,7 +97,7 @@ window.addEventListener('load', function() {
 
       inputNomBouteille.addEventListener("keyup", function(evt){
 
-        console.log(evt);
+        // console.log(evt);
 
         let nom = inputNomBouteille.value;
 
@@ -105,25 +110,26 @@ window.addEventListener('load', function() {
           let requete = new Request(BaseURL+"index.php?requete=autocompleteBouteille", {method: 'POST', body: '{"nom": "'+nom+'"}'});
 
           fetch(requete)
-              .then(response => {
-                  if (response.status === 200) {
-                    return response.json();
-                  } else {
-                    throw new Error('Erreur');
-                  }
-                })
-                .then(response => {
+          .then(response => {
+              if (response.status === 200) {
+                return response.json();
+              } else {
+                throw new Error('Erreur');
+              }
+          })
+          .then(response => {
 
-                  console.log(response);
-                  
-                  // création d'un "li" pour chaque suggestion dans le DOM
-                  response.forEach(function(element){
-                    liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
-                  })
-                })
-                .catch(error => {
-                  console.error(error);
-                });
+            console.log(response);
+            
+            // création d'un "li" pour chaque suggestion dans le DOM
+            response.forEach(function(element){
+              liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
+            });
+
+          })
+          .catch(error => {
+            console.error(error);
+          });
         }
       });
 
@@ -184,28 +190,28 @@ window.addEventListener('load', function() {
           let requete = new Request(BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
 
             fetch(requete)
-                .then(response => {
+            .then(response => {
 
-                  console.log(response);
+              // console.log(response);
 
-                    if (response.status === 200) {
-                      return response.json();
-                    } else {
-                      throw new Error('Erreur');
-                    }
-                  })
-                  .then(response => {
+              if (response.status === 200) {
+                return response.json();
+              } else {
+                throw new Error('Erreur');
+              }
+            })
+            .then(response => {
 
-                    // ***************************************************
-                    // ajouter un traitement au succès de la requête
-                    // ***************************************************
+              // ***************************************************
+              // ajouter un traitement au succès de la requête
+              // ***************************************************
 
-
-                    console.log(response);
-                  
-                  }).catch(error => {
-                    console.error(error);
-                  });
+              console.log(response);
+            
+            })
+            .catch(error => {
+              console.error(error);
+            });
         });
       } 
   }
