@@ -31,11 +31,7 @@ class Bouteille extends Modele {
 				$rows[] = $row;
 			}
 		}
-		
-		// *******************************************************************************************************
-		// ici le retour va peut-être avoir un impact sur les données du front vu que j'ai modifié la table un peu 
-		// changements : il n'y a plus de champs "image" et il y a un champ id_type qui est un foreign key
-		// ***********************************************************************************************
+
 		return $rows;
 	}
 	
@@ -177,13 +173,37 @@ class Bouteille extends Modele {
 	 */
 	public function modifierQuantiteBouteilleCellier($id, $nombre)
 	{
-		//TODO : Valider les données.
+		// TODO : Valider les données.
+
+		// creation de l'objet de la reponse
+		$reponseObj = new stdClass();
 
 		$requete = "UPDATE vino__bouteille__collection SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
-		//echo $requete;
-        $res = $this->_db->query($requete);
-        
-		return $res;
+
+		$res = $this->_db->query($requete);
+
+		if($res){
+
+			// si l'update a fonctionné on construit un objet avec la réponse
+   			$reponseObj->success = true;
+
+			$requete = "SELECT quantite FROM vino__bouteille__collection WHERE id =" . $id;
+
+			$reponse = $this->_db->query($requete);
+
+			if($reponse->num_rows){
+
+				$row = $reponse->fetch_assoc();
+				$quantite = $row['quantite'];
+
+				// si le select a fonctionné, on ajoute la nouvelle quantité à l'objet réponse
+				$reponseObj->quantite = $quantite;				
+			}
+		} else {
+			$reponseObj->success = false;
+		}
+
+		return $reponseObj;
 	}
 }
 

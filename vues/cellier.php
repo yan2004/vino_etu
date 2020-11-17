@@ -3,12 +3,13 @@
 foreach ($data as $cle => $bouteille) {
  
     ?>
-    <div class="bouteille" data-quantite="">
+    <!-- <div class="bouteille" data-quantite=""> -->
+    <div class="bouteille">
         <div class="img">
             
             <img src="https:<?php echo $bouteille['url_image'] ?>">
         </div>
-        <div class="description">
+        <div class="description" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
             <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
             <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
             <p class="pays">Pays : <?php echo $bouteille['pays'] ?></p>

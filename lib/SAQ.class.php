@@ -32,12 +32,19 @@ class SAQ extends Modele {
 	 * @return int nombre de produits qui ont été récupérés
 	 */
 	public function getProduits($nombre = 24, $page = 1) {
+
+		// TEST
+		echo "getProduits</br>";
+
 		$s = curl_init();
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
 		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
 		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
 		curl_setopt($s, CURLOPT_URL, $url);
-		curl_setopt($s, CURLOPT_RETURNTRANSFER, true);
+
+		// pour pouvoir conserver la valeur de retour (en string) au lieu de l'output
+		curl_setopt($s, CURLOPT_RETURNTRANSFER, true); 
+
 		//curl_setopt($s, CURLOPT_FOLLOWLOCATION, 1);
 
 		self::$_webpage = curl_exec($s);
@@ -51,6 +58,13 @@ class SAQ extends Modele {
 		@$doc -> loadHTML(self::$_webpage);
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
+
+		// **********TESTS*****************
+		var_dump(self::$_webpage); // reponse : bool(false)
+		echo "<br>status :<br>";
+		echo(self::$_status); // reponse : 0importation : 0
+		// var_dump($elements);
+		// ********************************
 		
 		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
@@ -179,6 +193,11 @@ class SAQ extends Modele {
 	 * @return object réponse à savoir si on a pu ajouter le produit (bool), et si non pourquoi (string)
 	 */
 	private function ajouteProduit($bte) {
+
+
+		echo "ajouteProduits";
+
+
 		$retour = new stdClass();
 		$retour -> succes = false;
 		$retour -> raison = '';
