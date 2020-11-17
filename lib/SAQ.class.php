@@ -68,7 +68,7 @@ class SAQ extends Modele {
 		
 		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
-			//var_dump($noeud -> getAttribute('class')) ;
+			var_dump($noeud -> getAttribute('class')) ;
 			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
