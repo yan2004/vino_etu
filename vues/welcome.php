@@ -30,7 +30,7 @@
             font-size: 2rem;
             color: #511730;
             font-weight: bold;
-            text-shadow: 5px 5px 5px #C3979F;
+            text-shadow: 5px 5px 5px #FFFFFF;
         }
         .welcome-btns {
             margin-top: calc(5vh);
@@ -38,7 +38,6 @@
             justify-content: space-evenly;
         }
         #sign-in, #sign-up {
-            background-color: #4F646F;
             border: none;
             border-radius: 10px;
             width: calc(20vw);
@@ -46,6 +45,12 @@
             cursor: pointer;
             text-align: center;
             font-size: 1rem;
+        }
+        #sign-in {
+            background-color: #4F646F;
+        }
+        #sign-up {
+            background-color: #C3979F;
         }
         a {
             color: #FFFFFF;
