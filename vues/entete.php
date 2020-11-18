@@ -26,7 +26,7 @@
 				<ul class="links">
 					<!--<li><a href="?requete=accueil">MON CELLIER</a></li>-->
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>
-					<li><a href="?requete=monCompte">MON COMPTE</a></li>
+					<li><a href="?requete=modifierCompte">MON COMPTE</a></li>
 					<li><a href="?requete=deconnexion">DÉCONNEXION</a></li>
 				</ul>
 				<label for="nav-toggle" class="icon-burger">

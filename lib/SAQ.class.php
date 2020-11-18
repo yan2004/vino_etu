@@ -242,4 +242,6 @@ class SAQ extends Modele {
 		return $retour;
 	}
 }
+
+
 ?>
