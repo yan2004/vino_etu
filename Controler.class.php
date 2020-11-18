@@ -146,11 +146,10 @@ class Controler
 
 		private function modifierCompte()
 		{
-			//$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
-
+		
 			$usager = new Usager();
-			$usager->modifierUsager($_POST['id'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
+			//$usager->modifierUsager($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
+			$usager->modifierUsager(1, $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
 			
 			include("vues/entete.php");
 			include("vues/compte.php");

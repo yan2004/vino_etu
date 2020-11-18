@@ -39,7 +39,8 @@ class Usager extends Modele {
     {
         echo "haha";
         $requete = $this->_db->query("UPDATE ". self::TABLE. " SET nom=". $nom. ",prenom=". $prenom. ",mot_de_passe=". $mot_de_passe. " WHERE id=". $id);
-        $row = mysqli_fetch_assoc($requete)
+        echo $requete;
+        $row = mysqli_fetch_assoc($requete);
         
         /*
         if($res){

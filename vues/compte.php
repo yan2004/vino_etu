@@ -2,6 +2,7 @@
 
     <h2>Modifier Info De Compte</h2>
         
+        <!--<form action="Controler.class.php" method="post" class="modifierCompte">-->
         <form action="index.php?requete=modifierCompte" method="post" class="modifierCompte">
                 <input type="hidden" name="userId" value="<?php if($_SESSION['currentUserId'] != null)echo $_SESSION['currentUserId'] ?>">
                 <label for="nom">Nom</label>
