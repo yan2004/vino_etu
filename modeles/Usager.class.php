@@ -37,34 +37,12 @@ class Usager extends Modele {
      */
     public function modifierUsager($id,$nom,$prenom,$mot_de_passe)
     {
-        echo "haha";
+        echo $id. $nom . $prenom. $mot_de_passe;
         $requete = $this->_db->query("UPDATE ". self::TABLE. " SET nom=". $nom. ",prenom=". $prenom. ",mot_de_passe=". $mot_de_passe. " WHERE id=". $id);
         echo $requete;
         $row = mysqli_fetch_assoc($requete);
         
-        /*
-        if($res){
-
-			// si l'update a fonctionné on construit un objet avec la réponse
-   			$reponseObj->success = true;
-
-			$requete = "SELECT * FROM ". self::TABLE. "WHERE id =" . $id;
-
-			$reponse = $this->_db->query($requete);
-
-			/*if($reponse->num_rows){
-
-				$row = $reponse->fetch_assoc();
-				$quantite = $row['quantite'];
-
-				// si le select a fonctionné, on ajoute la nouvelle quantité à l'objet réponse
-				$reponseObj->quantite = $quantite;				
-			}*/
-		/*} else {
-			$reponseObj->success = false;
-		}
-
-		return $reponseObj;*/
+        
     }
 	
 }
