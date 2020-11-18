@@ -157,9 +157,22 @@ class Controler
 		private function modifierCompte()
 		{
 		
-			include("vues/entete.php");
-			include("vues/compte.php");
-			include("vues/pied.php");	
+			$body = json_decode(file_get_contents('php://input'));
+			//var_dump($body);
+			if(!empty($body)){
+				$usager = new Usager();
+				//var_dump($_POST['data']);
+				
+				//var_dump($data);
+				$resultat = $usager->sauvegardeModificationCompte($body); 
+				echo json_encode($resultat);
+			}
+			else{
+				include("vues/entete.php");
+				include("vues/compte.php");
+				include("vues/pied.php");	
+			}
+
 		}
 
 		private function sauvegardeCompte()
