@@ -10,6 +10,35 @@
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
  */
+/*
+if(isset($_REQUEST["commande"]))
+{
+	$commande = $_REQUEST["commande"];
+	
+}
+
+switch($commande)
+{
+	case "ModifierCompte":
+		//faire afficher le formulaire de login
+		require_once('./dataconf.php');
+	    require_once("./config.php");
+		if(isset($_REQUEST["nom"], $_REQUEST["prenom"]))
+		{
+			
+			$user  = new Usager();
+			$user->modifierUsager(1,$_REQUEST["nom"],$_REQUEST["prenom"],$_REQUEST["mot_de_passe"]);
+
+			include("vues/entete.php");
+		    include("vues/compte.php");
+		    include("vues/pied.php");	
+			
+		}
+		
+		
+		break;
+}
+*/
 
 class Controler 
 {
@@ -36,10 +65,16 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
+				case 'modifierCompte':
+					$this->modifierCompte();
+					break;
 				default:
 					$this->accueil();
 					break;
 			}
+
+		
+			
 		}
 
 
@@ -108,6 +143,25 @@ class Controler
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
 		}
+
+		private function modifierCompte()
+		{
+			//$body = json_decode(file_get_contents('php://input'));
+			//var_dump($body);
+
+			$usager = new Usager();
+			$usager->modifierUsager($_POST['id'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
+			
+			include("vues/entete.php");
+			include("vues/compte.php");
+			include("vues/pied.php");	
+		}
+		
+		private function getCurrentUser()
+		{
+
+		}
+
 }
 ?>
 
