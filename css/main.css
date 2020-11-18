@@ -131,8 +131,11 @@ body {
 }
 
 main {
+<<<<<<< HEAD
+=======
     padding-left: 2vw;
     padding-bottom: 100px;
+>>>>>>> db82d7b1670efb49320b10881470f91e2c0f0031
 	margin-top: calc(10vh);
 	padding-left: 2vw;
 	padding-bottom: 100px;

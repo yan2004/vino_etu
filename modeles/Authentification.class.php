@@ -12,26 +12,31 @@ class Authentification extends Modele {
 
 	public function validerAuthentification($user, $password){
 
-		// TODO : filtrer les donnees
-		// TODO : HASHER LE PASSWORD
-
+		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
 
 		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE pseudo='" . $user . "'");
 
 		if($row = mysqli_fetch_assoc($requete)){
 
-			// echo $row["mot_de_passe"];
+			// comparaison du mot de passe avec le hash de la base de données 
+			if(password_verify($password, $row["mot_de_passe"])){
+				return true;
+			}
+		}
+		return false;
+	}
 
-			
-			// // comparaison du mot de passe avec le hash de la base de données 
-			// if(password_verify($password, $row["mot_de_passe"])){
+	public function creerCompte($pseudo, $nom, $prenom, $password){
 
-			// 	// rediriger vers l'action de controller pour accueilUsager
-			// 	return true;
-			// }
+		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
 
-			// test temporaire pour debug de la fonctionnalité
-			if($password == $row["mot_de_passe"]) return true;
+		$password = password_hash($password, PASSWORD_DEFAULT);
+
+		$requete = $this->_db->query("INSERT INTO vino__usager (pseudo, nom, prenom, mot_de_passe) VALUES ('" . $pseudo . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
+
+		// echo $requete;
+		if($requete == 1){
+			return true;
 		}
 		return false;
 	}
