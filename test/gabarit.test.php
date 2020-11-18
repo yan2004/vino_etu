@@ -13,7 +13,7 @@
 			<h1>Test - Modèles</h1>
 		</div>
 		<div id="contenu">
-
+	
 			<h2>Connection DB</h2>
 			<?php
 

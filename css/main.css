@@ -131,8 +131,15 @@ body {
 }
 
 main {
+<<<<<<< HEAD
     padding-left: 2vw;
     padding-bottom: 100px;
+=======
+	margin-top: calc(10vh);
+	padding-left: 2vw;
+	padding-bottom: 100px;
+	display: flex;
+>>>>>>> 1072b187477e059f63957734ceba6a4c5b503227
 }
 
 footer {
@@ -257,6 +264,40 @@ nav .icon-burger .line {
     nav :checked ~ .icon-burger .line:nth-child(2) {
         opacity: 0;
     }
+}
+
+
+/*Formulaire Modification de compte*/
+.compte {
+	width: calc(80vw);
+	height: calc(50vh);
+	background-color: rgba(1, 28, 39, .4);
+	margin-left: calc(9vw);
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding-left: calc(10vw);
+}
+
+.modifierCompte {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.modifierCompte input[type=text] {
+	width: calc(40vw);
+}
+
+.modifierCompte input[type=submit]{
+	border: none;
+    border-radius: 10px;
+    width: calc(20vw);
+    height: calc(6vh);
+    cursor: pointer;
+    text-align: center;
+	font-size: 1rem;
+	background-color: #4F646F;
 }
 
 @media all and (max-width:640px)

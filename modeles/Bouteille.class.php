@@ -24,7 +24,7 @@ class Bouteille extends Modele {
 		
 		$rows = Array();
 		$res = $this->_db->query('Select * from '. self::TABLE);
-		if($res->num_rows)
+		if($res->num_rows)		
 		{
 			while($row = $res->fetch_assoc())
 			{
