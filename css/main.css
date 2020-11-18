@@ -131,15 +131,10 @@ body {
 }
 
 main {
-<<<<<<< HEAD
-    padding-left: 2vw;
-    padding-bottom: 100px;
-=======
 	margin-top: calc(10vh);
 	padding-left: 2vw;
 	padding-bottom: 100px;
 	display: flex;
->>>>>>> 1072b187477e059f63957734ceba6a4c5b503227
 }
 
 footer {

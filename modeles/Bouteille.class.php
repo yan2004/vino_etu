@@ -137,7 +137,7 @@ class Bouteille extends Modele {
 	/**
 	 * Cette méthode ajoute une ou des bouteilles au cellier avec les données provenant de l'utilisateur
 	 * 
-	 * @param Array $data Tableau des données représentants la bouteille.
+	 * @param Object $data Tableau des données représentants la bouteille.
 	 * 
 	 * @return Boolean Succès ou échec de l'ajout.
 	 */

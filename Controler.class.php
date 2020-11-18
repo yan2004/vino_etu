@@ -73,6 +73,9 @@ class Controler
 				case 'modifierCompte':
 					$this->modifierCompte();
 					break;
+				case 'creerCompte':
+					$this->creerCompte();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -88,21 +91,32 @@ class Controler
 
 			$auth = new Authentification();
 
-
-			// 1- test option 1 infos via ajax
 			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
-
 
 			if($valide) {
 
-				// TODO : sauvegarde de l'usager authentifié
-				// $_SESSION["username"] = $_REQUEST["username"];
+				// sauvegarde de l'usager authentifié
+				$_SESSION["pseudo"] = $_POST["pseudo"];
 				
 				$this->accueilUsager();
 
 			}
 
+		}
 
+		private function creerCompte()
+		{
+			$auth = new Authentification();
+
+			$succes = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
+
+			if($succes) {
+
+				// TODO AJOUTER UN MESSAGE POUR DIRE QUE C'EST UN SUCCES!
+				// quelque chose comme : "succès! Vous pouvez maintenant vous connecter"
+
+				$this->accueil();
+			}
 		}
 
 		// accueil publique (usager qui n'est pas encore authentifié)
@@ -197,6 +211,8 @@ class Controler
 		{
 
 		}
+
+
 
 }
 ?>

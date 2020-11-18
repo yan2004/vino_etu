@@ -18,28 +18,21 @@
             <h1>Bienvenue Chez VINO</h1>
 
             <!-- Formulaire de login -->
-            <!-- <form name="login" method="post" action="index.php"> -->
-            <form name="formLogin" class="form-accueil display--none" method="post" action="index.php?requete=authentification">
-                        
+            <form name="formLogin" class="form-accueil display--none" method="post" action="index.php?requete=authentification">   
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="pseudo"/>
                 </div>
-                
+
                 <div>
                     <label for="password">Mot de passe :</label>
                     <input type="password" name="password" id="password"/>
                 </div>
-
                 <button type="submit" name="soumettre">SOUMETTRE</button>
-                <!-- <button type="button" name="soumettre"><a href="">SOUMETTRE</a></button> -->
-            
             </form>
 
             <!-- Formulaire de création de compte -->
-            <!-- <form name="formSignUp" method="post" action="index.php"> -->
-            <form name="formSignUp" class="form-accueil display--none">
-                        
+            <form name="formSignUp" class="form-accueil display--none" method="post" action="index.php?requete=creerCompte"> 
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="singUpPseudo"/>
@@ -59,10 +52,7 @@
                     <label for="password">Mot de passe :</label>
                     <input type="password" name="password" id="singUpPassword"/>
                 </div>
-
-                <button type="button" name="confirmer">CONFIRMER</button>
-                <!-- <button type="button" name="confirmer"><a href="">CONFIRMER</a></button> -->
-            
+                <button type="submit" name="confirmer">CONFIRMER</button>
             </form>
         </div>
 
