@@ -22,7 +22,7 @@
 		<header>
 			<nav>
 				<input id="nav-toggle" type="checkbox">
-				<div class="logo"><a href="?requete=accueil"><strong>VINO</strong></a></div>
+				<div class="logo"><a href="?requete=accueilUsager"><strong>VINO</strong></a></div>
 				<ul class="links">
 					<!--<li><a href="?requete=accueil">MON CELLIER</a></li>-->
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>

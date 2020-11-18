@@ -10,35 +10,6 @@
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
  */
-/*
-if(isset($_REQUEST["commande"]))
-{
-	$commande = $_REQUEST["commande"];
-	
-}
-
-switch($commande)
-{
-	case "ModifierCompte":
-		//faire afficher le formulaire de login
-		require_once('./dataconf.php');
-	    require_once("./config.php");
-		if(isset($_REQUEST["nom"], $_REQUEST["prenom"]))
-		{
-			
-			$user  = new Usager();
-			$user->modifierUsager(1,$_REQUEST["nom"],$_REQUEST["prenom"],$_REQUEST["mot_de_passe"]);
-
-			include("vues/entete.php");
-		    include("vues/compte.php");
-		    include("vues/pied.php");	
-			
-		}
-		
-		
-		break;
-}
-*/
 
 class Controler 
 {
@@ -72,6 +43,9 @@ class Controler
 					$this->accueilUsager();
 				case 'modifierCompte':
 					$this->modifierCompte();
+					break;
+				case 'sauvegardeCompte':
+					$this->sauvegardeCompte();
 					break;
 				default:
 					$this->accueil();
@@ -183,13 +157,24 @@ class Controler
 		private function modifierCompte()
 		{
 		
-			$usager = new Usager();
-			//$usager->modifierUsager($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
-			$usager->modifierUsager(1, $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']);
-			
 			include("vues/entete.php");
 			include("vues/compte.php");
 			include("vues/pied.php");	
+		}
+
+		private function sauvegardeCompte()
+		{
+			/**
+			 * *******************
+			 * To Do
+			 * récupérer id d'usager quand authentification
+			 * *******************
+			 */
+			$usager = new Usager();
+			$usager->sauvegardeModificationCompte(1, $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
+			include("vues/entete.php");
+			include("vues/compte.php");
+			include("vues/pied.php");
 		}
 		
 		private function getCurrentUser()
