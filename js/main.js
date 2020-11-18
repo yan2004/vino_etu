@@ -119,7 +119,7 @@ window.addEventListener('load', function() {
           })
           .then(response => {
 
-            console.log(response);
+            // console.log(response);
             
             // création d'un "li" pour chaque suggestion dans le DOM
             response.forEach(function(element){

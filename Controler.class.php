@@ -21,6 +21,9 @@ class Controler
 		public function gerer()
 		{
 			switch ($_GET['requete']) {
+				case 'authentification':
+					$this->authentification();
+					break;
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
@@ -36,22 +39,56 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
+				case 'accueilUsager':
+					$this->accueilUsager();
+					break;
 				default:
 					$this->accueil();
 					break;
 			}
 		}
 
+		private function authentification()
+		{
+			// echo "controller-auth";
 
+			$auth = new Authentification();
+
+
+			// 1- test option 1 infos via ajax
+			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
+
+
+			if($valide) {
+
+				// TODO : sauvegarde de l'usager authentifié
+				// $_SESSION["username"] = $_REQUEST["username"];
+				
+				$this->accueilUsager();
+
+			}
+
+
+		}
+
+		// accueil publique (usager qui n'est pas encore authentifié)
 		private function accueil()
 		{
+			// include("vues/entete.php");
+			include("vues/welcome.php");
+			// include("vues/pied.php");      
+		}
+
+		// cette méthode se nommait "accueil" avant
+		private function accueilUsager()
+		{
 			$bte = new Bouteille();
-            $data = $bte->getListeBouteilleCellier();
+			$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
 			include("vues/cellier.php");
 			include("vues/pied.php");      
 		}
-		
+
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
