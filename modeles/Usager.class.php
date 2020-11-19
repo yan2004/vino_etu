@@ -22,8 +22,33 @@ class Usager extends Modele {
         $res = $this->_db->query($requete);
         
         //echo $requete;
-        
       
+    }
+
+
+    public function getUserByPseudo($pseudo)
+    {
+        $rows = Array();
+        $requete = "SELECT * FROM ". self::TABLE. " WHERE pseudo= '". $pseudo. "'";
+
+        if(($res = $this->_db->query($requete)) ==	 true)
+		{
+			if($res->num_rows)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					$rows[] = $row;
+				}
+			}
+		}
+		else 
+		{
+			throw new Exception("Erreur de requête sur la base de donnée", 1);
+			 //$this->_db->error;
+		}
+
+		return $rows;
+
     }
     
 	

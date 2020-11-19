@@ -5,7 +5,7 @@
 
 		<meta charset="utf-8">
 		<meta http-equiv="cache-control" content="no-cache">
-		<meta name="viewport" content="width=device-width, minimum-scale=0.5, initial-scale=1.0, user-scalable=yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
 		<meta name="description" content="Un petit verre de vino">
 		<meta name="author" content="Jonathan Martel (jmartel@cmaisonneuve.qc.ca)">
@@ -22,7 +22,7 @@
 		<header>
 			<nav>
 				<input id="nav-toggle" type="checkbox">
-				<div class="logo"><a href="?requete=accueilUsager"><strong>VINO</strong></a></div>
+				<div class="logo"><a href="?requete=accueilUsager"><img src="./images/logo-couleurs-v2.svg" alt="vino-logo"></a></div>
 				<ul class="links">
 					<!--<li><a href="?requete=accueil">MON CELLIER</a></li>-->
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>
