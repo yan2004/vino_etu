@@ -15,17 +15,18 @@ class Usager extends Modele {
     
     public function sauvegardeModificationCompte($id,$nom,$prenom,$mot_de_passe)
     {
-       
+
         $pwd = password_hash($mot_de_passe, PASSWORD_DEFAULT);
         $reponseObj = new stdClass();
         $requete = "UPDATE ". self::TABLE. " SET nom='". $nom. "',prenom='". $prenom. "',mot_de_passe='". $pwd. "' WHERE id=". $id;
         $res = $this->_db->query($requete);
-        
-        //echo $requete;
       
     }
 
 
+    /**
+     * Cette méthode récupère les valeurs de table vino_usager
+     */
     public function getUserByPseudo($pseudo)
     {
         $rows = Array();
@@ -50,7 +51,8 @@ class Usager extends Modele {
 		return $rows;
 
     }
-    
+
+
 	
 }
 

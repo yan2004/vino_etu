@@ -36,21 +36,25 @@
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="singUpPseudo"/>
+                    <span id="errPseudo"></span>
                 </div>
 
                 <div>
                     <label for="nom">Nom :</label>
                     <input type="text" name="nom" id="singUpNom"/>
+                    <span id="errSignUpNom"></span>
                 </div>
 
                 <div>
                     <label for="prenom">Prénom :</label>
                     <input type="text" name="prenom" id="singUpPrenom"/>
+                    <span id="errSignUpPrenom"></span>
                 </div>
                 
                 <div>
                     <label for="password">Mot de passe :</label>
                     <input type="password" name="password" id="singUpPassword"/>
+                    <span id="errSignUpPwd"></span>
                 </div>
                 <button type="submit" name="confirmer">CONFIRMER</button>
             </form>

@@ -85,11 +85,13 @@ class Controler
 
 			$succes = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
 
-			if($succes) {
-
-				// TODO AJOUTER UN MESSAGE POUR DIRE QUE C'EST UN SUCCES!
-				// quelque chose comme : "succès! Vous pouvez maintenant vous connecter"
-
+			/**
+			 * Si fait de création du compte, rédigier la page de cellier;
+			 * Sinon, reste dans la page public
+			 */
+			if ($succes == true) {
+				$this->accueilUsager();
+			}else {
 				$this->accueil();
 			}
 		}
@@ -197,9 +199,14 @@ class Controler
 			 */
 			$usager = new Usager();
 			$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
+			// include("vues/entete.php");
+			// include("vues/compte.php");
+			// include("vues/pied.php");
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
-			include("vues/compte.php");
-			include("vues/pied.php");
+			include("vues/cellier.php");
+			include("vues/pied.php"); 
 		}
 		
 		private function getCurrentUser()
