@@ -142,6 +142,7 @@ window.addEventListener('load', function() {
         prix : document.querySelector("[name='prix']"),
         garde_jusqua : document.querySelector("[name='garde_jusqua']"),
         notes : document.querySelector("[name='notes']"),
+        pseudo : document.querySelector("[name='pseudo_usager']"), // pseudo de l'usager en session
       };
 
       liste.addEventListener("click", function(evt){
@@ -171,10 +172,6 @@ window.addEventListener('load', function() {
 
           // toutes les valeurs de notre formulaire (données prêtes à être envoyées au back end)
 
-          // *******************************************************************************************************
-          // ICI L'ID_USER EST HARDCODÉ POUR L'INSTANT, CAR À CE STADE NOUS N'AVONS PAS ENCORE DE GESTION DE USER
-          // *******************************************************************************************************
-
           var param = {
             "id_bouteille":bouteille.nom.dataset.id,
             "date_achat":bouteille.date_achat.value,
@@ -183,7 +180,7 @@ window.addEventListener('load', function() {
             "prix":bouteille.prix.value,
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
-            "id_usager":1,                                // TODO : MODIFIER POUR QUE L'ID_USAGER CHANGE DYNAMIQUEMENT
+            "pseudo":bouteille.pseudo.value,              // pseudo de l'usager en session
           };
 
           // requete ajax pour ajouter une bouteille dans le cellier
@@ -195,18 +192,18 @@ window.addEventListener('load', function() {
               // console.log(response);
 
               if (response.status === 200) {
-                return response.json();
+                // return response.json();
+                return response;
               } else {
                 throw new Error('Erreur');
               }
             })
             .then(response => {
 
-              // ***************************************************
-              // ajouter un traitement au succès de la requête
-              // ***************************************************
+              // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+              window.location = BaseURL+"index.php?requete=accueilUsager";
 
-              console.log(response);
+              // console.log(response);
             
             })
             .catch(error => {

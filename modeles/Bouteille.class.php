@@ -67,7 +67,9 @@ class Bouteille extends Modele {
 						t.type 
 						from vino__bouteille__collection c 
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__type t ON t.id = b.id_type ORDER BY id_bouteille_collection
+						INNER JOIN vino__type t ON t.id = b.id_type 
+						INNER JOIN vino__usager u ON u.id = c.id_usager
+						WHERE u.pseudo = "' . $_SESSION["pseudo"] . '" ORDER BY id_bouteille_collection
 						'; 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -145,21 +147,32 @@ class Bouteille extends Modele {
     {
         // TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
 
-        var_dump($data);    
+		var_dump($data);    
+		
+		$requete = "SELECT id FROM vino__usager WHERE pseudo ='" . $data->pseudo . "'";
+		$res = $this->_db->query($requete);
+		if($res->num_rows == 1)
+		{
+			$row = $res->fetch_assoc();
+			$id_usager = $row["id"];
 
-        $requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
-        "'".$data->id_bouteille."',".
-        "'".$data->date_achat."',".
-        "'".$data->garde_jusqua."',".
-        "'".$data->notes."',".
-        "'".$data->prix."',".
-        "'".$data->quantite."',".
-        "'".$data->millesime."',".
-        "'".$data->id_usager."')";
+			$requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
+			"'".$data->id_bouteille."',".
+			"'".$data->date_achat."',".
+			"'".$data->garde_jusqua."',".
+			"'".$data->notes."',".
+			"'".$data->prix."',".
+			"'".$data->quantite."',".
+			"'".$data->millesime."',".
+			"'".$id_usager."')";
+	
+			$res = $this->_db->query($requete);
+			
+			return $res;
+		}
 
-        $res = $this->_db->query($requete);
-        
-        return $res;
+		return false;
+
     }
     
     
