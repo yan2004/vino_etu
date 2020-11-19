@@ -51,6 +51,9 @@ class Controler
 				case 'sauvegardeCompte':
 					$this->sauvegardeCompte();
 					break;
+				case 'deconnexion':
+					$this->deconnexion();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -62,7 +65,6 @@ class Controler
 
 		private function authentification()
 		{
-			// echo "controller-auth";
 
 			$auth = new Authentification();
 
@@ -74,9 +76,7 @@ class Controler
 				$_SESSION["pseudo"] = $_POST["pseudo"];
 				
 				$this->accueilUsager();
-
 			}
-
 		}
 
 		private function creerCompte()
@@ -105,11 +105,18 @@ class Controler
 		// cette méthode se nommait "accueil" avant
 		private function accueilUsager()
 		{
-			$bte = new Bouteille();
-			$data = $bte->getListeBouteilleCellier();
-			include("vues/entete.php");
-			include("vues/cellier.php");
-			include("vues/pied.php");      
+			if(isset($_SESSION['pseudo'])){
+
+				$bte = new Bouteille();
+				$data = $bte->getListeBouteilleCellier();
+				include("vues/entete.php");
+				include("vues/cellier.php");
+				include("vues/pied.php");  
+			}else{
+
+				$this->accueil();
+			}
+			    
 		}
 
 		private function listeBouteille()
@@ -197,6 +204,13 @@ class Controler
 
 		}
 
+		private function deconnexion(){
+
+			//fermer la session usager
+			session_destroy();
+
+			$this->accueil();
+		}
 
 
 }
