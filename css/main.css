@@ -63,8 +63,7 @@
 
 /* MOBILE FIRST */
 
-/* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) { ... } */
+
 
 html, body {
     height: 100%;
@@ -132,9 +131,7 @@ body {
 
 main {
     padding-left: 2vw;
-    padding-bottom: 100px;
-	margin-top: calc(10vh);
-	padding-left: 2vw;
+	margin-top: calc(12vh);
 	padding-bottom: 100px;
 	display: flex;
 }
@@ -174,6 +171,12 @@ nav .logo {
     float: left;
     width: 40%;
     height: 100%;
+}
+
+nav .logo img {
+	height: 100%;
+	width: auto;
+	margin-left: 5%;
 }
 
 nav .links {
@@ -221,47 +224,7 @@ nav .icon-burger .line {
     border-radius: 3px;
 }
 
-@media screen and (max-width:768px) {
-    nav .logo {
-        float: none;
-        width: auto;
-        justify-content: center;
-    }
-    nav .links {
-        float: none;
-        position: fixed;
-        z-index: 9;
-        left: 0;
-        right: 0;
-        top: 70px;
-        bottom: 100%;
-        width: auto;
-        height: auto;
-        flex-direction: column;
-        justify-content: space-evenly;
-        background-color: rgba(1, 28, 39, .4);
-        overflow: hidden;
-        transition: all .5s ease-in-out;
-    }
-    nav .links a {
-        font-size: 20px;
-    }
-    nav :checked ~ .links {
-        bottom: 0;
-    }
-    nav .icon-burger {
-        display: block;
-    }
-    nav :checked ~ .icon-burger .line:nth-child(1) {
-        transform: translateY(10px) rotate(225deg);
-    }
-    nav :checked ~ .icon-burger .line:nth-child(3) {
-        transform: translateY(-10px) rotate(-225deg);
-    }
-    nav :checked ~ .icon-burger .line:nth-child(2) {
-        opacity: 0;
-    }
-}
+
 
 
 /*Formulaire Modification de compte*/
@@ -307,10 +270,12 @@ nav .icon-burger .line {
 }
 
 /* AUTRES FORMATS */
+/* Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { ... } */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-
+	
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -321,4 +286,53 @@ nav .icon-burger .line {
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
 
+	
+}
+
+@media  (min-width: 320px) {
+	/*Navigation menu*/
+    nav .logo {
+        float: none;
+        width: auto;
+        justify-content: center;
+    }
+    nav .links {
+        float: none;
+        position: fixed;
+        z-index: 9;
+        left: 0;
+        right: 0;
+        top: calc(10vh);
+        bottom: 100%;
+        width: auto;
+        height: auto;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: rgba(1, 28, 39, .4);
+        overflow: hidden;
+        transition: all .5s ease-in-out;
+    }
+    nav .links a {
+        font-size: 20px;
+    }
+    nav :checked ~ .links {
+        bottom: 0;
+    }
+    nav .icon-burger {
+        display: block;
+    }
+    nav :checked ~ .icon-burger .line:nth-child(1) {
+        transform: translateY(10px) rotate(225deg);
+    }
+    nav :checked ~ .icon-burger .line:nth-child(3) {
+        transform: translateY(-10px) rotate(-225deg);
+    }
+    nav :checked ~ .icon-burger .line:nth-child(2) {
+        opacity: 0;
+	}
+	
+	/*Formulaire de modification de compte*/
+	.compte {
+		height: calc(60vh);
+	}
 }

@@ -12,20 +12,45 @@ class Usager extends Modele {
      * @param string $pseudo,$nom,$prenom,$mot_de_passe
      * @return Boolean Succès ou échec à modifiér.
      */
+    
     public function sauvegardeModificationCompte($id,$nom,$prenom,$mot_de_passe)
     {
-       /**
-        * *********************TO DO*************
-        * Utiliser le hachage pour gérer l'insere des mots de passe 
-		*/
-		$pwd = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+       
+        $pwd = password_hash($mot_de_passe, PASSWORD_DEFAULT);
         $reponseObj = new stdClass();
         $requete = "UPDATE ". self::TABLE. " SET nom='". $nom. "',prenom='". $prenom. "',mot_de_passe='". $pwd. "' WHERE id=". $id;
         $res = $this->_db->query($requete);
         
-        echo $requete;
+        //echo $requete;
       
     }
+
+
+    public function getUserByPseudo($pseudo)
+    {
+        $rows = Array();
+        $requete = "SELECT * FROM ". self::TABLE. " WHERE pseudo= '". $pseudo. "'";
+
+        if(($res = $this->_db->query($requete)) ==	 true)
+		{
+			if($res->num_rows)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					$rows[] = $row;
+				}
+			}
+		}
+		else 
+		{
+			throw new Exception("Erreur de requête sur la base de donnée", 1);
+			 //$this->_db->error;
+		}
+
+		return $rows;
+
+    }
+    
 	
 }
 
