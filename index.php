@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Fichier de lancement du MVC, Il appel le var.init et le gabarit HTML 
  * @author Jonathan Martel
@@ -19,7 +20,14 @@
    /***************************************************/
     /** Initialisation des variables **/
     /***************************************************/
-	require_once("./var.init.php");
+    require_once("./var.init.php");
+    
+    /************************************************* */
+    /** Initialisation de la session */
+    /************************************************ */
+    if(!isset($_SESSION)){ 
+        session_start(); 
+    }
    
    /***************************************************/
     /** Démarrage du controleur **/

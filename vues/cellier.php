@@ -19,7 +19,7 @@ foreach ($data as $cle => $bouteille) {
         </div>
 
         <div class="options" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-            <button>Modifier</button>
+            <!-- <button>Modifier</button> -->
             <button class='btnAjouter'>Ajouter</button>
             <button class='btnBoire'>Boire</button>
             
