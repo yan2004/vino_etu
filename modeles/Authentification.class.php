@@ -33,15 +33,31 @@ class Authentification extends Modele {
 
 		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
 
-		$password = password_hash($password, PASSWORD_DEFAULT);
+		
+		$requete ="SELECT * FROM vino__usager WHERE pseudo = '". $pseudo . "'";
+		$res = $this->_db->query($requete);
+		$row_cnt = $res->num_rows;
+		
+		/**
+		 * Si il n'y a pas de pseudo déjà exsité dans base de donnée
+		 */
+		if ($row_cnt == 0) {
 
-		$requete = $this->_db->query("INSERT INTO vino__usager (pseudo, nom, prenom, mot_de_passe) VALUES ('" . $pseudo . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
+			$_SESSION['pseudo'] = $pseudo;
 
-		// echo $requete;
-		if($requete == 1){
-			return true;
+			$password = password_hash($password, PASSWORD_DEFAULT);
+
+			$requete = $this->_db->query("INSERT INTO vino__usager (pseudo, nom, prenom, mot_de_passe) VALUES ('" . $pseudo . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
+
+			// echo $requete;
+			if($requete == 1){
+				return true;
+			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
+
 	}
 
 
