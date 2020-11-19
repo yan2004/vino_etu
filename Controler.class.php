@@ -41,7 +41,7 @@ class Controler
 					break;
 				case 'accueilUsager':
 					$this->accueilUsager();
-					break;
+				    break;
 				case 'modifierCompte':
 					$this->modifierCompte();
 					break;
@@ -178,10 +178,13 @@ class Controler
 
 		private function modifierCompte()
 		{
-		
+			$usager = new Usager();
+			$data = $usager->getUserByPseudo($_SESSION['pseudo']);
+			
 			include("vues/entete.php");
 			include("vues/compte.php");
-			include("vues/pied.php");	
+			include("vues/pied.php");
+
 		}
 
 		private function sauvegardeCompte()
@@ -193,7 +196,7 @@ class Controler
 			 * *******************
 			 */
 			$usager = new Usager();
-			$usager->sauvegardeModificationCompte(1, $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
+			$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
 			include("vues/entete.php");
 			include("vues/compte.php");
 			include("vues/pied.php");
