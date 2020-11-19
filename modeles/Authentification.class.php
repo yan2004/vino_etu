@@ -14,12 +14,15 @@ class Authentification extends Modele {
 
 		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
 
+		
+
 		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE pseudo='" . $user . "'");
 
 		if($row = mysqli_fetch_assoc($requete)){
 
 			// comparaison du mot de passe avec le hash de la base de données 
 			if(password_verify($password, $row["mot_de_passe"])){
+
 				return true;
 			}
 		}

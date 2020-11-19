@@ -17,9 +17,10 @@ class Usager extends Modele {
        /**
         * *********************TO DO*************
         * Utiliser le hachage pour gérer l'insere des mots de passe 
-        */
+		*/
+		$pwd = password_hash($mot_de_passe, PASSWORD_DEFAULT);
         $reponseObj = new stdClass();
-        $requete = "UPDATE ". self::TABLE. " SET nom='". $nom. "',prenom='". $prenom. "',mot_de_passe='". $mot_de_passe. "' WHERE id=". $id;
+        $requete = "UPDATE ". self::TABLE. " SET nom='". $nom. "',prenom='". $prenom. "',mot_de_passe='". $pwd. "' WHERE id=". $id;
         $res = $this->_db->query($requete);
         
         echo $requete;

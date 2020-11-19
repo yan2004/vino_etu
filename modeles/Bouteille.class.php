@@ -12,7 +12,6 @@
  */
 class Bouteille extends Modele {
 
-<<<<<<< HEAD
 	const TABLE = 'vino__bouteille';
 	
 	/**
@@ -68,7 +67,7 @@ class Bouteille extends Modele {
 						t.type 
 						from vino__bouteille__collection c 
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__type t ON t.id = b.id_type
+						INNER JOIN vino__type t ON t.id = b.id_type ORDER BY id_bouteille_collection
 						'; 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -133,154 +132,6 @@ class Bouteille extends Modele {
 		//var_dump($rows);
 		return $rows;
 	}
-	
-	
-	/**
-	 * Cette méthode ajoute une ou des bouteilles au cellier avec les données provenant de l'utilisateur
-	 * 
-	 * @param Object $data Tableau des données représentants la bouteille.
-	 * 
-	 * @return Boolean Succès ou échec de l'ajout.
-	 */
-	public function ajouterBouteilleCellier($data)
-	{
-		// TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
-
-		var_dump($data);	
-
-		$requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
-		"'".$data->id_bouteille."',".
-		"'".$data->date_achat."',".
-		"'".$data->garde_jusqua."',".
-		"'".$data->notes."',".
-		"'".$data->prix."',".
-		"'".$data->quantite."',".
-		"'".$data->millesime."',".
-		"'".$data->id_usager."')";
-
-        $res = $this->_db->query($requete);
-=======
-    const TABLE = 'vino__bouteille';
-    
-    /**
-     * Cette méthode permet d'obtenir la liste de toutes les bouteilles de notre catalogue
-     * 
-     * @return array toutes les rangées représentant chacune des bouteilles
-     */
-    public function getListeBouteille()
-    {
-        
-        $rows = Array();
-        $res = $this->_db->query('Select * from '. self::TABLE);
-        if($res->num_rows)      
-        {
-            while($row = $res->fetch_assoc())
-            {
-                $rows[] = $row;
-            }
-        }
-
-        return $rows;
-    }
-    
-    /**
-     * Cette méthode permet d'obtenir la liste des bouteilles d'un cellier (en ce moment un seul)
-     * 
-     * @throws Exception Erreur de requête sur la base de données
-     * 
-     * @return array toutes les rangées représentant chacune des bouteilles du cellier
-     */
-    public function getListeBouteilleCellier()
-    {
-        
-        $rows = Array();
-        $requete ='SELECT 
-                        c.id as id_bouteille_collection,
-                        c.id_bouteille, 
-                        c.date_achat, 
-                        c.garde_jusqua, 
-                        c.notes, 
-                        c.prix, 
-                        c.quantite,
-                        c.millesime,
-                        c.id_usager,
-                        b.id,
-                        b.nom,
-                        b.url_image,
-                        b.code_saq,
-                        b.pays,
-                        b.description,
-                        b.url_saq,
-                        b.id_type,
-                        t.type 
-                        from vino__bouteille__collection c 
-                        INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-                        INNER JOIN vino__type t ON t.id = b.id_type
-                        '; 
-        if(($res = $this->_db->query($requete)) ==   true)
-        {
-            if($res->num_rows)
-            {
-                while($row = $res->fetch_assoc())
-                {
-                    $row['nom'] = trim(utf8_encode($row['nom']));
-                    $rows[] = $row;
-                }
-            }
-        }
-        else 
-        {
-            throw new Exception("Erreur de requête sur la base de donnée", 1);
-             //$this->_db->error;
-        }
-
-        return $rows;
-    }
-    
-    /**
-     * Cette méthode permet de retourner les résultats de recherche pour la fonction d'autocomplete de l'ajout des bouteilles dans le cellier
-     * 
-     * @param string $nom La chaine de caractère à rechercher
-     * @param integer $nb_resultat Le nombre de résultat maximal à retourner.
-     * 
-     * @throws Exception Erreur de requête sur la base de données 
-     * 
-     * @return array id et nom de la bouteille trouvée dans le catalogue
-     */
-
-    public function autocomplete($nom, $nb_resultat=10)
-    {
-        
-        $rows = Array();
-        $nom = $this->_db->real_escape_string($nom);
-        $nom = preg_replace("/\*/","%" , $nom);
->>>>>>> db82d7b1670efb49320b10881470f91e2c0f0031
-        
-
-        //echo $nom;
-        $requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
-        //var_dump($requete);
-        if(($res = $this->_db->query($requete)) ==   true)
-        {
-            if($res->num_rows)
-            {
-                while($row = $res->fetch_assoc())
-                {
-                    $row['nom'] = trim(utf8_encode($row['nom']));
-                    $rows[] = $row;
-                    
-                }
-            }
-        }
-        else 
-        {
-            throw new Exception("Erreur de requête sur la base de données", 1);
-             
-        }
-        
-        //var_dump($rows);
-        return $rows;
-    }
     
     
     /**
