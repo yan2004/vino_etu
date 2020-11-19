@@ -14,6 +14,9 @@
                 <p>Prix : <input name="prix"></p>
                 <p>Garde : <input name="garde_jusqua"></p>
                 <p>Notes <input name="notes"></p>
+                
+                <!-- input caché avec id usager -->
+                <input type="hidden" name="pseudo_usager" value="<?= $_SESSION['pseudo'] ?>">
             </div>
             <button name="ajouterBouteilleCellier">Ajouter la bouteille (champs tous obligatoires)</button>
         </div>
