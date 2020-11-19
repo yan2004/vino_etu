@@ -55,15 +55,76 @@
     src: url("../fonts/PoiretOne-Regular.ttf");
 }
 
+
+/* Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { ... } */
+
+
+/* AUTRES FORMATS */
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+	/* IN NE VEUT PAS PRENDRE LE FONT-SIZE de ces 2 la*/
+	.welcome-img h1{
+		font-size: 3em;
+	}
+	.form-accueil{
+		font-size: 2.5em;
+	}
+	button{
+		font-size: 1.5em;
+		
+	}
+
+	/* NE VEUT PAS PRENDRE LE FONT SIZE ICI NON PLUS */
+	.form-accueil button{
+		font-size: 2em;
+	}
+
+	/* LE FORMULAIRE DEPASSE L'IMAGE C'EST DEGUEUSE */
+	.form-accueil{
+		/* width: 30%; */
+		/* flex-basis: 60%; */
+		
+
+	}
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+	/* NE VEUT PAS PRENDRE LES FONT-SIZE */
+	/* .welcome-img h1{
+		font-size: 10em;
+	}
+	.form-accueil{
+		font-size: 5em;
+	}
+
+	.form-accueil button{
+		font-size: 5em;
+	} */
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+/* @media screen and (min-width: 1200px) {
+
+	
+} */
+
 body {
 	height: 100vh;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	/* align-items: center; */
 	font-family: "HindMadurai-Bold";
-	/* font-size:625%; */
 }
 .display--none{
 	display: none;
@@ -71,100 +132,92 @@ body {
 .display--flex{
 	display: flex;
 }
-.form-accueil{
 
-	/* display: none; */
+
+.welcome-container {
+	display: flex;
+	flex-direction: column;
+	height: 80vh;
+	width: 80vw;
+	margin: auto;
+}
+.welcome-btns {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10vw;
+}
+#sign-in, #sign-up{
+	flex-basis: 100%;
+	margin: 0 1vw;
+}
+button {
+	border: none;
+	border-radius: 5px;
+	padding: 5vw;
+	cursor: pointer;
+	text-align: center;
+	color: #FFFFFF;
+	font-family: "HindMadurai-Bold";
+	background-color: #511730;
+
+	/* font-size: 0.7em; */
+}
+button:hover {
+	transform: scale(0.97);
+	background-color: #C3979F;
+}
+.welcome-img {
+	/* position: relative; */
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	background-image: url("../images/welcome-background.jpg");
+	background-size: cover;
+	object-fit: none; 
+	height: 65vh;
+}
+.welcome-img h1{
+	font-size: 2em;
+	font-family: "HindMadurai-Bold";
+	color: #511730;
+	text-shadow: 5px 5px 5px #FFFFFF;
+	text-align: center;
+	margin-bottom: auto;
+}
+
+/* FORMULAIRE ACCUEIL */
+.form-accueil{
 	box-sizing: border-box;
-	
-	margin-bottom: 15vh;
+	margin: auto;
+
 	width: 90%;
 
 	background-color: #C6D8D3;
-	border-radius: 10px;
-	padding: 35px;
-
-	/* display: flex; */
+	border-radius: 5px;
+	padding: 5vw;
 	flex-direction: column;
+	box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
 
+	font-family: "HindMadurai-Medium";
+	font-size: 1em;
 }
 .form-accueil div{
 	display: flex;
 	flex-direction: column;
-	margin: 8px;
+	margin: 2vw;
 }
-.welcome-container {
-	
-
-	height: calc(80vh);
-	width: calc(80vw);
-	margin-top: calc(10vh);
+.form-accueil input{
+	margin-bottom: 2vw;
+	height: 3vw;
 }
-.welcome-img {
-
-	position: relative;
-
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-
-	align-items: center;
-
-
-
-	background-image: url("../images/welcome-background.jpg");
-	background-size: cover;
-	object-fit: none; 
-
-	height: calc(65vh);
-	
-	
+.form-accueil button{
+	align-self: flex-end;
+	margin-right: 2vw;
+	font-size: 0.8em;
+	padding: 2vw;
+	background-color: #011C27;
 }
-.welcome-img h1{
-	font-size: 2rem;
-	color: #511730;
-	font-weight: bold;
-	text-shadow: 5px 5px 5px #FFFFFF;
-
-	align-self: center;
-	margin-bottom: auto;
-}
-.welcome-btns {
-	margin-top: calc(5vh);
-	display: flex;
-	justify-content: space-evenly;
-}
-button {
-	border: none;
-	border-radius: 10px;
-
-	width: calc(20vw);
-	height: calc(5vh);
-	font-size: 1rem;
-
-	cursor: pointer;
-	text-align: center;
-	
+.form-accueil button:hover{
 	background-color: #4F646F;
-}
-
-a {
-	color: #FFFFFF;
-	text-decoration: none;
-}
-button:hover {
-	transform: scale(0.95);
-	background-color: #C3979F;
-}
-
-@media screen and (max-width: 410px) {
-	button {
-		width: calc(30vw);
-
-	}
-}
-
-@media screen and (min-width: 1280px), screen and (orientation: landscape){
-	.welcome-img h1{
-		font-size: 6rem;
-	}
 }

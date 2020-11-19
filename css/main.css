@@ -151,7 +151,7 @@ footer {
     -webkit-box-pack: center;
 }
 
-/*Header styling*/
+/*Header styling - FORMAT DESKTOP*/
 
 nav>ul>li>a:hover {
     color: #C3979F;
@@ -227,7 +227,7 @@ nav .icon-burger .line {
 
 
 
-/*Formulaire Modification de compte*/
+/*Formulaire Modification de compte - FORMAT DESKTOP */
 .compte {
 	width: calc(80vw);
 	height: calc(50vh);
@@ -289,6 +289,7 @@ nav .icon-burger .line {
 	
 }
 
+/* FORMAT CELLULAIRE DE YAN */
 @media  (min-width: 320px) {
 	/*Navigation menu*/
     nav .logo {
