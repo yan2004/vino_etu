@@ -97,7 +97,6 @@ class Controler
 		// accueil publique (usager qui n'est pas encore authentifié)
 		private function accueil($data=null)
 		{
-			echo $data->success;
 			include("vues/welcome.php");     
 		}
 

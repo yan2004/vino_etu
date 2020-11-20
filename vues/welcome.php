@@ -18,7 +18,7 @@
             <h1>Bienvenue Chez VINO</h1>
 
             <!-- Formulaire de login -->
-            <form name="formLogin" class="form-accueil <?php echo $data && $data->success ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=authentification">   
+            <form name="formLogin" class="form-accueil <?php echo $data &&  property_exists($data,'success') ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=authentification">   
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="pseudo"/>
@@ -33,7 +33,7 @@
             </form>
 
             <!-- Formulaire de création de compte -->
-            <form name="formSignUp" class="form-accueil <?php echo $data && $data->msgErreur ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=creerCompte">
+            <form name="formSignUp" class="form-accueil <?php echo $data &&  property_exists($data,'msgErreur') ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=creerCompte">
 
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
