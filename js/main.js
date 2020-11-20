@@ -206,27 +206,30 @@ window.addEventListener('load', function() {
    * validation de formulaire de modification du compte 
    * *********************
    */
-  let f = fCompte;
-  let erreurCmpt = false;
+  if(typeof fCompte !== 'undefined'){
 
-  f.addEventListener('change', (evt)=>{
-    let nomChamp = evt.target.name;
-    eval(nomChamp + 'Valider()');
-  })
-  
-  let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
+    
+    let f = fCompte;
+    let erreurCmpt = false;
 
-  f.addEventListener("submit", function(evt){
-    console.log("sybmit");
-     erreurCmpt = false;
-     nomValider();
-     prenomValider();
-     mot_de_passeValider();
+    f.addEventListener('change', (evt)=>{
+      let nomChamp = evt.target.name;
+      eval(nomChamp + 'Valider()');
+    })
+    
+    let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
 
-     if (erreurCmpt) evt.preventDefault();
+    f.addEventListener("submit", function(evt){
+      console.log("sybmit");
+      erreurCmpt = false;
+      nomValider();
+      prenomValider();
+      mot_de_passeValider();
 
-   })
+      if (erreurCmpt) evt.preventDefault();
 
+    })
+  }
    function nomValider() {
      let msgErr = "";
      let val = f.nom.value.trim();
