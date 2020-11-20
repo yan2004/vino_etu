@@ -116,6 +116,9 @@ h1{
     font-family: "PoiretOne-Regular";
     margin: auto;
 }
+span{
+	color: red;
+}
 
 button{
 

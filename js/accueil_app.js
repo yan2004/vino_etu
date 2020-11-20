@@ -24,7 +24,8 @@ window.addEventListener('load', function(){
 	btnSignIn.addEventListener("click", () =>{
 
 		if(formSignUp.classList.contains("display--flex")) formSignUp.classList.replace("display--flex", "display--none");
-		formLogin.classList.replace("display--none", "display--flex");
+    formLogin.classList.replace("display--none", "display--flex");
+    document.getElementById("errConfirmer").innerText = "";
 
 	});
 
@@ -70,11 +71,11 @@ window.addEventListener('load', function(){
 		
 		//Vérifiér si au moins deux caractères
 		let l = val.length;
-		if(l < 5) msgErr = "Au moins cinque caractères alphabétiques";
+		if(l < 5) msgErr = "Au moins cinq caractères alphabétiques";
 
 		//Vérifiér si les caractères de séparation sont suivantes
 		if(l > 1){
-		if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+		if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
 		}
 		
 		document.getElementById('errPseudo').innerHTML = msgErr;
@@ -89,11 +90,11 @@ window.addEventListener('load', function(){
      
      //Vérifiér si au moins deux caractères
      let l = val.length;
-     if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+     if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
 
       //Vérifiér si les caractères de séparation sont suivantes
       if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
       }
      
      document.getElementById('errSignUpNom').innerHTML = msgErr;
@@ -108,11 +109,11 @@ window.addEventListener('load', function(){
       
       //Vérifiér si au moins deux caractères
       let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+      if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
 
       //Vérifiér si les caractères de séparation sont suivantes
       if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
       }
       
       document.getElementById('errSignUpPrenom').innerHTML = msgErr;
@@ -127,11 +128,11 @@ window.addEventListener('load', function(){
       
       //Vérifiér si au moins deux caractères
       let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+      if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
 
       //Vérifiér si les caractères de séparation sont suivantes
       if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
       }
       
       document.getElementById('errSignUpPwd').innerHTML = msgErr;

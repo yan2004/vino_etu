@@ -12,10 +12,9 @@ class Authentification extends Modele {
 
 	public function validerAuthentification($user, $password){
 
-		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
-
+		// filtrer les donnees de l'usager
+		$user = $this->filtre($user);
 		
-
 		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE pseudo='" . $user . "'");
 
 		if($row = mysqli_fetch_assoc($requete)){
@@ -31,8 +30,14 @@ class Authentification extends Modele {
 
 	public function creerCompte($pseudo, $nom, $prenom, $password){
 
-		// TODO : FILTRER LES DONNÉES REÇUES DE L'USAGER
+		// filtrer les donnees de l'usager
+		$pseudo = $this->filtre($pseudo);
+		$nom = $this->filtre($nom);
+		$prenom = $this->filtre($prenom);
+		
 
+		// creation de l'objet de la reponse
+        $reponseObj = new stdClass();
 		
 		$requete ="SELECT * FROM vino__usager WHERE pseudo = '". $pseudo . "'";
 		$res = $this->_db->query($requete);
@@ -51,22 +56,24 @@ class Authentification extends Modele {
 
 			// echo $requete;
 			if($requete == 1){
-				return true;
+				$reponseObj->success = true;
+				$reponseObj->msgSuccess = "Succès! Vous pouvez maintenant vous connecter.";
 			}
-			return false;
+			else{
+				$reponseObj->success = false;
+				$reponseObj->msgErreur = "";
+			}
 		} else {
-			return false;
+			$reponseObj->success = false;
+			$reponseObj->msgErreur = "Ce pseudo est déjà pris.";
 		}
+
+		return $reponseObj;
 
 	}
 
 
-	// //fonction de filtre pour les entrées de l'usager
-	// private function filtre($var){
-
-	// 	$var = mysqli_real_escape_string($this->_db, $var);
-	// 	return $var;
-	// }
+	
 }
 
 ?>

@@ -16,6 +16,12 @@ class Usager extends Modele {
     public function sauvegardeModificationCompte($id,$nom,$prenom,$mot_de_passe)
     {
 
+        // filtrer les donnees de l'usager
+        $id = $this->filtre($id);
+        $nom = $this->filtre($nom);
+        $prenom = $this->filtre($prenom);
+        $mot_de_passe = $this->filtre($mot_de_passe);
+        
         $pwd = password_hash($mot_de_passe, PASSWORD_DEFAULT);
         $reponseObj = new stdClass();
         $requete = "UPDATE ". self::TABLE. " SET nom='". $nom. "',prenom='". $prenom. "',mot_de_passe='". $pwd. "' WHERE id=". $id;
@@ -29,6 +35,9 @@ class Usager extends Modele {
      */
     public function getUserByPseudo($pseudo)
     {
+        // filtrer les donnees de l'usager
+        $pseudo = $this->filtre($pseudo);
+
         $rows = Array();
         $requete = "SELECT * FROM ". self::TABLE. " WHERE pseudo= '". $pseudo. "'";
 

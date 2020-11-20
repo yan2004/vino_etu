@@ -85,22 +85,19 @@ class Controler
 		{
 			$auth = new Authentification();
 
-			$succes = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
+			$resultat = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
 
 			/**
-			 * Si fait de création du compte, rédigier la page de cellier;
-			 * Sinon, reste dans la page public
+			 * Redirection à la page d'accueil suite à la création de compte avec message d'erreur au besoin
 			 */
-			if ($succes == true) {
-				$this->accueilUsager();
-			}else {
-				$this->accueil();
-			}
+			
+			$this->accueil($resultat);
 		}
 
 		// accueil publique (usager qui n'est pas encore authentifié)
-		private function accueil()
+		private function accueil($data=null)
 		{
+			echo $data->success;
 			// include("vues/entete.php");
 			include("vues/welcome.php");
 			// include("vues/pied.php");      

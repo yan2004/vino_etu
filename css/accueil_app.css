@@ -44,6 +44,12 @@ body {
 	align-items: center;
 	font-family: "HindMadurai-Bold";
 }
+span{
+	color: red;
+}
+span#msgSuccess{
+	color: green;
+}
 .display--none{
 	display: none;
 }
