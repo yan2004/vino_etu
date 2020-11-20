@@ -17,6 +17,13 @@ class Modele {
 	{
 		$this->_db = MonSQL::getInstance();
 	}
+
+	//fonction de filtre pour les entrées de l'usager
+	protected function filtre($var){
+
+		$var = mysqli_real_escape_string($this->_db, $var);
+		return $var;
+	}
 	
 	function __destruct ()
 	{

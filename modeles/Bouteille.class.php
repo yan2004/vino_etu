@@ -85,7 +85,7 @@ class Bouteille extends Modele {
 		else 
 		{
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
-			 //$this->_db->error;
+
 		}
 
 		return $rows;
@@ -109,10 +109,8 @@ class Bouteille extends Modele {
 		$nom = $this->_db->real_escape_string($nom);
 		$nom = preg_replace("/\*/","%" , $nom);
 		
-
-		//echo $nom;
 		$requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
-		//var_dump($requete);
+
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)
@@ -130,8 +128,7 @@ class Bouteille extends Modele {
 			throw new Exception("Erreur de requête sur la base de données", 1);
 			 
 		}
-		
-		//var_dump($rows);
+
 		return $rows;
 	}
     
@@ -147,7 +144,7 @@ class Bouteille extends Modele {
     {
         // TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
 
-		var_dump($data);    
+		
 		
 		$requete = "SELECT id FROM vino__usager WHERE pseudo ='" . $data->pseudo . "'";
 		$res = $this->_db->query($requete);
@@ -186,7 +183,11 @@ class Bouteille extends Modele {
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
-        // TODO : Valider les données.
+		// TODO : Valider les données.
+		
+		// filtrer les donnees de l'usager
+		$id = $this->filtre($id);
+		$nombre = $this->filtre($nombre);
 
         // creation de l'objet de la reponse
         $reponseObj = new stdClass();

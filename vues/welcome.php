@@ -18,7 +18,7 @@
             <h1>Bienvenue Chez VINO</h1>
 
             <!-- Formulaire de login -->
-            <form name="formLogin" class="form-accueil display--none" method="post" action="index.php?requete=authentification">   
+            <form name="formLogin" class="form-accueil <?php echo $data && $data->success ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=authentification">   
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="pseudo"/>
@@ -29,10 +29,12 @@
                     <input type="password" name="password" id="password"/>
                 </div>
                 <button type="submit" name="soumettre">SOUMETTRE</button>
+                <span id="msgSuccess"><?php if($data && $data->msgSuccess) echo $data->msgSuccess ?></span>
             </form>
 
             <!-- Formulaire de création de compte -->
-            <form name="formSignUp" class="form-accueil display--none" method="post" action="index.php?requete=creerCompte"> 
+            <form name="formSignUp" class="form-accueil <?php echo $data && $data->msgErreur ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=creerCompte">
+
                 <div>
                     <label for="pseudo">Nom d'utilisateur :</label>
                     <input type="text" name="pseudo" id="singUpPseudo"/>
@@ -57,12 +59,13 @@
                     <span id="errSignUpPwd"></span>
                 </div>
                 <button type="submit" name="confirmer">CONFIRMER</button>
+                <span id="errConfirmer"><?php if($data && $data->msgErreur) echo $data->msgErreur ?></span>
             </form>
         </div>
 
         <div class="welcome-btns">
-            <button id="sign-in">ME CONNECTER</button>
-            <button id="sign-up">M'INSCRIRE</button>
+            <button id="sign-in">CONNEXION</button>
+            <button id="sign-up">INSCRIPTION</button>
         </div>
     </div>
 </body>
