@@ -66,17 +66,20 @@ class Controler
 		private function authentification()
 		{
 
-			$auth = new Authentification();
+			  $auth = new Authentification();
 
-			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
-
+			  $valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
+		     
 			if($valide) {
 
 				// sauvegarde de l'usager authentifié
 				$_SESSION["pseudo"] = $_POST["pseudo"];
 				
 				$this->accueilUsager();
+			}else {
+				$this->accueil();
 			}
+			
 		}
 
 		private function creerCompte()
@@ -115,7 +118,6 @@ class Controler
 				include("vues/cellier.php");
 				include("vues/pied.php");  
 			}else{
-
 				$this->accueil();
 			}
 			    
