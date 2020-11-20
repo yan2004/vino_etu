@@ -66,10 +66,10 @@ class Controler
 		private function authentification()
 		{
 
-			  $auth = new Authentification();
+			$auth = new Authentification();
 
-			  $valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
-		     
+			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
+
 			if($valide) {
 
 				// sauvegarde de l'usager authentifié
@@ -79,32 +79,25 @@ class Controler
 			}else {
 				$this->accueil();
 			}
-			
 		}
 
 		private function creerCompte()
 		{
 			$auth = new Authentification();
 
-			$succes = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
+			$resultat = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
 
 			/**
-			 * Si fait de création du compte, rédigier la page de cellier;
-			 * Sinon, reste dans la page public
+			 * Redirection à la page d'accueil suite à la création de compte avec message d'erreur au besoin
 			 */
-			if ($succes == true) {
-				$this->accueilUsager();
-			}else {
-				$this->accueil();
-			}
+			
+			$this->accueil($resultat);
 		}
 
 		// accueil publique (usager qui n'est pas encore authentifié)
-		private function accueil()
+		private function accueil($data=null)
 		{
-			// include("vues/entete.php");
-			include("vues/welcome.php");
-			// include("vues/pied.php");      
+			include("vues/welcome.php");     
 		}
 
 		// cette méthode se nommait "accueil" avant
@@ -118,6 +111,7 @@ class Controler
 				include("vues/cellier.php");
 				include("vues/pied.php");  
 			}else{
+
 				$this->accueil();
 			}
 			    
@@ -135,9 +129,9 @@ class Controler
 		private function autocompleteBouteille()
 		{
 			$bte = new Bouteille();
-			//var_dump(file_get_contents('php://input'));
+
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
+
             $listeBouteille = $bte->autocomplete($body->nom);
             
             echo json_encode($listeBouteille);    
@@ -146,12 +140,10 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
+
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
-				
-				//var_dump($data);
+
 				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
@@ -201,9 +193,7 @@ class Controler
 			 */
 			$usager = new Usager();
 			$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
-			// include("vues/entete.php");
-			// include("vues/compte.php");
-			// include("vues/pied.php");
+
 			$bte = new Bouteille();
 			$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
@@ -223,8 +213,6 @@ class Controler
 
 			$this->accueil();
 		}
-
-
 }
 ?>
 

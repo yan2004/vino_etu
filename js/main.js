@@ -15,11 +15,9 @@ console.log(BaseURL);
 
 window.addEventListener('load', function() {
 
-    // console.log("load");
 
     document.querySelectorAll(".btnBoire").forEach(function(element){
 
-        // console.log(element);
 
         // requête ajax au click d'un des boutons "boire" de la page
         element.addEventListener("click", function(evt){
@@ -89,15 +87,11 @@ window.addEventListener('load', function() {
     // concernant le formulaire d'ajout d'une bouteille
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
-    // console.log(inputNomBouteille);
-
     let liste = document.querySelector('.listeAutoComplete');
 
     if(inputNomBouteille){
 
       inputNomBouteille.addEventListener("keyup", function(evt){
-
-        // console.log(evt);
 
         let nom = inputNomBouteille.value;
 
@@ -118,9 +112,7 @@ window.addEventListener('load', function() {
               }
           })
           .then(response => {
-
-            // console.log(response);
-            
+     
             // création d'un "li" pour chaque suggestion dans le DOM
             response.forEach(function(element){
               liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
@@ -180,7 +172,7 @@ window.addEventListener('load', function() {
             "prix":bouteille.prix.value,
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
-            "pseudo":bouteille.pseudo.value,              // pseudo de l'usager en session
+            "pseudo":bouteille.pseudo.value,
           };
 
           // requete ajax pour ajouter une bouteille dans le cellier
@@ -189,10 +181,7 @@ window.addEventListener('load', function() {
             fetch(requete)
             .then(response => {
 
-              // console.log(response);
-
               if (response.status === 200) {
-                // return response.json();
                 return response;
               } else {
                 throw new Error('Erreur');
@@ -202,8 +191,6 @@ window.addEventListener('load', function() {
 
               // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
               window.location = BaseURL+"index.php?requete=accueilUsager";
-
-              // console.log(response);
             
             })
             .catch(error => {
@@ -230,6 +217,7 @@ window.addEventListener('load', function() {
   let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
 
   f.addEventListener("submit", function(evt){
+    console.log("sybmit");
      erreurCmpt = false;
      nomValider();
      prenomValider();
@@ -244,11 +232,11 @@ window.addEventListener('load', function() {
      let val = f.nom.value.trim();
      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
      
-     //Vérifiér si au moins deux caractères
+     //Vérifier si au moins deux caractères
      let l = val.length;
      if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
 
-      //Vérifiér si les caractères de séparation sont suivantes
+      //Vérifier si les caractères de séparation sont suivantes
       if(l > 1){
         if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
       }
@@ -263,11 +251,11 @@ window.addEventListener('load', function() {
       let val = f.prenom.value.trim();
       let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
       
-      //Vérifiér si au moins deux caractères
+      //Vérifier si au moins deux caractères
       let l = val.length;
       if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
 
-      //Vérifiér si les caractères de séparation sont suivantes
+      //Vérifier si les caractères de séparation sont suivantes
       if(l > 1){
         if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
       }
@@ -282,11 +270,11 @@ window.addEventListener('load', function() {
       let val = f.mot_de_passe.value.trim();
       let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
       
-      //Vérifiér si au moins deux caractères
+      //Vérifier si au moins deux caractères
       let l = val.length;
       if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
 
-      //Vérifiér si les caractères de séparation sont suivantes
+      //Vérifier si les caractères de séparation sont suivantes
       if(l > 1){
         if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
       }
@@ -295,8 +283,6 @@ window.addEventListener('load', function() {
 
       if (msgErr !== "") erreurCmpt = true
    }
-
-
 
 
 });
