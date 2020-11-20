@@ -54,7 +54,6 @@ class Authentification extends Modele {
 
 			$requete = $this->_db->query("INSERT INTO vino__usager (pseudo, nom, prenom, mot_de_passe) VALUES ('" . $pseudo . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
 
-			// echo $requete;
 			if($requete == 1){
 				$reponseObj->success = true;
 				$reponseObj->msgSuccess = "Succès! Vous pouvez maintenant vous connecter.";
@@ -67,13 +66,8 @@ class Authentification extends Modele {
 			$reponseObj->success = false;
 			$reponseObj->msgErreur = "Ce pseudo est déjà pris.";
 		}
-
 		return $reponseObj;
-
 	}
-
-
-	
 }
 
 ?>

@@ -6,7 +6,7 @@
 
         </ul>
             <div class="form-ajouter">
-                <!-- PEUT-ETRE AJOUTER UN DATA-ID-BOUTEILLE ET DATA-ID-USAGER ? À SUIVRE... -->
+               
                 <p>Nom : <span data-id="" class="nom_bouteille"></span></p>
                 <label>Millesime : </label><input name="millesime">
                 <label>Quantite : </label><input name="quantite" value="1">

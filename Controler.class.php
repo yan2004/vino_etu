@@ -98,9 +98,7 @@ class Controler
 		private function accueil($data=null)
 		{
 			echo $data->success;
-			// include("vues/entete.php");
-			include("vues/welcome.php");
-			// include("vues/pied.php");      
+			include("vues/welcome.php");     
 		}
 
 		// cette méthode se nommait "accueil" avant
@@ -132,9 +130,9 @@ class Controler
 		private function autocompleteBouteille()
 		{
 			$bte = new Bouteille();
-			//var_dump(file_get_contents('php://input'));
+
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
+
             $listeBouteille = $bte->autocomplete($body->nom);
             
             echo json_encode($listeBouteille);    
@@ -143,12 +141,10 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-			//var_dump($body);
+
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
-				
-				//var_dump($data);
+
 				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
@@ -198,9 +194,7 @@ class Controler
 			 */
 			$usager = new Usager();
 			$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
-			// include("vues/entete.php");
-			// include("vues/compte.php");
-			// include("vues/pied.php");
+
 			$bte = new Bouteille();
 			$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
@@ -220,8 +214,6 @@ class Controler
 
 			$this->accueil();
 		}
-
-
 }
 ?>
 

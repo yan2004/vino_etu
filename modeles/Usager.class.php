@@ -54,7 +54,6 @@ class Usager extends Modele {
 		else 
 		{
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
-			 //$this->_db->error;
 		}
 
 		return $rows;
