@@ -341,8 +341,37 @@ form button:hover, .form-ajouter button:hover{
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     .cellier, .ajouter, .compte{
-        max-width: 1200px;
+        /* max-width: 1200px; */
+        max-width: 1400px;
         margin: auto;
+    }
+    h1{
+        display: block;
+        width: 100%;
+        margin: 1vw;
+    }
+    .cellier{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .bouteille{
+        max-width: 45%;
+        margin: 1vw;
+        padding: 2.5vw;
+    }
+    .img{
+        width: 40%;
+    }
+    .description{
+        width: 60%;
+        margin-left: 1vw;
+    }
+    .tuile{
+        height: 90%;
+    }
+    .options{
+        height: 10%;
     }
     input{
         height: 1.5vw;
