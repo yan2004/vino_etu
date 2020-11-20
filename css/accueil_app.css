@@ -23,33 +23,7 @@
     src: url("../fonts/HindMadurai-Bold.ttf");
 }
 
-/* serif */
-@font-face{
-    font-family: "Lora-Regular";
-    src: url("../fonts/Lora-Regular.ttf");
-}
-@font-face{
-    font-family: "Lora-Italic";
-    src: url("../fonts/Lora-Italic.ttf");
-}
-@font-face{
-    font-family: "Lora-Medium";
-    src: url("../fonts/Lora-Medium.ttf");
-}
-@font-face{
-    font-family: "Lora-MediumItalic";
-    src: url("../fonts/Lora-MediumItalic.ttf");
-}
-@font-face{
-    font-family: "Lora-Bold";
-    src: url("../fonts/Lora-Bold.ttf");
-}
-@font-face{
-    font-family: "Lora-BoldItalic";
-    src: url("../fonts/Lora-BoldItalic.ttf");
-}
-
-/* slogan ou feature text "h1" peut-être "h2" à voir */
+/* slogan ou feature text "h1" */
 @font-face{
     font-family: "PoiretOne-Regular";
     src: url("../fonts/PoiretOne-Regular.ttf");
@@ -58,62 +32,6 @@
 
 /* Small devices (landscape phones, 576px and up) */
 /* @media (min-width: 576px) { ... } */
-
-
-/* AUTRES FORMATS */
-
-/* Medium devices (tablets, 768px and up) */
-@media screen and (min-width: 768px) {
-
-	/* IN NE VEUT PAS PRENDRE LE FONT-SIZE de ces 2 la*/
-	.welcome-img h1{
-		font-size: 3em;
-	}
-	.form-accueil{
-		font-size: 2.5em;
-	}
-	button{
-		font-size: 1.5em;
-		
-	}
-
-	/* NE VEUT PAS PRENDRE LE FONT SIZE ICI NON PLUS */
-	.form-accueil button{
-		font-size: 2em;
-	}
-
-	/* LE FORMULAIRE DEPASSE L'IMAGE C'EST DEGUEUSE */
-	.form-accueil{
-		/* width: 30%; */
-		/* flex-basis: 60%; */
-		
-
-	}
-	
-}
-
-/* Large devices (desktops, 992px and up) */
-@media screen and (min-width: 992px) {
-
-	/* NE VEUT PAS PRENDRE LES FONT-SIZE */
-	/* .welcome-img h1{
-		font-size: 10em;
-	}
-	.form-accueil{
-		font-size: 5em;
-	}
-
-	.form-accueil button{
-		font-size: 5em;
-	} */
-
-}
-
-/* Extra large devices (large desktops, 1200px and up) */
-/* @media screen and (min-width: 1200px) {
-
-	
-} */
 
 body {
 	height: 100vh;
@@ -132,8 +50,6 @@ body {
 .display--flex{
 	display: flex;
 }
-
-
 .welcome-container {
 	display: flex;
 	flex-direction: column;
@@ -144,10 +60,11 @@ body {
 .welcome-btns {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 10vw;
+	flex-basis: 10%;
+	margin-top: 6vw;
 }
 #sign-in, #sign-up{
-	flex-basis: 100%;
+	flex-basis: 50%;
 	margin: 0 1vw;
 }
 button {
@@ -159,15 +76,12 @@ button {
 	color: #FFFFFF;
 	font-family: "HindMadurai-Bold";
 	background-color: #511730;
-
-	/* font-size: 0.7em; */
 }
 button:hover {
 	transform: scale(0.97);
 	background-color: #C3979F;
 }
 .welcome-img {
-	/* position: relative; */
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -175,11 +89,11 @@ button:hover {
 	background-image: url("../images/welcome-background.jpg");
 	background-size: cover;
 	object-fit: none; 
-	height: 65vh;
+	flex-basis: 90%;
 }
 .welcome-img h1{
 	font-size: 2em;
-	font-family: "HindMadurai-Bold";
+	font-family: "PoiretOne-Regular";
 	color: #511730;
 	text-shadow: 5px 5px 5px #FFFFFF;
 	text-align: center;
@@ -190,34 +104,99 @@ button:hover {
 .form-accueil{
 	box-sizing: border-box;
 	margin: auto;
+	padding: 5vw;
+
+	border-radius: 5px;
 
 	width: 90%;
-
 	background-color: #C6D8D3;
-	border-radius: 5px;
-	padding: 5vw;
+	
+	/* verifier pour le display flex */
 	flex-direction: column;
 	box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
-
 	font-family: "HindMadurai-Medium";
 	font-size: 1em;
 }
 .form-accueil div{
 	display: flex;
 	flex-direction: column;
-	margin: 2vw;
 }
 .form-accueil input{
-	margin-bottom: 2vw;
+	margin-bottom: 8px;
 	height: 3vw;
 }
 .form-accueil button{
 	align-self: flex-end;
-	margin-right: 2vw;
-	font-size: 0.8em;
-	padding: 2vw;
+	margin-top:1vh;
+	font-size: 0.7em;
+	padding: 1vw 2vw;
 	background-color: #011C27;
 }
 .form-accueil button:hover{
 	background-color: #4F646F;
+}
+
+
+/* AUTRES FORMATS */
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+	.welcome-img h1{
+		font-size: 3em;
+	}
+	.form-accueil{
+		font-size: 1em;
+	}
+	button{
+		font-size: 1em;
+	}
+	.form-accueil button{
+		font-size: 1em;
+	}
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+	button{
+		font-size: 1.5em;
+		padding: 0;
+	}
+	.welcome-img h1{
+		font-size: 4em;
+	}
+	.form-accueil{
+		font-size: 1.3em;
+	}
+	.welcome-container{
+		width: 50%;
+	}
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+
+	button{
+		font-size: 1.5em;
+	}
+	.welcome-img h1{
+		font-size: 5.5em;
+	}
+	.form-accueil{
+		font-size: 1.3em;
+		max-width: 1200px;
+		padding: 2vw;
+	}
+	.form-accueil input{
+		height: 1.5vw;
+	}
+	.form-accueil button{
+		padding: 0.8vw;
+	}
+	.welcome-btns{
+		margin-top: 1vw;
+	}
 }

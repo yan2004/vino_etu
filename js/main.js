@@ -230,6 +230,7 @@ window.addEventListener('load', function() {
   let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
 
   f.addEventListener("submit", function(evt){
+    console.log("sybmit");
      erreurCmpt = false;
      nomValider();
      prenomValider();

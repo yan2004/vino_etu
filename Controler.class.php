@@ -76,6 +76,8 @@ class Controler
 				$_SESSION["pseudo"] = $_POST["pseudo"];
 				
 				$this->accueilUsager();
+			}else {
+				$this->accueil();
 			}
 		}
 

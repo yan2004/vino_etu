@@ -61,8 +61,8 @@
         </div>
 
         <div class="welcome-btns">
-            <button id="sign-in">ME CONNECTER</button>
-            <button id="sign-up">M'INSCRIRE</button>
+            <button id="sign-in">CONNEXION</button>
+            <button id="sign-up">INSCRIPTION</button>
         </div>
     </div>
 </body>

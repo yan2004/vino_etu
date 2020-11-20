@@ -5,20 +5,20 @@
         <ul class="listeAutoComplete">
 
         </ul>
-            <div >
+            <div class="form-ajouter">
                 <!-- PEUT-ETRE AJOUTER UN DATA-ID-BOUTEILLE ET DATA-ID-USAGER ? À SUIVRE... -->
                 <p>Nom : <span data-id="" class="nom_bouteille"></span></p>
-                <p>Millesime : <input name="millesime"></p>
-                <p>Quantite : <input name="quantite" value="1"></p>
-                <p>Date achat : <input name="date_achat"></p>
-                <p>Prix : <input name="prix"></p>
-                <p>Garde : <input name="garde_jusqua"></p>
-                <p>Notes <input name="notes"></p>
+                <label>Millesime : </label><input name="millesime">
+                <label>Quantite : </label><input name="quantite" value="1">
+                <label>Date achat : </label><input name="date_achat">
+                <label>Prix : </label><input name="prix">
+                <label>Garde : </label><input name="garde_jusqua">
+                <label for="notes">Notes</label> <input id="notes" name="notes">
                 
                 <!-- input caché avec id usager -->
                 <input type="hidden" name="pseudo_usager" value="<?= $_SESSION['pseudo'] ?>">
             </div>
-            <button name="ajouterBouteilleCellier">Ajouter la bouteille (champs tous obligatoires)</button>
+            <button name="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE (CHAMPS TOUS OBLIGATOIRES)</button>
         </div>
     </div>
 </div>
