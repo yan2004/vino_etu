@@ -71,6 +71,7 @@ main {
     /* padding-left: 2vw; */
 	margin-top: 18vh;
 	display: flex;
+	align-items: center;
 }
 h1{
     font-family: "PoiretOne-Regular";
@@ -286,8 +287,9 @@ footer p
 
 
 /* FORMULAIRE MODIFICATION DE COMPTE */
+/* FORMULAIRE MODIFICATION DE BOUTEILLE DE CELLIER */
 
-.compte, .ajouter{
+.compte, .ajouter, .modificationBtl{
     margin: auto;
     padding: 5vw;
     border-radius: 5px;
@@ -310,6 +312,7 @@ input{
 form button:hover, .form-ajouter button:hover{
     background-color: #C3979F;
 }
+
 
 /* AJOUTER BOUTEILLE  */
 
@@ -340,7 +343,7 @@ form button:hover, .form-ajouter button:hover{
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .cellier, .ajouter, .compte{
+    .cellier, .ajouter, .compte .modificationBtl{
         /* max-width: 1200px; */
         max-width: 1400px;
         margin: auto;
