@@ -46,70 +46,18 @@ body {
 	align-items: center;
 	font-family: "HindMadurai-Bold";
 }
-span{
-	min-height: 1.5em;
-	font-size: 0.7em;
-	text-align: right;
-	padding: 0;
-	color: #511730;
-}
 .display--none{
 	display: none;
 }
 .display--flex{
 	display: flex;
 }
-
 .welcome-container {
 	display: flex;
 	flex-direction: column;
 	height: 80vh;
 	width: 80vw;
 	margin: auto;
-}
-.form-accueil .login-btns {
-	display: flex;
-	flex-direction: row;
-
-	justify-content: flex-end;
-}
-/* .login-btns{
-	display: flex;
-}
-.login-btns img{
-	color: #FFFFFF;
-	width:30px;
-	background-color: #FFFFFF;
-} */
-
-#sign-up, #sign-in{
-	margin-right: 25px;
-	/* margin-right: auto; */
-
-	background-color: #4F646F;
-
-}
-#sign-up:hover, #sign-in:hover{
-	background-color: #C3979F;
-}
-button {
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	text-align: center;
-	color: #FFFFFF;
-	font-family: "HindMadurai-Bold";
-
-	background-color: #011C27;
-
-	margin-top:1vh;
-	font-size: 0.7em;
-	padding: 1vw 2vw;
-	/* background-color: #4F646F;  */
-}
-button:hover {
-	transform: scale(0.97);
-	background-color: #C3979F;
 }
 .welcome-img {
 	display: flex;
@@ -151,7 +99,41 @@ button:hover {
 	margin-bottom: 8px;
 	height: 3vw;
 }
-
+.form-accueil .login-btns {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+#sign-up, #sign-in{
+	margin-right: 3vw;
+	background-color: #4F646F;
+}
+#sign-up:hover, #sign-in:hover{
+	background-color: #C3979F;
+}
+button {
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	color: #FFFFFF;
+	font-family: "HindMadurai-Bold";
+	background-color: #011C27;
+	margin-top:1vh;
+	font-size: 0.7em;
+	padding: 1vw 2vw;
+}
+button:hover {
+	transform: scale(0.97);
+	background-color: #C3979F;
+}
+span{
+	min-height: 1.5em;
+	font-size: 0.7em;
+	text-align: right;
+	padding: 0;
+	color: #511730;
+}
 
 
 /* AUTRES FORMATS */
