@@ -39,6 +39,15 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
+				case 'modifierBouteilleCellier':
+					$this->modifierBouteilleCellier();
+					break;
+				case 'formModificationBtl':
+				 	$this->formModificationBtl();
+					 break;
+				case 'sauvegardeBouteille':
+					$this->sauvegardeBouteille();
+					break;
 				case 'accueilUsager':
 					$this->accueilUsager();
 				    break;
@@ -172,6 +181,42 @@ class Controler
 			echo json_encode($resultat);
 		}
 
+		private function modifierBouteilleCellier()
+		{
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellierById($_GET['id']);
+			echo json_encode($data);
+
+			//  include("vues/entete.php");
+			//  include("vues/modificationBtl.php");
+			//  include("vues/pied.php");
+			
+		}
+
+		 private function formModificationBtl()
+		 {
+			
+			   $data =json_decode($_GET['dataBtls'], true);
+			   //var_dump($data[0]);
+		
+			   include("vues/entete.php");
+			   include("vues/modificationBtl.php");
+			   include("vues/pied.php");
+			  
+			   
+		 }
+
+		private function sauvegardeBouteille()
+		{
+			$requestPayload = file_get_contents('php://input');
+			$object = json_decode($requestPayload, true);
+			//var_dump($object);
+
+			$bte = new Bouteille();
+			$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+
+		}
+
 		private function modifierCompte()
 		{
 			$usager = new Usager();
@@ -213,6 +258,8 @@ class Controler
 
 			$this->accueil();
 		}
+
+
 }
 ?>
 
