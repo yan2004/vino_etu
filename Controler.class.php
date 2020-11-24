@@ -68,12 +68,16 @@ class Controler
 
 			$auth = new Authentification();
 
-			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
+			// *********************************
+			// FAIRE REQUETE AJAX VERSUS PHP ?
+			// *********************************
+
+			$valide = $auth->validerAuthentification($_POST['courriel'], $_POST['password']);
 
 			if($valide) {
 
 				// sauvegarde de l'usager authentifié
-				$_SESSION["pseudo"] = $_POST["pseudo"];
+				$_SESSION["courriel"] = $_POST["courriel"];
 				
 				$this->accueilUsager();
 			}else {
@@ -85,17 +89,18 @@ class Controler
 		{
 			$auth = new Authentification();
 
-			$resultat = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
+			$resultat = $auth->creerCompte($_POST['courriel'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
 
 			/**
-			 * Redirection à la page d'accueil suite à la création de compte avec message d'erreur au besoin
+			 * Redirection à la page d'accueil suite à la création de compte
 			 */
 			
-			$this->accueil($resultat);
+			// $this->accueil($resultat);
+			$this->accueilUsager();
 		}
 
 		// accueil publique (usager qui n'est pas encore authentifié)
-		private function accueil($data=null)
+		private function accueil()
 		{
 			include("vues/welcome.php");     
 		}
@@ -103,7 +108,7 @@ class Controler
 		// cette méthode se nommait "accueil" avant
 		private function accueilUsager()
 		{
-			if(isset($_SESSION['pseudo'])){
+			if(isset($_SESSION['courriel'])){
 
 				$bte = new Bouteille();
 				$data = $bte->getListeBouteilleCellier();
@@ -175,7 +180,7 @@ class Controler
 		private function modifierCompte()
 		{
 			$usager = new Usager();
-			$data = $usager->getUserByPseudo($_SESSION['pseudo']);
+			$data = $usager->getUserByCourriel($_SESSION['courriel']);
 			
 			include("vues/entete.php");
 			include("vues/compte.php");

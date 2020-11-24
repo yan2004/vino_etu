@@ -46,21 +46,19 @@ body {
 	align-items: center;
 	font-family: "HindMadurai-Bold";
 }
-
 span{
-	color: red;
+	min-height: 1.5em;
+	font-size: 0.7em;
+	text-align: right;
+	padding: 0;
+	color: #511730;
 }
-span#msgSuccess{
-	color: green;
-}
-
 .display--none{
 	display: none;
 }
 .display--flex{
 	display: flex;
 }
-
 
 .welcome-container {
 	display: flex;
@@ -69,25 +67,45 @@ span#msgSuccess{
 	width: 80vw;
 	margin: auto;
 }
-.welcome-btns {
+.form-accueil .login-btns {
 	display: flex;
-	justify-content: space-between;
-	flex-basis: 10%;
-	margin-top: 6vw;
+	flex-direction: row;
+
+	justify-content: flex-end;
 }
-#sign-in, #sign-up{
-	flex-basis: 50%;
-	margin: 0 1vw;
+/* .login-btns{
+	display: flex;
+}
+.login-btns img{
+	color: #FFFFFF;
+	width:30px;
+	background-color: #FFFFFF;
+} */
+
+#sign-up, #sign-in{
+	margin-right: 25px;
+	/* margin-right: auto; */
+
+	background-color: #4F646F;
+
+}
+#sign-up:hover, #sign-in:hover{
+	background-color: #C3979F;
 }
 button {
 	border: none;
 	border-radius: 5px;
-	padding: 5vw;
 	cursor: pointer;
 	text-align: center;
 	color: #FFFFFF;
 	font-family: "HindMadurai-Bold";
-	background-color: #511730;
+
+	background-color: #011C27;
+
+	margin-top:1vh;
+	font-size: 0.7em;
+	padding: 1vw 2vw;
+	/* background-color: #4F646F;  */
 }
 button:hover {
 	transform: scale(0.97);
@@ -112,7 +130,7 @@ button:hover {
 	margin-bottom: auto;
 }
 
-/* formulaire */
+/* FORMULAIRES */
 .form-accueil{
 	box-sizing: border-box;
 	margin: auto;
@@ -133,16 +151,7 @@ button:hover {
 	margin-bottom: 8px;
 	height: 3vw;
 }
-.form-accueil button{
-	align-self: flex-end;
-	margin-top:1vh;
-	font-size: 0.7em;
-	padding: 1vw 2vw;
-	background-color: #011C27;
-}
-.form-accueil button:hover{
-	background-color: #4F646F;
-}
+
 
 
 /* AUTRES FORMATS */
@@ -168,10 +177,6 @@ button:hover {
 /* Large devices (desktops, 992px and up) */
 @media screen and (min-width: 992px) {
 
-	button{
-		font-size: 1.5em;
-		padding: 0;
-	}
 	.welcome-img h1{
 		font-size: 4em;
 	}
@@ -187,9 +192,6 @@ button:hover {
 /* Extra large devices (large desktops, 1200px and up) */
 @media screen and (min-width: 1200px) {
 
-	button{
-		font-size: 1.5em;
-	}
 	.welcome-img h1{
 		font-size: 5.5em;
 	}
@@ -200,11 +202,5 @@ button:hover {
 	}
 	.form-accueil input{
 		height: 1.5vw;
-	}
-	.form-accueil button{
-		padding: 0.8vw;
-	}
-	.welcome-btns{
-		margin-top: 1vw;
 	}
 }

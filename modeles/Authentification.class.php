@@ -10,12 +10,12 @@
 class Authentification extends Modele {
 
 
-	public function validerAuthentification($user, $password){
+	public function validerAuthentification($courriel, $password){
 
 		// filtrer les donnees de l'usager
-		$user = $this->filtre($user);
+		$courriel = $this->filtre($courriel);
 		
-		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE pseudo='" . $user . "'");
+		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE courriel='" . $courriel . "'");
 
 		if($row = mysqli_fetch_assoc($requete)){
 
@@ -23,50 +23,60 @@ class Authentification extends Modele {
 			if(password_verify($password, $row["mot_de_passe"])){
 
 				return true;
+				// echo $row['mot_de_passe'];
 			}
 		}
 		return false;
 	}
 
-	public function creerCompte($pseudo, $nom, $prenom, $password){
+	public function creerCompte($courriel, $nom, $prenom, $password){
 
 		// filtrer les donnees de l'usager
-		$pseudo = $this->filtre($pseudo);
+		$courriel = $this->filtre($courriel);
 		$nom = $this->filtre($nom);
 		$prenom = $this->filtre($prenom);
 		
 
 		// creation de l'objet de la reponse
-        $reponseObj = new stdClass();
+        // $reponseObj = new stdClass();
 		
-		$requete ="SELECT * FROM vino__usager WHERE pseudo = '". $pseudo . "'";
+		$requete ="SELECT * FROM vino__usager WHERE courriel = '". $courriel . "'";
 		$res = $this->_db->query($requete);
 		$row_cnt = $res->num_rows;
 		
 		/**
-		 * Si il n'y a pas de pseudo déjà exsité dans base de donnée
+		 * Si le courriel n'existe pas déjà dans la base de données, on créé le compte
 		 */
 		if ($row_cnt == 0) {
 
-			$_SESSION['pseudo'] = $pseudo;
+			$_SESSION['courriel'] = $courriel;
 
 			$password = password_hash($password, PASSWORD_DEFAULT);
 
-			$requete = $this->_db->query("INSERT INTO vino__usager (pseudo, nom, prenom, mot_de_passe) VALUES ('" . $pseudo . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
+			$requete = $this->_db->query("INSERT INTO vino__usager (courriel, nom, prenom, mot_de_passe) VALUES ('" . $courriel . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
 
 			if($requete == 1){
-				$reponseObj->success = true;
-				$reponseObj->msgSuccess = "Succès! Vous pouvez maintenant vous connecter.";
+				// $reponseObj->success = true;
+				// $reponseObj->msgSuccess = "Succès! Vous pouvez maintenant vous connecter.";
+
+				// echo $row['mot_de_passe'];
+				return true;
 			}
+
+			// la requete n'a pas pu être effectuée
 			else{
-				$reponseObj->success = false;
-				$reponseObj->msgErreur = "";
+				// $reponseObj->success = false;
+				// $reponseObj->msgErreur = "";
+				return false;
 			}
+
+		// le courriel existe déjà
 		} else {
-			$reponseObj->success = false;
-			$reponseObj->msgErreur = "Ce pseudo est déjà pris.";
+			// $reponseObj->success = false;
+			// $reponseObj->msgErreur = "Ce courriel est déjà pris.";
+			return false;
 		}
-		return $reponseObj;
+		// return $reponseObj;
 	}
 }
 

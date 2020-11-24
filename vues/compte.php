@@ -1,7 +1,5 @@
 <div class="compte">
-
     <h2>Modifier mes informations</h2>
-        
         <form action="index.php?requete=sauvegardeCompte" method="post" class="modifierCompte" name="fCompte">
                 <input type="hidden" name="userId" value="<?php echo $data[0]['id']; ?>">
                 <label for="nom">Nom</label>
@@ -18,6 +16,4 @@
                 
                 <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button>
         </form>
-
-    
 </div>

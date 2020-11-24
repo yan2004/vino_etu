@@ -18,27 +18,32 @@
             <h1>Bienvenue Chez VINO</h1>
 
             <!-- Formulaire de login -->
-            <form name="formLogin" class="form-accueil <?php echo $data &&  property_exists($data,'success') ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=authentification">   
+            <form name="formLogin" class="form-accueil display--flex" method="post" action="index.php?requete=authentification">   
                 <div>
-                    <label for="pseudo">Nom d'utilisateur :</label>
-                    <input type="text" name="pseudo" id="pseudo"/>
+                    <label for="courriel">Courriel :</label>
+                    <input type="email" name="courriel" id="courriel"/>
+                    <span id="errSignInCourriel"></span>
                 </div>
 
                 <div>
                     <label for="password">Mot de passe :</label>
                     <input type="password" name="password" id="password"/>
+                    <span id="errSignInPassword"></span>
                 </div>
-                <button type="submit" name="soumettre">SOUMETTRE</button>
-                <span id="msgSuccess"><?php if($data && $data->msgSuccess) echo $data->msgSuccess ?></span>
+                <div class="login-btns">
+                    <button type="button" id="sign-up">S'INSCRIRE</button>
+                    <button type="submit" name="entrer">ENTRER</button>
+                </div>
+                <!-- <span id="msgSuccess"></span> -->
             </form>
 
             <!-- Formulaire de création de compte -->
-            <form name="formSignUp" class="form-accueil <?php echo $data &&  property_exists($data,'msgErreur') ? "display--flex" : "display--none"; ?>" method="post" action="index.php?requete=creerCompte">
+            <form name="formSignUp" class="form-accueil display--none" method="post" action="index.php?requete=creerCompte">
 
                 <div>
-                    <label for="pseudo">Nom d'utilisateur :</label>
-                    <input type="text" name="pseudo" id="singUpPseudo"/>
-                    <span id="errPseudo"></span>
+                    <label for="singUpCourriel">Courriel :</label>
+                    <input type="email" name="courriel" id="singUpCourriel"/>
+                    <span id="errSignUpCourriel"></span>
                 </div>
 
                 <div>
@@ -56,16 +61,15 @@
                 <div>
                     <label for="password">Mot de passe :</label>
                     <input type="password" name="password" id="singUpPassword"/>
-                    <span id="errSignUpPwd"></span>
+                    <span id="errSignUpPassword"></span>
                 </div>
-                <button type="submit" name="confirmer">CONFIRMER</button>
-                <span id="errConfirmer"><?php if($data && $data->msgErreur) echo $data->msgErreur ?></span>
-            </form>
-        </div>
 
-        <div class="welcome-btns">
-            <button id="sign-in">CONNEXION</button>
-            <button id="sign-up">INSCRIPTION</button>
+                <div class="login-btns">
+                    <button type="button" id="sign-in" name="annuler">ANNULER</button>
+                    <button type="submit" name="soumettre">SOUMETTRE</button>
+                </div>
+                <!-- <span id="errSoumettre"></span> -->
+            </form>
         </div>
     </div>
 </body>

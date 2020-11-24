@@ -73,7 +73,7 @@ INSERT INTO `vino__bouteille` VALUES(NULL, 'Tenuta Il Falchetto Bricco Paradiso 
 CREATE TABLE `vino__usager`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `pseudo` VARCHAR(50) NOT NULL UNIQUE,
+  `courriel` VARCHAR(320) NOT NULL UNIQUE,
   `nom` VARCHAR(50) NOT NULL,
   `prenom` VARCHAR(50) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
@@ -81,10 +81,13 @@ CREATE TABLE `vino__usager`
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- Contenu de la table `vino__usager`
+-- Info de l'admin dans `vino__usager`
 -- -----------------------------------------------------
 
-INSERT INTO `vino__usager` VALUES(NULL, 'Samus', 'Soucy', 'Marianne', 'temp1');
+-- courriel : admin_pw2@cmaisonneuve.qc.ca
+-- mot de passe : sm1994
+
+-- INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
 
 
 -- -----------------------------------------------------
@@ -106,15 +109,3 @@ CREATE TABLE `vino__bouteille__collection`
   FOREIGN KEY(`id_bouteille`) REFERENCES `vino__bouteille`(`id`),
   FOREIGN KEY(`id_usager`) REFERENCES `vino__usager`(`id`)
 ) ENGINE=InnoDB;
-
--- -----------------------------------------------------
--- Contenu de la table `vino__bouteille_collection`
--- -----------------------------------------------------
-
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 10, '2019-01-16', '', '', 0, 3, 0, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 10, '2019-01-16', '', '', 0, 1, 0, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 5, '2019-01-16', '2020', '2019-01-16', 22, 10, 1999, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 5, '2019-01-16', '', '', 0, 1, 0, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 5, '2019-01-16', '', '', 0, 1, 0, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 5, '2019-01-16', '', '', 0, 10, 2000, 1);
-INSERT INTO `vino__bouteille__collection` VALUES(NULL, 3, '2019-01-26', 'non', '2019-01-26', 23.52, 1, 2015, 1);

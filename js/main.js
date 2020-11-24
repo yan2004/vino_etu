@@ -134,7 +134,7 @@ window.addEventListener('load', function() {
         prix : document.querySelector("[name='prix']"),
         garde_jusqua : document.querySelector("[name='garde_jusqua']"),
         notes : document.querySelector("[name='notes']"),
-        pseudo : document.querySelector("[name='pseudo_usager']"), // pseudo de l'usager en session
+        courriel : document.querySelector("[name='courriel_usager']"), // courriel de l'usager en session
       };
 
       liste.addEventListener("click", function(evt){
@@ -172,7 +172,7 @@ window.addEventListener('load', function() {
             "prix":bouteille.prix.value,
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
-            "pseudo":bouteille.pseudo.value,
+            "courriel":bouteille.courriel.value,
           };
 
           // requete ajax pour ajouter une bouteille dans le cellier
