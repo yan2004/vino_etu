@@ -18,7 +18,8 @@
             <h1>Bienvenue Chez VINO</h1>
 
             <!-- Formulaire de login -->
-            <form name="formLogin" class="form-accueil display--flex" method="post" action="index.php?requete=authentification">   
+            <form name="formLogin" class="form-accueil display--flex">
+            
                 <div>
                     <label for="courriel">Courriel :</label>
                     <input type="email" name="courriel" id="courriel"/>
@@ -30,15 +31,17 @@
                     <input type="password" name="password" id="password"/>
                     <span id="errSignInPassword"></span>
                 </div>
+                
                 <div class="login-btns">
                     <button type="button" id="sign-up">S'INSCRIRE</button>
-                    <button type="submit" name="entrer">ENTRER</button>
+                    <button type="button" name="entrer">ENTRER</button>
+                    
                 </div>
-                <!-- <span id="msgSuccess"></span> -->
+                
             </form>
 
             <!-- Formulaire de création de compte -->
-            <form name="formSignUp" class="form-accueil display--none" method="post" action="index.php?requete=creerCompte">
+            <form name="formSignUp" class="form-accueil display--none">
 
                 <div>
                     <label for="singUpCourriel">Courriel :</label>
@@ -66,9 +69,8 @@
 
                 <div class="login-btns">
                     <button type="button" id="sign-in" name="annuler">ANNULER</button>
-                    <button type="submit" name="soumettre">SOUMETTRE</button>
+                    <button type="button" name="soumettre">SOUMETTRE</button>
                 </div>
-                <!-- <span id="errSoumettre"></span> -->
             </form>
         </div>
     </div>

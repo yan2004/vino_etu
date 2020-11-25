@@ -6,23 +6,27 @@
  *
  */
 
-//const BaseURL = "http://localhost:8888/vino/vino_etu/";
-const BaseURL = document.baseURI;
+// const BaseURL = "http://localhost:8888/vino/vino_etu/";
+// const BaseURL = document.baseURI;
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('load', function(){
 
+  // console.log(BaseURL);
+
 	let btnSignIn = document.getElementById("sign-in");
   let btnSignUp = document.getElementById("sign-up");
-  
+
   let fS = formSignUp;
   let fL = formLogin;
 
-  let errSignIn = false;
-  let errSignUp = false;
+  let btnEntrer = fL.entrer;
+  let btnSoumettre = fS.soumettre;
+
+  let errForm = false;
 
   const ID_FORM_SIGNUP = "SignUp";
   const ID_FORM_SIGNIN = "SignIn";
-
 
 	// pour faire apparaitre le formulaire de login
 	btnSignIn.addEventListener("click", () =>{
@@ -53,15 +57,50 @@ window.addEventListener('load', function(){
     let controles = controlesCreation[nomChamp];
     validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
   });
-  
-  // validations au submit
-  fS.addEventListener("submit", function(evt){
-    errSignUp = false;
+
+  // requête ajax au click du bouton "soumettre" lors de la creation de compte
+  btnSoumettre.addEventListener("click", (evt) =>{
+
+    evt.preventDefault();
+
+    errForm = false;
     for(let nomChamp in controlesCreation){
       let controles = controlesCreation[nomChamp];
       validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     }
-    if (errSignUp) evt.preventDefault();
+    if (!errForm){
+
+      let param = {
+        "courriel":fS.courriel.value,
+        "nom":fS.nom.value,
+        "prenom":fS.prenom.value,
+        "password":fS.password.value,
+      };
+
+      let requete = new Request(BaseURL+"index.php?requete=creerCompte", {method: 'POST', body: JSON.stringify(param)});
+
+      fetch(requete)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Erreur');
+        }
+      })
+      .then(response => {
+        if(response.success){
+          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+          window.location = BaseURL+"index.php?requete=accueilUsager";
+        }else{
+          let eErrCreation = document.getElementById("errSignUpPassword");
+          eErrCreation.innerText = response.msg;
+        }
+      })
+      .catch(error => {
+        // TODO : traitement de l'erreur
+        console.error(error);
+      });
+    }
   });
 
   // **************************************
@@ -78,15 +117,48 @@ window.addEventListener('load', function(){
     let controles = controlesLogin[nomChamp];
     validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
   });
-  
-  // validations au submit
-  fL.addEventListener("submit", function(evt){
-    errSignIn = false;
+
+  // requête ajax au click du bouton "entrer" lors de l'authentification
+  btnEntrer.addEventListener("click", (evt) => {
+
+    evt.preventDefault();
+
+    errForm = false;
     for(let nomChamp in controlesLogin){
       let controles = controlesLogin[nomChamp];
       validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     }
-    if (errSignIn) evt.preventDefault();
+    if (!errForm){
+
+      let param = {
+        "courriel":fL.courriel.value,
+        "password":fL.password.value,
+      };
+
+      let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body: JSON.stringify(param)});
+
+      fetch(requete)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Erreur');
+        }
+      })
+      .then(response => {
+        if(response.success){
+          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+          window.location = BaseURL+"index.php?requete=accueilUsager";
+        }else{
+          let eErrAuth = document.getElementById("errSignInPassword");
+          eErrAuth.innerText = response.msg;
+        }
+      })
+      .catch(error => {
+        // TODO : traitement de l'erreur
+        console.error(error);
+      });
+    }
   });
 
 
@@ -118,7 +190,8 @@ window.addEventListener('load', function(){
   
     let idSpan = idForm + nomChamp[0].toUpperCase() + nomChamp.substring(1);
     document.getElementById(idSpan).innerHTML = msgErr;
-    if (msgErr !== "") idForm = true;
+
+    if (msgErr !== "") errForm = true;
   }
 
 });
