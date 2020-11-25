@@ -218,7 +218,43 @@ class Bouteille extends Modele {
         }
 
         return $reponseObj;
-    }
+	}
+	
+
+    /**
+     * Cette méthode change l'information d'une bouteille en particulier dans le cellier
+     * 
+     * @param int $id id de la bouteille
+     * @param int $nombre Nombre de bouteille a ajouter ou retirer
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
+	public function modificationInfoBtl($id,$date_achat,$garde_jusqua,$notes,$prix,$quantite,$millesime)
+	{
+		$requete = "UPDATE vino__bouteille__collection SET date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime='". $millesime ."' WHERE id=". $id;
+		//echo $requete;
+		$res = $this->_db->query($requete);
+	}
+
+	public function getListeBouteilleCellierById($id)
+	{
+		$rows = Array();
+		$requete = "SELECT c.*, b.nom FROM vino__bouteille__collection c
+					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
+					WHERE c.id ='". $id . "'";
+		//echo $requete;
+		$res = $this->_db->query($requete);
+		if($res->num_rows)		
+		{
+			while($row = $res->fetch_assoc())
+			{
+				$rows[] = $row;
+			}
+		}
+
+		return $rows;
+	}
+	
 }
 
 ?>

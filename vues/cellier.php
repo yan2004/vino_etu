@@ -28,13 +28,15 @@ foreach ($data as $cle => $bouteille) {
                 <a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a>
             </div>
             <div data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-                <!--<button>Modifier</button>-->
+                <!--<button class='btnModifier'><a href="index.php?requete=modifierBouteilleCellier">Modifier</a></button>-->
+                <button class='btnModifier'>Modifier</button>
                 <button class='btnAjouter'>Ajouter</button>
                 <button class='btnBoire'>Boire</button>
             </div>
             
         </div>
     </div>
+    
 <?php
 
 
