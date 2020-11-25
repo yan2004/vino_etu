@@ -34,10 +34,11 @@ class SAQ extends Modele {
 	public function getProduits($nombre = 24, $page = 1) {
 
 		// TEST
-		echo "getProduits</br>";
+		echo "getProduits</br></br>";
 
 		$s = curl_init();
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
+		// $url = "http://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
 		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
 		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
 		curl_setopt($s, CURLOPT_URL, $url);
@@ -51,6 +52,7 @@ class SAQ extends Modele {
 		self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);
 		curl_close($s);
 
+
 		// création d'un DOM avec les infos récupérées du sites
 		$doc = new DOMDocument();
 		$doc -> recover = true;
@@ -59,12 +61,6 @@ class SAQ extends Modele {
 		$elements = $doc -> getElementsByTagName("li");
 		$i = 0;
 
-		// **********TESTS*****************
-		var_dump(self::$_webpage); // reponse : bool(false)
-		echo "<br>status :<br>";
-		echo(self::$_status); // reponse : 0importation : 0
-		// var_dump($elements);
-		// ********************************
 		
 		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
@@ -170,16 +166,22 @@ class SAQ extends Modele {
 			}
 		}
 
-		// *********************************************************************************************************
-		// prix !! Problème du prix tronqué est potentiellement ici - NON JE NE PENSE PAS FINALEMENT VOIR LIGNE 203
+
+		// prix
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 			if ($node -> getAttribute('class') == 'price') {
 
 				$info -> prix = trim($node -> textContent);
+				$info -> prix = rtrim($info -> prix, "$");
+				// echo ($info -> prix);
+
+				// 
+				$info -> prix = str_replace(",", ".", $info -> prix);
+				// echo ($info -> prix);
 			}
+
 		}
-		// *********************************************************************************************************
 
 		//var_dump($info);
 		return $info;
@@ -219,13 +221,6 @@ class SAQ extends Modele {
 			// si le code de la bouteille (SAQ) n'existe pas déjà dans la bd (nouvelle bouteille), on ajoute la bouteille dans vino__bouteille
 			if ($rows -> num_rows < 1) {
 				
-				// **************************************************************************************************************************************
-				// bug du prix_saq ici, je pense que c'est réglé (à suivre lorsqu'on testera Update.SAQ), c'était indiqué "i" au lieu de "d" pour double 
-				// **************************************************************************************************************************************
-
-				// TODO : TESTER POUR SAVOIR S'IL FAUT MODIFIER LE TYPE DE LA BD EN "DOUBLE" AU LIEU DE "FLOAT"
-				// Je ne pense pas parce qu'ils représentent tous 2 semblablement la même chose au final
-
 				$this -> stmt -> bind_param("sssssdssi", $bte -> nom, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url_saq, $bte -> desc -> format, $type);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
