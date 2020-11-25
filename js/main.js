@@ -117,7 +117,8 @@ window.addEventListener('load', function() {
       });
     });
 
-  //if(typeof fMdBtl !== 'undefined'){
+  //if(typeof(fMdBtl) != 'undefined')
+  //{
     let fMdBtl = fModificationBtl;
     let erreurBtl = false;
     fMdBtl.addEventListener('change', (evt)=>{
@@ -248,15 +249,25 @@ window.addEventListener('load', function() {
       }
 
       function gardeValiderBtl(){
-        let msgErr = "";
-        let valGarde = fMdBtl.garde.value.split('-');
-        let valAchat = fMdBtl.date_achat.value.split('-');
+        // let msgErr = "";
+        // let valGarde = fMdBtl.garde.value.trim();
+        // let valAchat = fMdBtl.date_achat.value.split('-');
             
-        let ymdGarde = valGarde[0]+valGarde[1]+valGarde[2];
-        let ymdAchat = valAchat[0]+valAchat[1]+valAchat[2];
+        // let ymdGarde = valGarde[0]+valGarde[1]+valGarde[2];
+        // let ymdAchat = valAchat[0]+valAchat[1]+valAchat[2];
           
-        if (parseInt(ymdGarde) < parseInt(ymdAchat)) msgErr = "Veuille vérifier si choisir la date correctement!";
+        // if (parseInt(ymdGarde) < parseInt(ymdAchat)) msgErr = "Veuille vérifier si choisir la date correctement!";
+        let msgErr = "";
+        let val = fMdBtl.garde.value.trim();
+        let reg = new RegExp("\w*[a-zA-Z]\w*");
             
+        //Champ non-obligatoire
+        let l = val.length;
+        if(l > 0) {
+          if(!reg.test(val)) msgErr = "un mot au moins avec une lettre ou / et un nombre quelconque!";
+        }else {
+          msgErr = "";
+        }
         document.getElementById('errGarde').innerHTML = msgErr;
       
         if (msgErr !== "") erreurBtl = true;
@@ -404,7 +415,8 @@ window.addEventListener('load', function() {
    * validation de formulaire de modification du compte 
    * *********************
    */
-  if(typeof fCompte !== 'undefined'){
+  //if(typeof(fCompte) != "undefined")
+  //{
 
     
     let f = fCompte;
@@ -427,8 +439,10 @@ window.addEventListener('load', function() {
       if (erreurCmpt) evt.preventDefault();
 
     })
-  }
-   function nomValider() {
+  //}
+
+   function nomValider() 
+   {
      let msgErr = "";
      let val = f.nom.value.trim();
      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
@@ -447,7 +461,8 @@ window.addEventListener('load', function() {
      if (msgErr !== "") erreurCmpt = true;
    }
 
-   function prenomValider() {
+   function prenomValider() 
+   {
       let msgErr = "";
       let val = f.prenom.value.trim();
       let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
@@ -466,7 +481,8 @@ window.addEventListener('load', function() {
       if (msgErr !== "") erreurCmpt = true;
    }
 
-   function mot_de_passeValider() {
+   function mot_de_passeValider() 
+   {
       let msgErr = "";
       let val = f.mot_de_passe.value.trim();
       let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
@@ -486,4 +502,6 @@ window.addEventListener('load', function() {
    }
 
 
+
 });
+
