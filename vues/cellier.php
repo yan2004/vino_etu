@@ -8,7 +8,7 @@ foreach ($data as $cle => $bouteille) {
     <div class="bouteille">
         <div class="tuile">
             <div class="img">
-                <img src="https:<?php echo $bouteille['url_image'] ?>">
+                <img src="https:<?php echo $bouteille['url_image'] ?>"/>
             </div>
             <div class="description" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <div>

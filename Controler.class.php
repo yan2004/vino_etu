@@ -67,26 +67,58 @@ class Controler
 					$this->accueil();
 					break;
 			}
-
-		
-			
 		}
 
 		private function authentification()
 		{
-
 			$auth = new Authentification();
+			$body = json_decode(file_get_contents('php://input'));
 
-			$valide = $auth->validerAuthentification($_POST['pseudo'], $_POST['password']);
+			//validations back end
+			if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
 
-			if($valide) {
+				// TODO : refaire les regex, php ne comprend pas les regex pour le moment
 
-				// sauvegarde de l'usager authentifié
-				$_SESSION["pseudo"] = $_POST["pseudo"];
-				
-				$this->accueilUsager();
-			}else {
-				$this->accueil();
+				// // test regex
+				// $regexCourriel = preg_quote('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i');
+				// $regexPassword = preg_quote('/^[0-9a-z]{4,}$/i');
+
+				// // test en escapant les escapes
+				// $regexCourriel = preg_quote('/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/i');
+				// $regexPassword = preg_quote('/^[0-9a-z]{4,}$/i');
+
+				// if (preg_match($regexCourriel, $courriel) && preg_match($regexPassword, $password)){
+
+					$valide = $auth->validerAuthentification($body->courriel, $body->password);
+
+					if($valide){
+						// sauvegarde de l'usager authentifié
+						$_SESSION["courriel"] = $body->courriel;
+
+						$responseObj = new stdClass();
+						$responseObj->success = true;
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}else{
+						$responseObj = new stdClass();
+						$responseObj->success = false;
+						$responseObj->msg = "Combinaison invalide.";
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}
+				// }else{
+				// 	$responseObj = new stdClass();
+				// 	$responseObj->success = false;
+				// 	$responseObj->msg = "";
+				// 	$responseJSON = json_encode($responseObj);
+				// 	echo $responseJSON;
+				// }
+			}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
 			}
 		}
 
@@ -94,17 +126,50 @@ class Controler
 		{
 			$auth = new Authentification();
 
-			$resultat = $auth->creerCompte($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['password']);
+			$body = json_decode(file_get_contents('php://input'));
 
-			/**
-			 * Redirection à la page d'accueil suite à la création de compte avec message d'erreur au besoin
-			 */
-			
-			$this->accueil($resultat);
+			// validations back end
+			if	(isset($body->courriel) && isset($body->nom) && isset($body->prenom) && isset($body->password)
+				&& !empty(trim($body->courriel)) && !empty(trim($body->nom)) && !empty(trim($body->prenom)) && !empty(trim($body->password))){
+
+				// TODO : refaire les regex, php ne comprend pas les regex pour le moment
+
+				// test regex
+				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
+				// $regexNomPrenom = '/^[a-zà-ÿ]{2,}$/i';
+				// $regexPassword = '/^[0-9a-z]{4,}$/i';
+
+				// if (preg_match($regexCourriel, $courriel) && preg_match($regexNomPrenom, $nom) && preg_match($regexNomPrenom, $prenom) && preg_match($regexPassword, $password)){
+
+				// }
+
+				
+
+				$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
+
+				if($valide){
+					$responseObj = new stdClass();
+					$responseObj->success = true;
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Ce courriel existe déjà.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
+			}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
+			}
 		}
 
 		// accueil publique (usager qui n'est pas encore authentifié)
-		private function accueil($data=null)
+		private function accueil()
 		{
 			include("vues/welcome.php");     
 		}
@@ -112,37 +177,29 @@ class Controler
 		// cette méthode se nommait "accueil" avant
 		private function accueilUsager()
 		{
-			if(isset($_SESSION['pseudo'])){
-
+			if(isset($_SESSION['courriel'])){
 				$bte = new Bouteille();
 				$data = $bte->getListeBouteilleCellier();
 				include("vues/entete.php");
 				include("vues/cellier.php");
 				include("vues/pied.php");  
 			}else{
-
 				$this->accueil();
-			}
-			    
+			}  
 		}
 
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
             $cellier = $bte->getListeBouteilleCellier();
-            
-            echo json_encode($cellier);
-                  
+            echo json_encode($cellier);  
 		}
 		
 		private function autocompleteBouteille()
 		{
 			$bte = new Bouteille();
-
 			$body = json_decode(file_get_contents('php://input'));
-
             $listeBouteille = $bte->autocomplete($body->nom);
-            
             echo json_encode($listeBouteille);    
 		}
 
@@ -220,7 +277,7 @@ class Controler
 		private function modifierCompte()
 		{
 			$usager = new Usager();
-			$data = $usager->getUserByPseudo($_SESSION['pseudo']);
+			$data = $usager->getUserByCourriel($_SESSION['courriel']);
 			
 			include("vues/entete.php");
 			include("vues/compte.php");

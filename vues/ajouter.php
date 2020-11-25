@@ -27,14 +27,14 @@
                 <label for="garde_jusqua_ajouter">Garde : </label>
                 <input name="garde_jusqua" id="garde_jusqua_ajouter">
 
-                <label for="notes_ajouter">Notes</label>
-                <input id="notes_ajouter" name="notes">
+                <label for="notes">Notes</label>
+                <input id="notes" name="notes">
                 
                 <!-- input caché avec id usager -->
-                <input type="hidden" name="pseudo_usager" value="<?= $_SESSION['pseudo'] ?>">
+                <input type="hidden" name="courriel_usager" value="<?= $_SESSION["courriel"] ?>">
             </div>
             <button name="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE</button>
         </div>
     </div>
 </div>
-<script src="./js/ajouter_app.js"></script>
+<!--<script src="./js/ajouter_app.js"></script>-->
