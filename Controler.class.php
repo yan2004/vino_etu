@@ -77,17 +77,12 @@ class Controler
 			//validations back end
 			if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
 
-				// TODO : refaire les regex, php ne comprend pas les regex pour le moment
+				// test regex
+				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
+				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
+				$regexPassword = '/^[0-9a-z]{4,}$/i';
 
-				// // test regex
-				// $regexCourriel = preg_quote('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i');
-				// $regexPassword = preg_quote('/^[0-9a-z]{4,}$/i');
-
-				// // test en escapant les escapes
-				// $regexCourriel = preg_quote('/^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/i');
-				// $regexPassword = preg_quote('/^[0-9a-z]{4,}$/i');
-
-				// if (preg_match($regexCourriel, $courriel) && preg_match($regexPassword, $password)){
+				if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
 
 					$valide = $auth->validerAuthentification($body->courriel, $body->password);
 
@@ -106,13 +101,13 @@ class Controler
 						$responseJSON = json_encode($responseObj);
 						echo $responseJSON;
 					}
-				// }else{
-				// 	$responseObj = new stdClass();
-				// 	$responseObj->success = false;
-				// 	$responseObj->msg = "";
-				// 	$responseJSON = json_encode($responseObj);
-				// 	echo $responseJSON;
-				// }
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
 			}else{
 				$responseObj = new stdClass();
 				$responseObj->success = false;
@@ -132,30 +127,30 @@ class Controler
 			if	(isset($body->courriel) && isset($body->nom) && isset($body->prenom) && isset($body->password)
 				&& !empty(trim($body->courriel)) && !empty(trim($body->nom)) && !empty(trim($body->prenom)) && !empty(trim($body->password))){
 
-				// TODO : refaire les regex, php ne comprend pas les regex pour le moment
-
 				// test regex
-				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
-				// $regexNomPrenom = '/^[a-zà-ÿ]{2,}$/i';
-				// $regexPassword = '/^[0-9a-z]{4,}$/i';
+				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
+				$regexNomPrenom = '/^[a-zà-ÿ]{2,}$/i';
+				$regexPassword = '/^[0-9a-z]{4,}$/i';
 
-				// if (preg_match($regexCourriel, $courriel) && preg_match($regexNomPrenom, $nom) && preg_match($regexNomPrenom, $prenom) && preg_match($regexPassword, $password)){
+				if (preg_match($regexCourriel, $body->courriel) && preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && preg_match($regexPassword, $body->password)){
+					$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
 
-				// }
-
-				
-
-				$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
-
-				if($valide){
-					$responseObj = new stdClass();
-					$responseObj->success = true;
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					if($valide){
+						$responseObj = new stdClass();
+						$responseObj->success = true;
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}else{
+						$responseObj = new stdClass();
+						$responseObj->success = false;
+						$responseObj->msg = "Ce courriel existe déjà.";
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}
 				}else{
 					$responseObj = new stdClass();
 					$responseObj->success = false;
-					$responseObj->msg = "Ce courriel existe déjà.";
+					$responseObj->msg = "";
 					$responseJSON = json_encode($responseObj);
 					echo $responseJSON;
 				}
