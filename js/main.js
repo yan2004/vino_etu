@@ -1,8 +1,8 @@
 /**
  * @file Script contenant les fonctions de base
- * @author Jonathan Martel (jmartel@cmaisonneuve.qc.ca)
- * @version 0.1
- * @update 2019-01-21
+ * @author Jin Yan, Marianne Soucy et Jonathan Martel
+ * @version 0.2
+ * @update 2020-11-24
  * @license Creative Commons BY-NC 3.0 (Licence Creative Commons Attribution - Pas d’utilisation commerciale 3.0 non transposé)
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  *
@@ -118,6 +118,7 @@ window.addEventListener('load', function() {
     });
 
   //if(typeof fMdBtl !== 'undefined'){
+  if(typeof fModificationBtl !== 'undefined'){
     let fMdBtl = fModificationBtl;
     let erreurBtl = false;
     fMdBtl.addEventListener('change', (evt)=>{
@@ -164,10 +165,9 @@ window.addEventListener('load', function() {
         //window.location.href = BaseURL+"index.php?requete=accueilUsager";
         if (erreurBtl) evt.preventDefault();
         //evt.preventDefault();
-    });
-    
+      });
 
-    function nomValiderBtl(){
+      function nomValiderBtl(){
         let msgErr = "";
         let val = fMdBtl.nom.value.trim();
         let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
@@ -279,6 +279,11 @@ window.addEventListener('load', function() {
       
         if (msgErr !== "") erreurBtl = true;
       }
+    }
+    
+    
+
+    
   //}
 
    
@@ -332,7 +337,7 @@ window.addEventListener('load', function() {
         prix : document.querySelector("[name='prix']"),
         garde_jusqua : document.querySelector("[name='garde_jusqua']"),
         notes : document.querySelector("[name='notes']"),
-        pseudo : document.querySelector("[name='pseudo_usager']"), // pseudo de l'usager en session
+        courriel : document.querySelector("[name='courriel_usager']"), // courriel de l'usager en session
       };
 
       liste.addEventListener("click", function(evt){
@@ -370,7 +375,7 @@ window.addEventListener('load', function() {
             "prix":bouteille.prix.value,
             "quantite":bouteille.quantite.value,
             "millesime":bouteille.millesime.value,
-            "pseudo":bouteille.pseudo.value,
+            "courriel":bouteille.courriel.value,
           };
 
           // requete ajax pour ajouter une bouteille dans le cellier

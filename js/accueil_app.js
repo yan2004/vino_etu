@@ -6,134 +6,192 @@
  *
  */
 
-//const BaseURL = "http://localhost:8888/vino/vino_etu/";
-const BaseURL = document.baseURI;
-
+// const BaseURL = "http://localhost:8888/vino/vino_etu/";
+// const BaseURL = document.baseURI;
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('load', function(){
 
-	let btnSignIn = document.getElementById("sign-in");
-	let btnSignUp = document.getElementById("sign-up");
+  // console.log(BaseURL);
 
+	let btnSignIn = document.getElementById("sign-in");
+  let btnSignUp = document.getElementById("sign-up");
+
+  let fS = formSignUp;
+  let fL = formLogin;
+
+  let btnEntrer = fL.entrer;
+  let btnSoumettre = fS.soumettre;
+
+  let errForm = false;
+
+  const ID_FORM_SIGNUP = "SignUp";
+  const ID_FORM_SIGNIN = "SignIn";
 
 	// pour faire apparaitre le formulaire de login
 	btnSignIn.addEventListener("click", () =>{
-
-		if(formSignUp.classList.contains("display--flex")) formSignUp.classList.replace("display--flex", "display--none");
-    formLogin.classList.replace("display--none", "display--flex");
-    document.getElementById("errConfirmer").innerText = "";
-
+    if(fS.classList.contains("display--flex")) fS.classList.replace("display--flex", "display--none");
+    fL.classList.replace("display--none", "display--flex");
 	});
 
 	// pour faire apparaitre le formulaire de creation de compte
 	btnSignUp.addEventListener("click", () =>{
-
-		if(formLogin.classList.contains("display--flex")) formLogin.classList.replace("display--flex", "display--none");
-		formSignUp.classList.replace("display--none", "display--flex");
-		
-	});
-
-
-
-	/**
-   * *********************
-   * validation de formulaire de création du compte 
-   * *********************
-   */
-  let fS = formSignUp;
-  let errCreation = false;
-
-  fS.addEventListener('change', (evt)=>{
-    let nomChamp = evt.target.name;
-    eval(nomChamp + 'Valider()');
-  })
+    if(fL.classList.contains("display--flex")) fL.classList.replace("display--flex", "display--none");
+    fS.classList.replace("display--none", "display--flex");
+  });
   
 
-  fS.addEventListener("submit", function(evt){
-	 errCreation = false;
-	 pseudoValider();
-	 nomValider();
-     prenomValider();
-     passwordValider();
+  // ***************************************************
+  // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
+  // ***************************************************
+  let controlesCreation = {
+    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, msgRegExp: "Courriel invalide."},
+    nom:        {requis: true, regExp: /^[a-zà-ÿ]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
+    prenom:     {requis: true, regExp: /^[a-zà-ÿ]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
+    password:   {requis: true, regExp: /^[0-9a-z]{4,}$/i,                   msgRegExp: "Au moins 4 caractères alphanumériques."}
+  };
 
-     if (errCreation) evt.preventDefault();
+  // validations inputs au change
+  fS.addEventListener('change', (evt)=>{
+    let nomChamp = evt.target.name;
+    let controles = controlesCreation[nomChamp];
+    validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  });
 
-   })
+  // requête ajax au click du bouton "soumettre" lors de la creation de compte
+  btnSoumettre.addEventListener("click", (evt) =>{
 
-   function  pseudoValider() {
-		let msgErr = "";
-		let val = fS.pseudo.value.trim();
-		let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-		
-		//Vérifiér si au moins deux caractères
-		let l = val.length;
-		if(l < 5) msgErr = "Au moins cinq caractères alphabétiques";
+    evt.preventDefault();
 
-		//Vérifier si les caractères de séparation sont suivantes
-		if(l > 1){
-		if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
-		}
-		
-		document.getElementById('errPseudo').innerHTML = msgErr;
+    errForm = false;
+    for(let nomChamp in controlesCreation){
+      let controles = controlesCreation[nomChamp];
+      validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+    }
+    if (!errForm){
 
-		if (msgErr !== "") errCreation = true;
-   }
+      let param = {
+        "courriel":fS.courriel.value,
+        "nom":fS.nom.value,
+        "prenom":fS.prenom.value,
+        "password":fS.password.value,
+      };
 
-   function nomValider() {
-     let msgErr = "";
-     let val = fS.nom.value.trim();
-     let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-     
-     //Vérifier si au moins deux caractères
-     let l = val.length;
-     if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
+      let requete = new Request(BaseURL+"index.php?requete=creerCompte", {method: 'POST', body: JSON.stringify(param)});
 
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
-      }
-     
-     document.getElementById('errSignUpNom').innerHTML = msgErr;
+      fetch(requete)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Erreur');
+        }
+      })
+      .then(response => {
+        if(response.success){
+          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+          window.location = BaseURL+"index.php?requete=accueilUsager";
+        }else{
+          let eErrCreation = document.getElementById("errSignUpPassword");
+          eErrCreation.innerText = response.msg;
+        }
+      })
+      .catch(error => {
+        // TODO : traitement de l'erreur
+        console.error(error);
+      });
+    }
+  });
 
-     if (msgErr !== "") errCreation = true;
-   }
+  // **************************************
+  // VALIDATION POUR LE FORMULAIRE DE LOGIN
+  // **************************************
+  let controlesLogin = {
+    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, msgRegExp: "Courriel invalide."},
+    password:   {requis: true, regExp: /^[0-9a-z]{4,}$/i,                   msgRegExp: "Au moins 4 caractères alphanumériques."}
+  };
 
-   function prenomValider() {
-      let msgErr = "";
-      let val = fS.prenom.value.trim();
-      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-      
-      //Vérifier si au moins deux caractères
-      let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
+  // validations inputs au change
+  fL.addEventListener('change', (evt)=>{
+    let nomChamp = evt.target.name;
+    let controles = controlesLogin[nomChamp];
+    validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  });
 
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
-      }
-      
-      document.getElementById('errSignUpPrenom').innerHTML = msgErr;
+  // requête ajax au click du bouton "entrer" lors de l'authentification
+  btnEntrer.addEventListener("click", (evt) => {
 
-      if (msgErr !== "") errCreation = true;
-   }
+    evt.preventDefault();
 
-   function passwordValider() {
-      let msgErr = "";
-      let val = fS.password.value.trim();
-      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-      
-      //Vérifier si au moins deux caractères
-      let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques.";
+    errForm = false;
+    for(let nomChamp in controlesLogin){
+      let controles = controlesLogin[nomChamp];
+      validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+    }
+    if (!errForm){
 
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Chaque mots doivent être séparés par '-' ou '_' ou un espace.";
-      }
-      
-      document.getElementById('errSignUpPwd').innerHTML = msgErr;
+      let param = {
+        "courriel":fL.courriel.value,
+        "password":fL.password.value,
+      };
 
-      if (msgErr !== "") errCreation = true
-   }
+      let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body: JSON.stringify(param)});
+
+      fetch(requete)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Erreur');
+        }
+      })
+      .then(response => {
+        if(response.success){
+          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+          window.location = BaseURL+"index.php?requete=accueilUsager";
+        }else{
+          let eErrAuth = document.getElementById("errSignInPassword");
+          eErrAuth.innerText = response.msg;
+        }
+      })
+      .catch(error => {
+        // TODO : traitement de l'erreur
+        console.error(error);
+      });
+    }
+  });
+
+
+  /**
+   * Fonction de validation des champs et gestion du message d'erreur
+   * @param {*} idForm 
+   * @param {*} nomChamp 
+   * @param {*} requis 
+   * @param {*} regExp 
+   * @param {*} msgRegExp 
+   */
+  function validerChamps(form, idForm, nomChamp, requis=false, regExp=null, msgRegExp=null){
+
+    let val = "";
+    let e = form[nomChamp];
+    idForm = "err" + idForm;
+
+    // recuperation de la valeur du champ
+    e.value = e.value.trim();
+    val = e.value;
+
+    // gestion de l'affichage des messages d'erreur
+    let msgErr = "";
+    if (val === "" && requis){
+      msgErr = "Obligatoire";
+    } else if (regExp !== null && !regExp.test(val) && val !== ""){
+      msgErr = msgRegExp;
+    }
+  
+    let idSpan = idForm + nomChamp[0].toUpperCase() + nomChamp.substring(1);
+    document.getElementById(idSpan).innerHTML = msgErr;
+
+    if (msgErr !== "") errForm = true;
+  }
 
 });

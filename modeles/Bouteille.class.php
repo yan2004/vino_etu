@@ -69,7 +69,7 @@ class Bouteille extends Modele {
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
 						INNER JOIN vino__type t ON t.id = b.id_type 
 						INNER JOIN vino__usager u ON u.id = c.id_usager
-						WHERE u.pseudo = "' . $_SESSION["pseudo"] . '" ORDER BY id_bouteille_collection
+						WHERE u.courriel = "' . $_SESSION["courriel"] . '" ORDER BY id_bouteille_collection
 						'; 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -146,7 +146,7 @@ class Bouteille extends Modele {
 
 		
 		
-		$requete = "SELECT id FROM vino__usager WHERE pseudo ='" . $data->pseudo . "'";
+		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
 		$res = $this->_db->query($requete);
 		if($res->num_rows == 1)
 		{
@@ -161,7 +161,7 @@ class Bouteille extends Modele {
 			"'".$data->prix."',".
 			"'".$data->quantite."',".
 			"'".$data->millesime."',".
-			"'".$id_usager."')";
+			"'".$id_usager."')"; // ICI ***
 	
 			$res = $this->_db->query($requete);
 			

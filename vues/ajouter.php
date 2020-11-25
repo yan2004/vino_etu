@@ -16,7 +16,7 @@
                 <label for="notes">Notes</label> <input id="notes" name="notes">
                 
                 <!-- input caché avec id usager -->
-                <input type="hidden" name="pseudo_usager" value="<?= $_SESSION['pseudo'] ?>">
+                <input type="hidden" name="courriel_usager" value="<?= $_SESSION['courriel'] ?>">
             </div>
             <button name="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE (CHAMPS TOUS OBLIGATOIRES)</button>
         </div>

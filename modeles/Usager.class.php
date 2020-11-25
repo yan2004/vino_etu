@@ -9,11 +9,11 @@ class Usager extends Modele {
     /**
      * Cette méthode modifier les infos du compte
      * @param int $id id de l'usager
-     * @param string $pseudo,$nom,$prenom,$mot_de_passe
+     * @param string $courriel, $nom, $prenom, $mot_de_passe
      * @return Boolean Succès ou échec à modifiér.
      */
     
-    public function sauvegardeModificationCompte($id,$nom,$prenom,$mot_de_passe)
+    public function sauvegardeModificationCompte($id, $nom, $prenom, $mot_de_passe)
     {
 
         // filtrer les donnees de l'usager
@@ -33,13 +33,13 @@ class Usager extends Modele {
     /**
      * Cette méthode récupère les valeurs de table vino_usager
      */
-    public function getUserByPseudo($pseudo)
+    public function getUserByCourriel($courriel)
     {
         // filtrer les donnees de l'usager
-        $pseudo = $this->filtre($pseudo);
+        $courriel = $this->filtre($courriel);
 
         $rows = Array();
-        $requete = "SELECT * FROM ". self::TABLE. " WHERE pseudo= '". $pseudo. "'";
+        $requete = "SELECT * FROM ". self::TABLE. " WHERE courriel= '". $courriel. "'";
 
         if(($res = $this->_db->query($requete)) ==	 true)
 		{
