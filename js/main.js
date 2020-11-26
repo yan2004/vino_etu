@@ -288,8 +288,9 @@ window.addEventListener('load', function() {
 
    
     // concernant le formulaire d'ajout d'une bouteille
+    // champ de recherche
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
-
+    // région d'affichage la liste de suggestions
     let liste = document.querySelector('.listeAutoComplete');
 
     if(inputNomBouteille){
@@ -315,10 +316,9 @@ window.addEventListener('load', function() {
               }
           })
           .then(response => {
-     
             // création d'un "li" pour chaque suggestion dans le DOM
             response.forEach(function(element){
-              liste.innerHTML += "<li data-id='"+element.id +"'>"+element.nom+"</li>";
+              liste.innerHTML += "<li data-id='"+element.id +"' data-prix='"+element.prix_saq+"'>"+element.nom+"</li>";
             });
 
           })
@@ -342,7 +342,8 @@ window.addEventListener('load', function() {
 
       liste.addEventListener("click", function(evt){
 
-        console.dir(evt.target)
+        //console.dir(evt.target)
+        //console.log(evt.target);
 
         if(evt.target.tagName == "LI"){
 
@@ -354,6 +355,14 @@ window.addEventListener('load', function() {
           
           liste.innerHTML = "";
           inputNomBouteille.value = "";
+
+          // on va cherche le prix de bouteille choisi
+          // et le met dans le champ de Prix
+          let prix = evt.target.dataset.prix;
+          if(document.getElementById('prix_ajouter')){
+            let prixEle = document.getElementById('prix_ajouter');
+            prixEle.setAttribute('value', prix);
+          }
 
         }
       });
@@ -489,6 +498,157 @@ window.addEventListener('load', function() {
 
       if (msgErr !== "") erreurCmpt = true
    }
+
+
+  /**
+   * *********************
+   * validation de formulaire d'ajouter une bouteille 
+   * *********************
+   */
+ if(document.getElementById('ajouterBouteilleCellier'))
+ {
+   let btnAjtBtlCellier = document.getElementById('ajouterBouteilleCellier');
+   let fAjtBtlCellier   = document.getElementById('form-ajouter-btl');
+   let inputEles        = document.querySelectorAll('#form-ajouter-btl input');
+   
+   //La valeur par défaut de champ Date, aujourd'hui
+   let dateAjtBtl       = document.getElementById('date_achat_ajouter');
+   dateAjtBtl.valueAsDate = new Date();
+   
+   let erreurAjtBtl     = false;
+
+
+   //Listener sur le changement du nom de bouteille
+   //Changer le prix par rapport
+  //  let nomRecherche = document.querySelector('#form-ajouter-btl .nom_bouteille');
+  //  nomRecherche.addEventListener('DOMSubtreeModified', function(){
+  //    //console.log(nomRecherche.innerHTML);
+  //  })
+
+   //Validation des champs obligatoires
+   inputEles.forEach(function(element){
+      element.addEventListener('change', (evt)=>{
+        let nomChamp = evt.target.name;
+        eval(nomChamp + 'ValideAjt()');
+      })
+   });
+
+   btnAjtBtlCellier.addEventListener('click', (evt)=>{
+    //const erreurAjtBtl = !quantiteValideAjt() || !date_achatValideAjt() || !prixValideAjt();
+      erreurAjtBtl     = false;
+      millesimeValideAjt();
+      quantiteValideAjt();
+      date_achatValideAjt();
+      prixValideAjt();
+      garde_jusquaValideAjt();
+      notesValideAjt();
+     if (erreurAjtBtl) evt.preventDefault();
+   })
+
+
+   function millesimeValideAjt(){
+    let msgErr = "";
+    let val = document.getElementById('millesime_ajouter').value.trim();
+    let reg = new RegExp("[1-2][0-9]{3}$");
+          
+    //Vérifier si 4 numéros
+    let l = val.length;
+    if(l>0){
+      if(l !== 4) msgErr = "4 chiffres commencent par 1YYY ou 2YYY!";
+      else {
+        if(!reg.test(val)) msgErr = "4 chiffres commencent par 1YYY ou 2YYY!"
+      }
+    }
+          
+    document.getElementById('errMillesime_ajouter').innerHTML = msgErr;
+    
+    if (msgErr !== "") erreurAjtBtl = true;
+  }
+
+   function quantiteValideAjt(){
+      let msgErr = "";
+      let val = document.getElementById('quantite_ajouter').value.trim();
+      let reg = new RegExp("[1-9][0-9]*");
+          
+      let l = val.length;
+      if(l <1) msgErr = "Champ obligatoire!";
+
+      if(l >= 1) {
+        if(!reg.test(val)) msgErr = "Veuillez vérifier si numéro entier!";
+      }
+          
+      document.getElementById('errQuantite_ajouter').innerHTML = msgErr;
+    
+      if (msgErr !== "") erreurAjtBtl = true;
+   }
+
+   function date_achatValideAjt(){
+      let msgErr = "";
+      let val = document.getElementById('date_achat_ajouter').value.split('-');
+      
+      let y = val[0];
+      if(y > new Date().getFullYear()) msgErr = "Format yyyy-mm-dd!";
+      
+      document.getElementById('errAchat_ajouter').innerHTML = msgErr;
+    
+      if (msgErr !== "") erreurAjtBtl = true;
+   }
+   
+   function prixValideAjt(){
+      let msgErr = "";
+      let val = document.getElementById('prix_ajouter').value.trim();
+      let reg = new RegExp("^([0-9]{0,2}((.)[0-9]{0,2}))$");
+          
+      let l = val.length;
+    
+      if(l < 1) msgErr = "Champ obligatoire!";
+
+      if(l > 1) {
+        if(!reg.test(val)) msgErr = "Maximum de 2 chiffres après la virgule décimale!";
+      }
+          
+      document.getElementById('errPrix_ajouter').innerHTML = msgErr;
+    
+      if (msgErr !== "") erreurAjtBtl = true;
+   }
+
+   function garde_jusquaValideAjt(){
+    let msgErr = "";
+    let val = document.getElementById('garde_jusqua_ajouter').value.trim();
+    let reg = new RegExp("\w*[a-zA-Z]\w*");
+        
+    //Champ non-obligatoire
+    let l = val.length;
+    if(l > 0) {
+      if(!reg.test(val)) msgErr = "un mot au moins avec une lettre ou / et un nombre quelconque!";
+    }else {
+      msgErr = "";
+    }
+        
+    document.getElementById('errGarde_ajouter').innerHTML = msgErr;
+  
+    if (msgErr !== "") erreurAjtBtl = true;
+  }
+
+   function notesValideAjt(){
+    let msgErr = "";
+    let val = document.getElementById('notes_ajouter').value.trim();
+    let reg = new RegExp("\w*[a-zA-Z]\w*");
+        
+    //Champ non-obligatoire
+    let l = val.length;
+    if(l > 0) {
+      if(!reg.test(val)) msgErr = "un mot au moins avec une lettre ou / et un nombre quelconque!";
+    }else {
+      msgErr = "";
+    }
+        
+    document.getElementById('errNotes_ajouter').innerHTML = msgErr;
+  
+    if (msgErr !== "") erreurAjtBtl = true;
+  }
+
+ }
 
 
 });

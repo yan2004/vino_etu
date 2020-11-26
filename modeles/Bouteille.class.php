@@ -109,7 +109,7 @@ class Bouteille extends Modele {
 		$nom = $this->_db->real_escape_string($nom);
 		$nom = preg_replace("/\*/","%" , $nom);
 		
-		$requete ='SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
+		$requete ='SELECT id, nom, prix_saq FROM vino__bouteille where LOWER(nom) like LOWER("%'. $nom .'%") LIMIT 0,'. $nb_resultat; 
 
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -162,7 +162,7 @@ class Bouteille extends Modele {
 			"'".$data->quantite."',".
 			"'".$data->millesime."',".
 			"'".$id_usager."')"; // ICI ***
-	
+			
 			$res = $this->_db->query($requete);
 			
 			return $res;

@@ -27,7 +27,7 @@
                 <span id="errPrix"></span>
 
                 <label for="garde">Garde</label>
-                <input type="date" name="garde" id="garde" value="2020-10-01" value="<?php echo $data[0]['garde_jusqua']; ?>">
+                <input type="text" name="garde" id="garde" value="2020-10-01" value="<?php echo $data[0]['garde_jusqua']; ?>">
                 <span id="errGarde"></span>
 
                 <label for="notes">Notes</label>
