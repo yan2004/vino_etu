@@ -201,8 +201,9 @@ class Controler
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-
+			
 			if(!empty($body)){
+
 				$bte = new Bouteille();
 
 				$resultat = $bte->ajouterBouteilleCellier($body);
