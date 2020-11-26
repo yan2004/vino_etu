@@ -180,7 +180,6 @@ class SAQ extends Modele {
 				$info -> prix = str_replace(",", ".", $info -> prix);
 				// echo ($info -> prix);
 			}
-
 		}
 
 		//var_dump($info);
