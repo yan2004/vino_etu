@@ -73,6 +73,13 @@ main {
 	display: flex;
 	align-items: center;
 }
+.main-title{
+    width: 100%;
+}
+.main-title-welcome h1{
+    display: flex;
+    justify-content: space-between;
+}
 h1{
     font-family: "PoiretOne-Regular";
     margin: auto;
@@ -81,9 +88,16 @@ h2{
     font-family: "Lora-Medium";
 }
 span{
-	color: red;
+	min-height: 1.5em;
+	font-size: 0.7em;
+	text-align: right;
+	padding: 0;
+	margin: 0;
+	color: #511730;
 }
 span.nom_bouteille{
+    font-size: 1em;
+    min-height: 0;
     color: #511730;
 }
 button{
@@ -336,7 +350,12 @@ form button:hover, .form-ajouter button:hover{
 .btn-call-action{
 	text-transform: uppercase;
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
-	transition: 0.6s;
+    transition: 0.6s;
+
+    width: 90%;
+    font-size: 0.4em;
+    
+    /* margin-left: auto; */
 }
 .btn-call-action:hover{
 	background-position: right;
@@ -363,6 +382,7 @@ form button:hover, .form-ajouter button:hover{
         max-width: 1400px;
         margin: auto;
     }
+
     h1{
         display: block;
         width: 100%;

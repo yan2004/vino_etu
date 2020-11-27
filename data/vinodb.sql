@@ -42,7 +42,7 @@ CREATE TABLE `vino__bouteille`
   `code_saq` VARCHAR(50) DEFAULT NULL,
   `pays` VARCHAR(50) DEFAULT NULL,
   `description` VARCHAR(200) DEFAULT NULL,
-  `prix_saq` FLOAT DEFAULT NULL,
+  `prix_saq` DECIMAL(6,2) DEFAULT NULL,
   `url_saq` VARCHAR(200) DEFAULT NULL,
   `format` VARCHAR(20) DEFAULT NULL,
   `id_type` INT DEFAULT NULL,
@@ -66,6 +66,7 @@ INSERT INTO `vino__bouteille` VALUES(NULL, 'Tessellae Old Vines Côtes du Roussi
 INSERT INTO `vino__bouteille` VALUES(NULL, 'Tenuta Il Falchetto Bricco Paradiso -... 2015', '//s7d9.scene7.com/is/image/SAQ/13637422_is?$saq-rech-prod-gril$', '13637422', 'Italie', 'Vin rouge\r\n         \r\n      \r\n      \r\n      Italie, 750 ml\r\n      \r\n      \r\n      Code SAQ : 13637422', 34, 'https://www.saq.com/page/fr/saqcom/vin-rouge/tenuta-il-falchetto-bricco-paradiso---barbera-dasti-superiore-docg-2015/13637422', ' 750 ml', 1);
 
 
+
 -- -----------------------------------------------------
 -- Structure de la table `vino__usager`
 -- -----------------------------------------------------
@@ -87,7 +88,7 @@ CREATE TABLE `vino__usager`
 -- courriel : admin_pw2@cmaisonneuve.qc.ca
 -- mot de passe : sm1994
 
--- INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
+INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
 
 
 -- -----------------------------------------------------
@@ -101,7 +102,7 @@ CREATE TABLE `vino__bouteille__collection`
   `date_achat` DATE DEFAULT NULL,
   `garde_jusqua` VARCHAR(200) DEFAULT NULL,
   `notes` VARCHAR(200) DEFAULT NULL,
-  `prix` FLOAT DEFAULT NULL,
+  `prix` DECIMAL(6,2) DEFAULT NULL,
   `quantite` INT DEFAULT NULL,
   `millesime` INT DEFAULT NULL,
   `id_usager` INT,
