@@ -19,8 +19,8 @@
                 <span id="errQuantite"></span>
 
                 <label for="date_achat">Date achat</label>
-                <input type="date" name="date_achat" id="date_achat" value="2020-10-01">
-                <span id="errDateAchat"></span>
+                <input type="date" name="date_achat" id="date_achat" value="<?php echo $data[0]['date_achat']; ?>">
+                <span id="errDate_achat"></span>
 
                 <label for="prix">Prix</label>
                 <input type="text" name="prix" id="prix" value="<?php echo $data[0]['prix']; ?>">
@@ -34,7 +34,7 @@
                 <input type="text" name="notes" id="notes" value="<?php echo $data[0]['notes']; ?>">
                 <span id="errNotes"></span>
                 
-                <button type="submit" value="Modifier" class="btnModifierBtl">MODIFIER</button>
+                <button value="Modifier" class="btnModifierBtl">MODIFIER</button>
         </form>
     
 </div>

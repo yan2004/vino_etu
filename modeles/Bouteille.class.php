@@ -144,7 +144,8 @@ class Bouteille extends Modele {
     {
         // TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
 
-		
+		// echo $data;
+		// echo $data->courriel;
 		
 		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
 		$res = $this->_db->query($requete);
@@ -153,6 +154,8 @@ class Bouteille extends Modele {
 			$row = $res->fetch_assoc();
 			$id_usager = $row["id"];
 
+			if(empty($data->millesime)) $data->millesime = 'NULL';
+
 			$requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
 			"'".$data->id_bouteille."',".
 			"'".$data->date_achat."',".
@@ -160,8 +163,10 @@ class Bouteille extends Modele {
 			"'".$data->notes."',".
 			"'".$data->prix."',".
 			"'".$data->quantite."',".
-			"'".$data->millesime."',".
-			"'".$id_usager."')"; // ICI ***
+			// "'".$data->millesime."',".
+			$data->millesime.",".
+			"'".$id_usager."')";
+
 			
 			$res = $this->_db->query($requete);
 			
@@ -231,9 +236,13 @@ class Bouteille extends Modele {
      */
 	public function modificationInfoBtl($id,$date_achat,$garde_jusqua,$notes,$prix,$quantite,$millesime)
 	{
-		$requete = "UPDATE vino__bouteille__collection SET date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime='". $millesime ."' WHERE id=". $id;
+		// vu que le type de millesime est un INT, on doit mettre NULL si le champs d'est pas rempli (sinon "" est une erreur, car ça reste un string même si vide)
+		if(empty($millesime)) $millesime = 'NULL';
+
+		$requete = "UPDATE vino__bouteille__collection SET date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime=". $millesime ." WHERE id=". $id;
 		//echo $requete;
 		$res = $this->_db->query($requete);
+		return $res;
 	}
 
 	public function getListeBouteilleCellierById($id)

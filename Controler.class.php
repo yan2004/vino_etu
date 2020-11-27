@@ -267,6 +267,17 @@ class Controler
 
 			$bte = new Bouteille();
 			$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+			
+			//test
+			$responseObj = new stdClass();
+			if($resultat){
+				$responseObj->success = true;
+			}
+			else{
+				$responseObj->success = false;
+			}
+			echo json_encode($responseObj);
+			// $this->accueilUsager();
 
 		}
 
