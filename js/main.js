@@ -651,4 +651,28 @@ window.addEventListener('load', function() {
  }
 
 
+
+   /**
+   * *********************
+   * Fetch API au click le bouton call to action AJOUTER BOUTEILLE 
+   * *********************
+   */
+  // if(document.getElementById('btnCallActionAjt'))
+  // {
+  //   let btnCallActionAjt = document.getElementById('btnCallActionAjt');
+  //   btnCallActionAjt.addEventListener("click", function(evt){
+
+  //     let url = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
+  //     fetch(url)
+  //     .then(res=>{
+  //       window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+
+  //   });
+  // }
+
+
 });

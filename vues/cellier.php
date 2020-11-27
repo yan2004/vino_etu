@@ -1,5 +1,19 @@
 <div class="cellier">
-    <h1>Mon cellier :</h1>
+   <div class="main-title">
+       <div class="main-title-welcome">
+            <h1>Le cellier de 
+            <?php 
+                if(isset($_SESSION["courriel"])){
+                    $usager = $dataUsager[0]['nom']."  ".$dataUsager[0]['prenom'];
+                    echo $usager;
+                }
+            ?>
+            :</h1>
+       </div>
+       <div class="main-title-call-action">
+           <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
+       </div>
+    </div>
 <?php
 foreach ($data as $cle => $bouteille) {
       
