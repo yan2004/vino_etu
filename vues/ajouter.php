@@ -5,7 +5,7 @@
         <ul class="listeAutoComplete">
 
         </ul>
-            <!-- <div class="form-ajouter" id="form-ajouter-btl"> -->
+            
             <form name="fAjtBtlCellier" class="form-ajouter" id="form-ajouter-btl">
                 <p>Nom : <span data-id="" class="nom_bouteille"></span></p>
                 <span id="errNom_ajouter"></span> 
@@ -37,7 +37,7 @@
                 
                 <!-- input caché avec id usager -->
                 <input type="hidden" name="courriel_usager" value="<?= $_SESSION["courriel"] ?>">
-            <!-- </div> -->
+            
             </form>
             <button name="ajouterBouteilleCellier" id="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE</button>
         </div>

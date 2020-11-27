@@ -175,6 +175,11 @@ class Controler
 			if(isset($_SESSION['courriel'])){
 				$bte = new Bouteille();
 				$data = $bte->getListeBouteilleCellier();
+
+				// pour afficher le nom d'usager
+				$usager = new Usager();
+				$dataUsager = $usager->getUserByCourriel($_SESSION['courriel']);
+
 				include("vues/entete.php");
 				include("vues/cellier.php");
 				include("vues/pied.php");  

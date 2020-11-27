@@ -12,24 +12,24 @@
 const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
-console.log(BaseURL);
+// console.log(BaseURL);
 
+// initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
 
 window.addEventListener('load', function() {
 
-  
+  // ************************************
+  // DIMINUER LA QUANTITÉ D'UNE BOUTEILLE
+  // ************************************
 
   document.querySelectorAll(".btnBoire").forEach(function(element){
-
 
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
         let id = evt.target.parentElement.dataset.id;
-
         let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
-
         let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
         fetch(requete)
@@ -40,7 +40,6 @@ window.addEventListener('load', function() {
               throw new Error('Erreur');
             }
         })
-        // traitement de la réponse
         .then(response => {
 
           // update de la quantité sur la page
@@ -55,15 +54,17 @@ window.addEventListener('load', function() {
 
   });
 
+  // ***********************************
+  // AJOUTER LA QUANTITÉ D'UNE BOUTEILLE
+  // ***********************************
+
   document.querySelectorAll(".btnAjouter").forEach(function(element){
 
     // requête ajax au click d'un des boutons "ajouter" de la page
     element.addEventListener("click", function(evt){
 
       let id = evt.target.parentElement.dataset.id;
-
       let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
-
       let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
       fetch(requete)
@@ -89,13 +90,19 @@ window.addEventListener('load', function() {
   });
 
 
-  // requête ajax au click d'un des boutons "modifier" de la page
+  // **********************************
+  // MODIFIER LES INFOS D'UNE BOUTEILLE
+  // **********************************
+
+  // TODO : AJOUTER LA FONCTIONNALITÉ D'AUTO-COMPLETE POUR LE NOM DE LA BOUTEILLE
+
   document.querySelectorAll(".btnModifier").forEach(function(element){
 
+    // requête ajax au click d'un des boutons "modifier" de la page
     element.addEventListener("click", function(evt){
 
+      // pour empêcher que le formulaire se soumette (submit) au serveur
       evt.preventDefault();
-
       let id = evt.target.parentElement.dataset.id;
       
       // call ajax
@@ -112,9 +119,7 @@ window.addEventListener('load', function() {
           //let dataBtls = JSON.parse(this.responseText);
           let dataBtls = this.responseText;
           //console.log(dataBtls);
-
           window.location.href = BaseURL+"index.php?requete=formModificationBtl&dataBtls="+dataBtls+"&id="+id;
-          
           }
       }
       xhr.open(method, url, asynchronous);
@@ -122,41 +127,51 @@ window.addEventListener('load', function() {
       xhr.send();
     });
   });
+
+  // *********************************************************
+  // VALIDATIONS DU FORMULAIRE DE MODIFICATION D'UNE BOUTEILLE
+  // *********************************************************
    
+  // construction de l'objet avec les controles qui seront effectués
+  // *** LE NOM N'Y EST PAS, CAR IL Y AURA UN AUTO-COMPLETE ***
   let controlesModifBtl = {
-    //nom:        {requis: true,  regExp: /^[a-zà-ÿ ',\-"]{3,}$/i,                                        msgRegExp: "Au moins 3 caractères."},
     millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
-    quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Veuillez vérifier si numéro entier."},
+    quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
     date_achat: {requis: true,  regExp: /^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/,  msgRegExp: "Format yyyy-mm-dd."},
     prix:       {requis: true,  regExp: /^(0|[1-9]\d*)(\.[0-9]{2})?$/,                                 msgRegExp: "Prix format xx.xx"},
     garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."},
     notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."}
   };
 
-  //if(typeof fMdBtl !== 'undefined'){
+  // si le formulaire est accessible dans le DOM, on effectue les validations
   if(typeof fModificationBtl !== 'undefined'){
-    let fMdBtl = fModificationBtl;
 
-    // *****************************************************************************
+    let fMdBtl = fModificationBtl;
     let btnModifierBtl = document.getElementsByClassName('btnModifierBtl')[0];
 
-
+    // validation des valeurs d'inputs au "change" avec l'objet des controles
     fMdBtl.addEventListener('change', (evt)=>{
       let nomChamp = evt.target.name;
       let controles = controlesModifBtl[nomChamp];
+      // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
       validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
 
-
+    // non
     // fMdBtl.addEventListener("submit", function(evt){
+
+    // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
     btnModifierBtl.addEventListener("click", function(evt){
 
+      // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
       evt.preventDefault();
 
       errForm = false;
-      //validations regex
+
+      // validation avec l'objet de controles
       for(let nomChamp in controlesModifBtl){
         let controles = controlesModifBtl[nomChamp];
+        // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
         validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
       }
 
@@ -166,10 +181,8 @@ window.addEventListener('load', function() {
         document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
       }
 
-      /*** *********************
-      * requête ajax par méthode POST 
-      */
-      const dataBtlEnvoyer = {
+      // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
+      let dataBtlEnvoyer = {
           'btlIdPK':    fMdBtl.btlIdPK.value,
           'nomIdFK':    fMdBtl.nomIdFK.value,
           'nomBtl':     fMdBtl.nom.value,
@@ -181,7 +194,10 @@ window.addEventListener('load', function() {
           'notes':      fMdBtl.notes.value
       }
 
+      // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
       if(!errForm){
+
+        // requête ajax pour envoi des données au serveur pour l'update
         let requete = new Request(BaseURL+"index.php?requete=sauvegardeBouteille", {method: 'POST', body: JSON.stringify(dataBtlEnvoyer)});
 
         fetch(requete)
@@ -197,10 +213,6 @@ window.addEventListener('load', function() {
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
           }
-          // else{
-          //   let eErrCreation = document.getElementById("errSignUpPassword");
-          //   eErrCreation.innerText = response.msg;
-          // }
         })
         .catch(error => {
           // TODO : traitement de l'erreur
@@ -210,10 +222,13 @@ window.addEventListener('load', function() {
     });
   }
 
-   
-  // concernant le formulaire d'ajout d'une bouteille
+  // ******************************************************
+  // AUTOCOMPLETE POUR L'AJOUT DE BOUTEILLE DANS LE CELLIER
+  // ******************************************************
+
   // champ de recherche
   let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
+
   // région d'affichage la liste de suggestions
   let liste = document.querySelector('.listeAutoComplete');
 
@@ -259,16 +274,12 @@ window.addEventListener('load', function() {
       quantite : document.querySelector("[name='quantite']"),
       date_achat : document.querySelector("[name='date_achat']"),
       prix : document.querySelector("[name='prix']"),
-      // garde_jusqua : document.querySelector("[name='garde_jusqua']"),
       garde_jusqua : document.querySelector("[name='garde']"),
       notes : document.querySelector("[name='notes']"),
       courriel : document.querySelector("[name='courriel_usager']"), // courriel de l'usager en session
     };
 
     liste.addEventListener("click", function(evt){
-
-      //console.dir(evt.target)
-      //console.log(evt.target);
 
       if(evt.target.tagName == "LI"){
 
@@ -281,8 +292,7 @@ window.addEventListener('load', function() {
         liste.innerHTML = "";
         inputNomBouteille.value = "";
 
-        // on va cherche le prix de bouteille choisi
-        // et le met dans le champ de Prix
+        // on va cherche le prix de bouteille choisi et le met dans le champ de Prix
         let prix = evt.target.dataset.prix;
         if(document.getElementById('prix_ajouter')){
           let prixEle = document.getElementById('prix_ajouter');
@@ -292,28 +302,38 @@ window.addEventListener('load', function() {
       }
     });
 
-    // gérer la soumission du formulaire d'ajout
+    // **********************************************************
+    // VALIDATIONS DU FORMULAIRE D'AJOUT D'UNE NOUVELLE BOUTEILLE
+    // **********************************************************
+    
     //let fAjtBtlCellier = document.getElementById('form-ajouter-btl');
     if(typeof fAjtBtlCellier !== 'undefined'){
 
       let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
       let fAjtBtlCellier = document.getElementById('form-ajouter-btl');
-      //La valeur par défaut de champ Date, aujourd'hui
+
+      // La valeur par défaut de champ Date, aujourd'hui
       let dateAjtBtl = document.getElementById('date_achat_ajouter');
       dateAjtBtl.valueAsDate = new Date();
 
+      // validation des valeurs d'inputs au "change" avec l'objet des controles
       fAjtBtlCellier.addEventListener('change', (evt)=>{
         let nomChamp = evt.target.name;
+
+        // l'objet de controles est le même que celui pour la modification, car il s'agit des même champs
         let controles = controlesModifBtl[nomChamp];
         validerChamps(fAjtBtlCellier, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
       });
 
+      // validation des valeurs au clic sur le bouton "ajouter", avant l'envoi des infos au serveur
       btnAjouter.addEventListener("click", function(evt){
 
+        // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
         evt.preventDefault();
 
         errForm = false;
-        //validations regex
+
+        // validation avec l'objet de controles
         for(let nomChamp in controlesModifBtl){
           let controles = controlesModifBtl[nomChamp];
           validerChamps(fAjtBtlCellier, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
@@ -325,7 +345,7 @@ window.addEventListener('load', function() {
           document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
         }
 
-        //validation spéciale pour le nom
+        //validation spéciale pour le nom : obligatoire seulement, car il s'agit d'un autocomplete
         let spanNom = document.getElementsByClassName('nom_bouteille')[0];
         if(spanNom.innerText === ""){
           errForm = true;
@@ -343,13 +363,15 @@ window.addEventListener('load', function() {
           "millesime":bouteille.millesime.value,
           "courriel":bouteille.courriel.value,
         };
+
+        // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur la nouvelle bouteille
         if(!errForm){
+
           // requete ajax pour ajouter une bouteille dans le cellier
           let requete = new Request(BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
 
           fetch(requete)
           .then(response => {
-
             if (response.status === 200) {
               return response;
               // return response.text();
@@ -359,11 +381,8 @@ window.addEventListener('load', function() {
           })
           .then(response => {
 
-            // console.log(response);
-
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
-          
           })
           .catch(error => {
             console.error(error);
@@ -373,14 +392,12 @@ window.addEventListener('load', function() {
     }
   }
 
-  /**
-   * *********************
-   * validation de formulaire de modification du compte 
-   * *********************
-   */
+  // ********************************************************************
+  // VALIDATIONS DU FORMULAIRE DE MODIFICATION DES INFOS DU COMPTE USAGER
+  // ********************************************************************
+
   if(typeof fCompte !== 'undefined'){
 
-    
     let f = fCompte;
     let erreurCmpt = false;
 
@@ -458,36 +475,63 @@ window.addEventListener('load', function() {
 
       if (msgErr !== "") erreurCmpt = true
    }
-  });
 
-  /**
-   * Fonction de validation des champs et gestion du message d'erreur
-   * @param {*} idForm 
-   * @param {*} nomChamp 
-   * @param {*} requis 
-   * @param {*} regExp 
-   * @param {*} msgRegExp 
-   */
-  function validerChamps(form, nomChamp, requis=false, regExp=null, msgRegExp=null){
 
-    let val = "";
-    let e = form[nomChamp];
+  // *********************************************************************************************************
+  // REQUET AJAX AU CLIC DU BOUTON "CALL TO ACTION" POUR OUVRIR LE FORMULAIRE D'AJOUT D'UNE NOUVELLE BOUTEILLE
+  // *********************************************************************************************************
 
-    // recuperation de la valeur du champ
-    e.value = e.value.trim();
-    val = e.value;
+  if(document.getElementById('btnCallActionAjt'))
+  {
+    let btnCallActionAjt = document.getElementById('btnCallActionAjt');
+    btnCallActionAjt.addEventListener("click", function(evt){
 
-    // gestion de l'affichage des messages d'erreur
-    let msgErr = "";
-    if (val === "" && requis){
-      msgErr = "Obligatoire";
-    } else if (regExp !== null && !regExp.test(val) && val !== ""){
-      msgErr = msgRegExp;
-    }
-  
-    let idSpan = "err" + nomChamp[0].toUpperCase() + nomChamp.substring(1);
-    document.getElementById(idSpan).innerHTML = msgErr;
+      let url = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
+      fetch(url)
+      .then(res=>{
+        window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
-    if (msgErr !== "") errForm = true;
+    });
   }
-  
+
+});
+
+// ************************************
+// FONCTIONS UTILISÉES DANS LE DOCUMENT
+// ************************************
+
+/**
+ * Fonction de validation des champs et gestion des messages d'erreur
+ * @param {*} idForm 
+ * @param {*} nomChamp 
+ * @param {*} requis 
+ * @param {*} regExp 
+ * @param {*} msgRegExp 
+ */
+function validerChamps(form, nomChamp, requis=false, regExp=null, msgRegExp=null){
+
+  let val = "";
+  let e = form[nomChamp];
+
+  // recuperation de la valeur du champ
+  e.value = e.value.trim();
+  val = e.value;
+
+  // gestion de l'affichage des messages d'erreur
+  let msgErr = "";
+  if (val === "" && requis){
+    msgErr = "Obligatoire";
+  } else if (regExp !== null && !regExp.test(val) && val !== ""){
+    msgErr = msgRegExp;
+  }
+
+  // construction du nom du span où sera affiché l'erreur
+  let idSpan = "err" + nomChamp[0].toUpperCase() + nomChamp.substring(1);
+  document.getElementById(idSpan).innerHTML = msgErr;
+
+  if (msgErr !== "") errForm = true;
+}
