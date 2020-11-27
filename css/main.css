@@ -332,6 +332,16 @@ form button:hover, .form-ajouter button:hover{
     flex-direction: column;
 }
 
+/* BOUTON CALL2ACTION AJOUTER BOUTEILLE*/
+.btn-call-action{
+	text-transform: uppercase;
+	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
+	transition: 0.6s;
+}
+.btn-call-action:hover{
+	background-position: right;
+}
+
 
 /* AUTRES FORMATS */
 
