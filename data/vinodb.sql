@@ -88,7 +88,7 @@ CREATE TABLE `vino__usager`
 -- courriel : admin_pw2@cmaisonneuve.qc.ca
 -- mot de passe : sm1994
 
--- INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
+INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
 
 
 -- -----------------------------------------------------
