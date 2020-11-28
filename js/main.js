@@ -8,8 +8,8 @@
  *
  */
 
-const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+// const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // console.log(BaseURL);
@@ -138,7 +138,7 @@ window.addEventListener('load', function() {
     millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
     quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
     date_achat: {requis: true,  regExp: /^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/,  msgRegExp: "Format yyyy-mm-dd."},
-    prix:       {requis: true,  regExp: /^(0|[1-9]\d*)(\.[0-9]{2})?$/,                                 msgRegExp: "Prix format xx.xx"},
+    prix:       {requis: true,  regExp: /^(0|[1-9]\d*)(\.[0-9]{2})$/,                                  msgRegExp: "Prix format xx.xx"},
     garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."},
     notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."}
   };
@@ -156,9 +156,6 @@ window.addEventListener('load', function() {
       // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
       validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
-
-    // non
-    // fMdBtl.addEventListener("submit", function(evt){
 
     // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
     btnModifierBtl.addEventListener("click", function(evt){
@@ -212,7 +209,15 @@ window.addEventListener('load', function() {
           if(response.success){
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
+
+          // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
+          // ********************************************************************************
+          }else{
+            // messages d'erreur provenant des validations back-end
+            let eSpanErrAjout = document.getElementById("errNotes");
+            eSpanErrAjout.innerText = response.msg;
           }
+          // *******************************************************************************
         })
         .catch(error => {
           // TODO : traitement de l'erreur
@@ -373,7 +378,7 @@ window.addEventListener('load', function() {
           fetch(requete)
           .then(response => {
             if (response.status === 200) {
-              return response;
+              return response.json();
               // return response.text();
             } else {
               throw new Error('Erreur');
@@ -381,8 +386,22 @@ window.addEventListener('load', function() {
           })
           .then(response => {
 
+            // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
+            // ********************************************************************************
+            if(response.success) {
+              
+              // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+              window.location = BaseURL+"index.php?requete=accueilUsager";
+            }else{
+              // messages d'erreur provenant des validations back-end
+              let eSpanErrAjout = document.getElementById("errNotes");
+              eSpanErrAjout.innerText = response.msg;
+            }
+            // *******************************************************************************
+
+            // ANCIEN CODE SANS VALIDATIONS BACK END:
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
+            // window.location = BaseURL+"index.php?requete=accueilUsager";
           })
           .catch(error => {
             console.error(error);
