@@ -142,10 +142,6 @@ class Bouteille extends Modele {
      */
     public function ajouterBouteilleCellier($data)
     {
-        // TODO : Valider les données, car lorsqu'on entre un prix avec une virgule (par exemple) la requête ne passe pas, mais avec un point il comprend
-
-		// echo $data;
-		// echo $data->courriel;
 		
 		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
 		$res = $this->_db->query($requete);
@@ -188,7 +184,6 @@ class Bouteille extends Modele {
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
-		// TODO : Valider les données.
 		
 		// filtrer les donnees de l'usager
 		$id = $this->filtre($id);
@@ -262,6 +257,40 @@ class Bouteille extends Modele {
 		}
 
 		return $rows;
+	}
+
+	/**
+     * Cette méthode supprime une bouteille (tuile entière) du cellier
+     * 
+     * @param Object $data Tableau des données représentants la bouteille.
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
+    public function supprimerBouteilleCellier($data){
+
+		// filtrer les donnees de l'usager
+		$data->id = $this->filtre($data->id);
+
+		// recuperation de l'id de l'usager en session
+		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $_SESSION["courriel"] . "'";
+		$res = $this->_db->query($requete);
+		
+		if($res->num_rows == 1){
+			$row = $res->fetch_assoc();
+			$id_usager = $row["id"];
+
+			// echo $id_usager;
+			// echo $data->id;
+
+			$requete = "DELETE FROM vino__bouteille__collection WHERE id =" . $data->id . " AND id_usager =" . $id_usager;
+
+			$res = $this->_db->query($requete);
+
+			return $res == 1;
+
+		}
+		
+		
 	}
 	
 }

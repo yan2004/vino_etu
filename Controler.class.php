@@ -48,6 +48,9 @@ class Controler
 				case 'sauvegardeBouteille':
 					$this->sauvegardeBouteille();
 					break;
+				case 'supprimerBouteilleCellier':
+					$this->supprimerBouteilleCellier();
+					break;
 				case 'accueilUsager':
 					$this->accueilUsager();
 				    break;
@@ -351,23 +354,6 @@ class Controler
 		// }
 		// *******************************************************************
 
-		// TEMPORAIRE
-		// if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
-		// 			&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
-
-		// 			// test regex
-		// 			$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
-		// 			$regexQuantite = '/^(0|[1-9]\d*)$/';
-		// 			$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
-					
-		// 			if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat)){
-
-		// 				$bte = new Bouteille();
-
-		// 				$resultat = $bte->ajouterBouteilleCellier($body);
-
-		// 				if($resultat){
-
 		private function sauvegardeBouteille()
 		{
 			$requestPayload = file_get_contents('php://input');
@@ -415,6 +401,41 @@ class Controler
 			}
 		}
 
+		// ********************************************************
+		private function supprimerBouteilleCellier(){
+
+			$body = json_decode(file_get_contents('php://input'));
+
+			if(isset($_SESSION['courriel']) && isset($body->id)){
+
+				$bte = new Bouteille();
+
+				$resultat = $bte->supprimerBouteilleCellier($body);
+
+				if($resultat){
+					$responseObj = new stdClass();
+					$responseObj->success = true;
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Impossible de supprimer la bouteille.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
+			}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "Paramètres manquants.";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
+			}
+
+			
+		}
+		// ********************************************************
+
 		private function modifierCompte()
 		{
 			$usager = new Usager();
@@ -456,8 +477,6 @@ class Controler
 
 			$this->accueil();
 		}
-
-
 }
 ?>
 

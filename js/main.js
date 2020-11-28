@@ -63,6 +63,7 @@ window.addEventListener('load', function() {
     // requête ajax au click d'un des boutons "ajouter" de la page
     element.addEventListener("click", function(evt){
 
+      // recuperer l'id de la bouteille
       let id = evt.target.parentElement.dataset.id;
       let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
       let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
@@ -85,6 +86,43 @@ window.addEventListener('load', function() {
       .catch(error => {
         console.error(error);
       });
+    });
+
+  });
+
+  // **********************************
+  // SUPPRIMER UNE BOUTEILLE DU CELLIER
+  // **********************************
+
+  document.querySelectorAll(".btnSupprimer").forEach(function(element){
+
+    // requête ajax au click d'un des boutons "boire" de la page
+    element.addEventListener("click", function(evt){
+
+        let id = evt.target.parentElement.dataset.id;
+
+        let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+        let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+
+        fetch(requete)
+        .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              throw new Error('Erreur');
+            }
+        })
+        .then(response => {
+          if(response.success){
+            // supprimer la bouteille du DOM
+            laBouteille.remove();
+          }else{
+            throw response.msg;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     });
 
   });
