@@ -326,26 +326,93 @@ class Controler
 			   
 		 }
 
+		// CODE D'AVANT SANS LES VALIDATIONS BACK-END
+		// *******************************************************************
+		// private function sauvegardeBouteille()
+		// {
+		// 	$requestPayload = file_get_contents('php://input');
+		// 	$object = json_decode($requestPayload, true);
+		// 	//var_dump($object);
+
+		// 	$bte = new Bouteille();
+		// 	$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+			
+		// 	//test
+		// 	$responseObj = new stdClass();
+		// 	if($resultat){
+		// 		$responseObj->success = true;
+		// 	}
+		// 	else{
+		// 		$responseObj->success = false;
+		// 	}
+		// 	echo json_encode($responseObj);
+		// 	// $this->accueilUsager();
+
+		// }
+		// *******************************************************************
+
+		// TEMPORAIRE
+		// if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
+		// 			&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
+
+		// 			// test regex
+		// 			$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
+		// 			$regexQuantite = '/^(0|[1-9]\d*)$/';
+		// 			$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+					
+		// 			if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat)){
+
+		// 				$bte = new Bouteille();
+
+		// 				$resultat = $bte->ajouterBouteilleCellier($body);
+
+		// 				if($resultat){
+
 		private function sauvegardeBouteille()
 		{
 			$requestPayload = file_get_contents('php://input');
 			$object = json_decode($requestPayload, true);
 			//var_dump($object);
 
-			$bte = new Bouteille();
-			$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
-			
-			//test
-			$responseObj = new stdClass();
-			if($resultat){
-				$responseObj->success = true;
-			}
-			else{
-				$responseObj->success = false;
-			}
-			echo json_encode($responseObj);
-			// $this->accueilUsager();
+			if(isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
+				&& !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
 
+				// test regex
+				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
+				$regexQuantite = '/^(0|[1-9]\d*)$/';
+				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+
+				if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat'])){
+
+					$bte = new Bouteille();
+					$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+					
+					if($resultat){
+						$responseObj = new stdClass();
+						$responseObj->success = true;
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}else{
+						$responseObj = new stdClass();
+						$responseObj->success = false;
+						$responseObj->msg = "Impossible de modifier cette bouteille.";
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Un ou plusieurs champs invalides.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
+			}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
+			}
 		}
 
 		private function modifierCompte()

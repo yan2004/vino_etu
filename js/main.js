@@ -157,9 +157,6 @@ window.addEventListener('load', function() {
       validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
 
-    // non
-    // fMdBtl.addEventListener("submit", function(evt){
-
     // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
     btnModifierBtl.addEventListener("click", function(evt){
 
@@ -212,7 +209,15 @@ window.addEventListener('load', function() {
           if(response.success){
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
+
+          // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
+          // ********************************************************************************
+          }else{
+            // messages d'erreur provenant des validations back-end
+            let eSpanErrAjout = document.getElementById("errNotes");
+            eSpanErrAjout.innerText = response.msg;
           }
+          // *******************************************************************************
         })
         .catch(error => {
           // TODO : traitement de l'erreur
