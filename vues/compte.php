@@ -22,6 +22,9 @@
                 <input type="password" name="mot_de_passe_conf" id="mot_de_passe_conf">
                 <span id="errConf"></span>
                 
-                <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button>
+                <div class="forms-btns">
+                        <button value="Annuler" class="btnAnnuler">ANNULER</button>
+                        <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button>
+                </div>
         </form>
 </div>

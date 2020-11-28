@@ -34,7 +34,10 @@
                 <input type="text" name="notes" id="notes" value="<?php echo $data[0]['notes']; ?>">
                 <span id="errNotes"></span>
                 
-                <button value="Modifier" class="btnModifierBtl">MODIFIER</button>
+                <div class="forms-btns">
+                        <button value="Annuler" class="btnAnnuler">ANNULER</button>
+                        <button value="Modifier" class="btnModifierBtl">MODIFIER</button>
+                </div>
         </form>
     
 </div>

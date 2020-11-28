@@ -195,6 +195,13 @@ window.addEventListener('load', function() {
       validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
 
+    // redirection à l'accueil (cellier) au clic sur le bouton "annuler"
+    let btnAnnuler = document.querySelector(".btnAnnuler");
+    btnAnnuler.addEventListener("click", function(evt){
+      evt.preventDefault();
+      window.location.href = BaseURL+"index.php?requete=accueilUsager";
+    });
+    
     // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
     btnModifierBtl.addEventListener("click", function(evt){
 
@@ -368,6 +375,13 @@ window.addEventListener('load', function() {
         validerChamps(fAjtBtlCellier, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
       });
 
+      // redirection à l'accueil (cellier) au clic sur le bouton "annuler"
+      let btnAnnuler = document.querySelector(".btnAnnuler");
+      btnAnnuler.addEventListener("click", function(evt){
+        evt.preventDefault();
+        window.location.href = BaseURL+"index.php?requete=accueilUsager";
+      });
+      
       // validation des valeurs au clic sur le bouton "ajouter", avant l'envoi des infos au serveur
       btnAjouter.addEventListener("click", function(evt){
 
@@ -564,6 +578,8 @@ window.addEventListener('load', function() {
   }
 
 });
+
+
 
 // ************************************
 // FONCTIONS UTILISÉES DANS LE DOCUMENT
