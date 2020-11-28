@@ -331,6 +331,10 @@ input{
 form button:hover, .form-ajouter button:hover{
     background-color: #C3979F;
 }
+form h3{
+    color: #511730;
+}
+
 
 
 /* AJOUTER BOUTEILLE  */
@@ -351,11 +355,8 @@ form button:hover, .form-ajouter button:hover{
 	text-transform: uppercase;
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
     transition: 0.6s;
-
     width: 90%;
     font-size: 0.4em;
-    
-    /* margin-left: auto; */
 }
 .btn-call-action:hover{
 	background-position: right;

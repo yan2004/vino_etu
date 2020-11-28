@@ -6,9 +6,9 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('load', function(){
 
@@ -45,10 +45,10 @@ window.addEventListener('load', function(){
   // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
   // ***************************************************
   let controlesCreation = {
-    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, msgRegExp: "Courriel invalide."},
-    nom:        {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,             msgRegExp: "Au moins 2 caractères alphabétiques."},
-    prenom:     {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,             msgRegExp: "Au moins 2 caractères alphabétiques."},
-    password:   {requis: true, regExp: /^[0-9a-z]{4,}$/i,                   msgRegExp: "Au moins 4 caractères alphanumériques."}
+    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,       msgRegExp: "Courriel invalide."},
+    nom:        {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
+    prenom:     {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
+    password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
   };
 
   // validations inputs au change

@@ -80,7 +80,7 @@ class Controler
 				// test regex
 				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexPassword = '/^[0-9a-z]{4,}$/i';
+				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i';
 
 				if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
 
@@ -130,7 +130,7 @@ class Controler
 				// test regex
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
 				$regexNomPrenom = '/^[a-zà-ÿ]{2,}$/i';
-				$regexPassword = '/^[0-9a-z]{4,}$/i';
+				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i';
 
 				if (preg_match($regexCourriel, $body->courriel) && preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && preg_match($regexPassword, $body->password)){
 					$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
@@ -236,7 +236,7 @@ class Controler
 					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
 
 					// test regex
-					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
+					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 					
@@ -378,7 +378,7 @@ class Controler
 				&& !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
 
 				// test regex
-				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
+				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 
