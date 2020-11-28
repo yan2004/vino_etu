@@ -373,7 +373,7 @@ window.addEventListener('load', function() {
           fetch(requete)
           .then(response => {
             if (response.status === 200) {
-              return response;
+              return response.json();
               // return response.text();
             } else {
               throw new Error('Erreur');
@@ -381,8 +381,22 @@ window.addEventListener('load', function() {
           })
           .then(response => {
 
+            // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
+            // ********************************************************************************
+            if(response.success) {
+              
+              // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+              window.location = BaseURL+"index.php?requete=accueilUsager";
+            }else{
+              // messages d'erreur provenant des validations back-end
+              let eSpanErrAjout = document.getElementById("errNotes");
+              eSpanErrAjout.innerText = response.msg;
+            }
+            // *******************************************************************************
+
+            // ANCIEN CODE SANS VALIDATIONS BACK END:
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
+            // window.location = BaseURL+"index.php?requete=accueilUsager";
           })
           .catch(error => {
             console.error(error);

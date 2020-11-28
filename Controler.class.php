@@ -203,18 +203,80 @@ class Controler
             echo json_encode($listeBouteille);    
 		}
 
+		// ANCIEN CODE SANS VALIDATIONS BACK :
+		// *******************************************************
+		// private function ajouterNouvelleBouteilleCellier()
+		// {
+		// 	$body = json_decode(file_get_contents('php://input'));
+			
+		// 	if(!empty($body)){
+
+		// 		$bte = new Bouteille();
+
+		// 		$resultat = $bte->ajouterBouteilleCellier($body);
+		// 		echo json_encode($resultat);
+		// 	}
+		// 	else{
+		// 		include("vues/entete.php");
+		// 		include("vues/ajouter.php");
+		// 		include("vues/pied.php");
+		// 	}
+		// }
+		// ******************************************************
+
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
-			
+
 			if(!empty($body)){
 
-				$bte = new Bouteille();
+				// NOUVEAU CODE AVEC VALIDATIONS BACK END POUR LES CHAMPS :
+				// *********************************************************
+				if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
+					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
 
-				$resultat = $bte->ajouterBouteilleCellier($body);
-				echo json_encode($resultat);
-			}
-			else{
+					// test regex
+					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})?$/';
+					$regexQuantite = '/^(0|[1-9]\d*)$/';
+					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+					
+					if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat)){
+
+						$bte = new Bouteille();
+
+						$resultat = $bte->ajouterBouteilleCellier($body);
+
+						if($resultat){
+							$responseObj = new stdClass();
+							$responseObj->success = true;
+							$responseJSON = json_encode($responseObj);
+							echo $responseJSON;
+						}else{
+							$responseObj = new stdClass();
+							$responseObj->success = false;
+							$responseObj->msg = "Impossible d'ajouter cette bouteille.";
+							$responseJSON = json_encode($responseObj);
+							echo $responseJSON;
+						}
+					}else{
+						$responseObj = new stdClass();
+						$responseObj->success = false;
+						$responseObj->msg = "Un ou plusieurs champs invalides.";
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+					
+				}
+				// *********************************************************
+				
+			}else{
+				// echo json_encode($resultat);
 				include("vues/entete.php");
 				include("vues/ajouter.php");
 				include("vues/pied.php");
