@@ -8,8 +8,8 @@
  *
  */
 
-//const BaseURL = "http://localhost:8888/vino/vino_etu/";
-const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+const BaseURL = "http://localhost:8888/vino/vino_etu/";
+//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // console.log(BaseURL);
@@ -415,9 +415,10 @@ window.addEventListener('load', function() {
   // VALIDATIONS DU FORMULAIRE DE MODIFICATION DES INFOS DU COMPTE USAGER
   // ********************************************************************
 
-  if(typeof fCompte !== 'undefined'){
+  if(document.getElementById('fCompte')){
 
-    let f = fCompte;
+    let f = document.getElementById('fCompte');
+    
     let erreurCmpt = false;
 
     f.addEventListener('change', (evt)=>{
@@ -433,6 +434,7 @@ window.addEventListener('load', function() {
       nomValider();
       prenomValider();
       mot_de_passeValider();
+      mot_de_passe_confValider();
 
       if (erreurCmpt) evt.preventDefault();
 
@@ -440,58 +442,64 @@ window.addEventListener('load', function() {
   }
    function nomValider() {
      let msgErr = "";
-     let val = f.nom.value.trim();
+     let val = document.querySelector('#fCompte #nom').value.trim();
      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
      
      //Vérifier si au moins deux caractères
      let l = val.length;
-     if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+     if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
 
       //Vérifier si les caractères de séparation sont suivantes
       if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
       }
      
      document.getElementById('errNom').innerHTML = msgErr;
-
      if (msgErr !== "") erreurCmpt = true;
    }
 
    function prenomValider() {
       let msgErr = "";
-      let val = f.prenom.value.trim();
+      let val = document.querySelector('#fCompte #prenom').value.trim();
       let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
       
       //Vérifier si au moins deux caractères
       let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+      if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
 
       //Vérifier si les caractères de séparation sont suivantes
       if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
       }
       
       document.getElementById('errPrenom').innerHTML = msgErr;
-
       if (msgErr !== "") erreurCmpt = true;
    }
 
    function mot_de_passeValider() {
       let msgErr = "";
-      let val = f.mot_de_passe.value.trim();
-      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-      
-      //Vérifier si au moins deux caractères
-      let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques";
+      let val = document.querySelector('#fCompte #mot_de_passe').value.trim();
 
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent.";
+      if(val.length < 5) {
+        msgErr = "Au moins 5 caractères!";
       }
-      
-      document.getElementById('errMDP').innerHTML = msgErr;
+      if(val.search(/[a-z]/i) < 0) {
+        msgErr = "Au moins 1 lettres!"
+      }
+      if(val.search(/[0-9]/) < 0) {
+        msgErr = "Au moin 1 chiffre!"
+      }
 
+      document.getElementById('errMDP').innerHTML = msgErr;
+      if (msgErr !== "") erreurCmpt = true
+   }
+
+   function mot_de_passe_confValider() {
+      let msgErr  = "";
+      let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
+      let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+      if(valConf !== val) msgErr = "Mot de passe et Confirmation ne correspond pas!";
+      document.getElementById('errConf').innerHTML = msgErr;
       if (msgErr !== "") erreurCmpt = true
    }
 
