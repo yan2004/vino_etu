@@ -55,13 +55,8 @@ class Usager extends Modele {
 		{
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
 		}
-
 		return $rows;
-
     }
-
-
-	
 }
 
 ?>

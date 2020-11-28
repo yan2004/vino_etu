@@ -31,7 +31,6 @@ class Bouteille extends Modele {
 				$rows[] = $row;
 			}
 		}
-
 		return $rows;
 	}
 	
@@ -44,7 +43,6 @@ class Bouteille extends Modele {
 	 */
 	public function getListeBouteilleCellier()
 	{
-		
 		$rows = Array();
 		$requete ='SELECT 
 						c.id as id_bouteille_collection,
@@ -85,9 +83,7 @@ class Bouteille extends Modele {
 		else 
 		{
 			throw new Exception("Erreur de requête sur la base de donnée", 1);
-
 		}
-
 		return $rows;
 	}
 	
@@ -101,10 +97,8 @@ class Bouteille extends Modele {
 	 * 
 	 * @return array id et nom de la bouteille trouvée dans le catalogue
 	 */
-
 	public function autocomplete($nom, $nb_resultat=10)
 	{
-		
 		$rows = Array();
 		$nom = $this->_db->real_escape_string($nom);
 		$nom = preg_replace("/\*/","%" , $nom);
@@ -119,16 +113,13 @@ class Bouteille extends Modele {
 				{
 					$row['nom'] = trim(utf8_encode($row['nom']));
 					$rows[] = $row;
-					
 				}
 			}
 		}
 		else 
 		{
-			throw new Exception("Erreur de requête sur la base de données", 1);
-			 
+			throw new Exception("Erreur de requête sur la base de données", 1); 
 		}
-
 		return $rows;
 	}
     
@@ -142,7 +133,18 @@ class Bouteille extends Modele {
      */
     public function ajouterBouteilleCellier($data)
     {
+		// filtrer les donnees de l'usager
+		$data->millesime = $this->filtre($data->millesime);
+		$data->id_bouteille = $this->filtre($data->id_bouteille);
+		$data->date_achat = $this->filtre($data->date_achat);
+		$data->garde_jusqua = $this->filtre($data->garde_jusqua);
+		$data->notes = $this->filtre($data->notes);
+		$data->prix = $this->filtre($data->prix);
+		$data->quantite = $this->filtre($data->quantite);
+		$id_usager = $this->filtre($id_usager);
 		
+		// TODO : PRENDRE LE COURRIEL EN SESSION À LA PLACE DE VIA DATA
+
 		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
 		$res = $this->_db->query($requete);
 		if($res->num_rows == 1)
@@ -159,7 +161,6 @@ class Bouteille extends Modele {
 			"'".$data->notes."',".
 			"'".$data->prix."',".
 			"'".$data->quantite."',".
-			// "'".$data->millesime."',".
 			$data->millesime.",".
 			"'".$id_usager."')";
 
@@ -191,9 +192,7 @@ class Bouteille extends Modele {
 
         // creation de l'objet de la reponse
         $reponseObj = new stdClass();
-
         $requete = "UPDATE vino__bouteille__collection SET quantite = GREATEST(quantite + ". $nombre. ", 0) WHERE id = ". $id;
-
         $res = $this->_db->query($requete);
 
         if($res){
@@ -202,11 +201,9 @@ class Bouteille extends Modele {
             $reponseObj->success = true;
 
             $requete = "SELECT quantite FROM vino__bouteille__collection WHERE id =" . $id;
-
             $reponse = $this->_db->query($requete);
 
             if($reponse->num_rows){
-
                 $row = $reponse->fetch_assoc();
                 $quantite = $row['quantite'];
 
@@ -216,7 +213,6 @@ class Bouteille extends Modele {
         } else {
             $reponseObj->success = false;
         }
-
         return $reponseObj;
 	}
 	
@@ -231,6 +227,15 @@ class Bouteille extends Modele {
      */
 	public function modificationInfoBtl($id,$date_achat,$garde_jusqua,$notes,$prix,$quantite,$millesime)
 	{
+		// filtrer les donnees de l'usager
+		$id = $this->filtre($id);
+		$date_achat = $this->filtre($date_achat);
+		$garde_jusqua = $this->filtre($garde_jusqua);
+		$notes = $this->filtre($notes);
+		$prix = $this->filtre($prix);
+		$quantite = $this->filtre($quantite);
+		$millesime = $this->filtre($millesime);
+
 		// vu que le type de millesime est un INT, on doit mettre NULL si le champs d'est pas rempli (sinon "" est une erreur, car ça reste un string même si vide)
 		if(empty($millesime)) $millesime = 'NULL';
 
@@ -240,8 +245,13 @@ class Bouteille extends Modele {
 		return $res;
 	}
 
+	// TODO : DOCUMENTER CETTE FONCTION :
+
 	public function getListeBouteilleCellierById($id)
 	{
+		// filtrer les donnees de l'usager
+		$id = $this->filtre($id);
+
 		$rows = Array();
 		$requete = "SELECT c.*, b.nom FROM vino__bouteille__collection c
 					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
@@ -255,7 +265,6 @@ class Bouteille extends Modele {
 				$rows[] = $row;
 			}
 		}
-
 		return $rows;
 	}
 
@@ -283,16 +292,10 @@ class Bouteille extends Modele {
 			// echo $data->id;
 
 			$requete = "DELETE FROM vino__bouteille__collection WHERE id =" . $data->id . " AND id_usager =" . $id_usager;
-
 			$res = $this->_db->query($requete);
-
 			return $res == 1;
-
 		}
-		
-		
 	}
-	
 }
 
 ?>

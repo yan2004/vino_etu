@@ -206,35 +206,12 @@ class Controler
             echo json_encode($listeBouteille);    
 		}
 
-		// ANCIEN CODE SANS VALIDATIONS BACK :
-		// *******************************************************
-		// private function ajouterNouvelleBouteilleCellier()
-		// {
-		// 	$body = json_decode(file_get_contents('php://input'));
-			
-		// 	if(!empty($body)){
-
-		// 		$bte = new Bouteille();
-
-		// 		$resultat = $bte->ajouterBouteilleCellier($body);
-		// 		echo json_encode($resultat);
-		// 	}
-		// 	else{
-		// 		include("vues/entete.php");
-		// 		include("vues/ajouter.php");
-		// 		include("vues/pied.php");
-		// 	}
-		// }
-		// ******************************************************
-
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
 
 			if(!empty($body)){
 
-				// NOUVEAU CODE AVEC VALIDATIONS BACK END POUR LES CHAMPS :
-				// *********************************************************
 				if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
 					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
 
@@ -276,7 +253,7 @@ class Controler
 					echo $responseJSON;
 					
 				}
-				// *********************************************************
+
 				
 			}else{
 				// echo json_encode($resultat);
@@ -329,31 +306,6 @@ class Controler
 			   
 		 }
 
-		// CODE D'AVANT SANS LES VALIDATIONS BACK-END
-		// *******************************************************************
-		// private function sauvegardeBouteille()
-		// {
-		// 	$requestPayload = file_get_contents('php://input');
-		// 	$object = json_decode($requestPayload, true);
-		// 	//var_dump($object);
-
-		// 	$bte = new Bouteille();
-		// 	$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
-			
-		// 	//test
-		// 	$responseObj = new stdClass();
-		// 	if($resultat){
-		// 		$responseObj->success = true;
-		// 	}
-		// 	else{
-		// 		$responseObj->success = false;
-		// 	}
-		// 	echo json_encode($responseObj);
-		// 	// $this->accueilUsager();
-
-		// }
-		// *******************************************************************
-
 		private function sauvegardeBouteille()
 		{
 			$requestPayload = file_get_contents('php://input');
@@ -401,7 +353,6 @@ class Controler
 			}
 		}
 
-		// ********************************************************
 		private function supprimerBouteilleCellier(){
 
 			$body = json_decode(file_get_contents('php://input'));
@@ -434,7 +385,7 @@ class Controler
 
 			
 		}
-		// ********************************************************
+
 
 		private function modifierCompte()
 		{
