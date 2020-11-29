@@ -225,9 +225,10 @@ class Bouteille extends Modele {
      * 
      * @return Boolean Succès ou échec de l'ajout.
      */
-	public function modificationInfoBtl($id,$date_achat,$garde_jusqua,$notes,$prix,$quantite,$millesime)
+	public function modificationInfoBtl($nom,$id,$date_achat,$garde_jusqua,$notes,$prix,$quantite,$millesime)
 	{
 		// filtrer les donnees de l'usager
+		$nom = $this->filtre($nom);
 		$id = $this->filtre($id);
 		$date_achat = $this->filtre($date_achat);
 		$garde_jusqua = $this->filtre($garde_jusqua);
@@ -239,10 +240,22 @@ class Bouteille extends Modele {
 		// vu que le type de millesime est un INT, on doit mettre NULL si le champs d'est pas rempli (sinon "" est une erreur, car ça reste un string même si vide)
 		if(empty($millesime)) $millesime = 'NULL';
 
-		$requete = "UPDATE vino__bouteille__collection SET date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime=". $millesime ." WHERE id=". $id;
-		//echo $requete;
+		// récupération de l'id de la bouteille avec le nom reçu
+		$requete = "SELECT id FROM vino__bouteille WHERE nom ='" . $nom . "'";
 		$res = $this->_db->query($requete);
-		return $res;
+
+		// si nous avons trouvé un id on l'ajoute aux paramètres pour modifier la bouteille
+		if($res->num_rows == 1){
+			$row = $res->fetch_assoc();
+			$id_bouteille = $row["id"];
+
+			$requete = "UPDATE vino__bouteille__collection SET id_bouteille=" .$id_bouteille . ",date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime=". $millesime ." WHERE id=". $id;
+			//echo $requete;
+			$res = $this->_db->query($requete);
+			return $res;
+		}else{
+			return false;
+		}
 	}
 
 	// TODO : DOCUMENTER CETTE FONCTION :

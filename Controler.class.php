@@ -39,9 +39,6 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
-				case 'modifierBouteilleCellier':
-					$this->modifierBouteilleCellier();
-					break;
 				case 'formModificationBtl':
 				 	$this->formModificationBtl();
 					 break;
@@ -281,29 +278,14 @@ class Controler
 			echo json_encode($resultat);
 		}
 
-		private function modifierBouteilleCellier()
-		{
-			$bte = new Bouteille();
-			$data = $bte->getListeBouteilleCellierById($_GET['id']);
-			echo json_encode($data);
-
-			//  include("vues/entete.php");
-			//  include("vues/modificationBtl.php");
-			//  include("vues/pied.php");
-			
-		}
-
 		 private function formModificationBtl()
 		 {
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellierById($_GET['id']);
 			
-			   $data =json_decode($_GET['dataBtls'], true);
-			   //var_dump($data[0]);
-		
-			   include("vues/entete.php");
-			   include("vues/modificationBtl.php");
-			   include("vues/pied.php");
-			  
-			   
+			include("vues/entete.php");
+			include("vues/modificationBtl.php");
+			include("vues/pied.php");
 		 }
 
 		private function sauvegardeBouteille()
@@ -312,8 +294,8 @@ class Controler
 			$object = json_decode($requestPayload, true);
 			//var_dump($object);
 
-			if(isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
-				&& !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
+			if(isset($object['nomBtl']) && isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
+				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
 
 				// test regex
 				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
@@ -323,7 +305,7 @@ class Controler
 				if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat'])){
 
 					$bte = new Bouteille();
-					$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+					$resultat = $bte->modificationInfoBtl($object['nomBtl'],$object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
 					
 					if($resultat){
 						$responseObj = new stdClass();

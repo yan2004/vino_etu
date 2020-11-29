@@ -142,27 +142,8 @@ window.addEventListener('load', function() {
       // pour empêcher que le formulaire se soumette (submit) au serveur
       evt.preventDefault();
       let id = evt.target.parentElement.dataset.id;
-      
-      // call ajax
-      let xhr = new XMLHttpRequest();
-      let method = "GET";
-      let url = BaseURL+"index.php?requete=modifierBouteilleCellier&id="+id;
-      //let url = BaseURL+"index.php?requete=formModificationBtl";
-      let asynchronous = true;
-      // receiving response from url
-      xhr.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-          
-          //converting JSON back to array
-          //let dataBtls = JSON.parse(this.responseText);
-          let dataBtls = this.responseText;
-          //console.log(dataBtls);
-          window.location.href = BaseURL+"index.php?requete=formModificationBtl&dataBtls="+dataBtls+"&id="+id;
-          }
-      }
-      xhr.open(method, url, asynchronous);
-      // Sending ajax request
-      xhr.send();
+
+      window.location.href = BaseURL+"index.php?requete=formModificationBtl&id="+id;
     });
   });
 
@@ -223,11 +204,14 @@ window.addEventListener('load', function() {
         document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
       }
 
+      let eNom = document.querySelector("span.nom_bouteille");
+
       // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
       let dataBtlEnvoyer = {
           'btlIdPK':    fMdBtl.btlIdPK.value,
           'nomIdFK':    fMdBtl.nomIdFK.value,
-          'nomBtl':     fMdBtl.nom.value,
+          // 'nomBtl':     fMdBtl.nom.value,
+          'nomBtl': eNom.innerText,
           'millesime':  fMdBtl.millesime.value,
           'quantite':   fMdBtl.quantite.value,
           'date_achat': fMdBtl.date_achat.value,
@@ -254,15 +238,11 @@ window.addEventListener('load', function() {
           if(response.success){
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
-
-          // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
-          // ********************************************************************************
           }else{
             // messages d'erreur provenant des validations back-end
             let eSpanErrAjout = document.getElementById("errNotes");
             eSpanErrAjout.innerText = response.msg;
           }
-          // *******************************************************************************
         })
         .catch(error => {
           // TODO : traitement de l'erreur
@@ -437,9 +417,6 @@ window.addEventListener('load', function() {
             }
           })
           .then(response => {
-
-            // NOUVEAU CODE PERMETTANT DES MESSAGES DE VALIDATIONS BACK À L'ÉCHEC D'UNE REQUÊTE:
-            // ********************************************************************************
             if(response.success) {
               
               // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
@@ -449,11 +426,6 @@ window.addEventListener('load', function() {
               let eSpanErrAjout = document.getElementById("errNotes");
               eSpanErrAjout.innerText = response.msg;
             }
-            // *******************************************************************************
-
-            // ANCIEN CODE SANS VALIDATIONS BACK END:
-            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            // window.location = BaseURL+"index.php?requete=accueilUsager";
           })
           .catch(error => {
             console.error(error);
@@ -563,17 +535,8 @@ window.addEventListener('load', function() {
   if(document.getElementById('btnCallActionAjt'))
   {
     let btnCallActionAjt = document.getElementById('btnCallActionAjt');
-    btnCallActionAjt.addEventListener("click", function(evt){
-
-      let url = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
-      fetch(url)
-      .then(res=>{
-        window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
+    btnCallActionAjt.addEventListener("click", function(){
+      window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
     });
   }
 

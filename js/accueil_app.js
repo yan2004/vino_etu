@@ -44,6 +44,9 @@ window.addEventListener('load', function(){
   // ***************************************************
   // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
   // ***************************************************
+
+  // ^[\u4e00-\u9fa5_a-zA-Z0-9]+$ (chinese characters and numbers)
+  // nom : ^[\u4e00-\u9fa5a-z]+$ (chinese characters)
   let controlesCreation = {
     courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,       msgRegExp: "Courriel invalide."},
     nom:        {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
