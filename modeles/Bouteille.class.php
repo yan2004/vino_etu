@@ -141,7 +141,7 @@ class Bouteille extends Modele {
 		$data->notes = $this->filtre($data->notes);
 		$data->prix = $this->filtre($data->prix);
 		$data->quantite = $this->filtre($data->quantite);
-		$id_usager = $this->filtre($id_usager);
+		//$id_usager = $this->filtre($id_usager);
 		
 		// TODO : PRENDRE LE COURRIEL EN SESSION À LA PLACE DE VIA DATA
 

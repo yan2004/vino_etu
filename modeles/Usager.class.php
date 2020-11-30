@@ -17,7 +17,7 @@ class Usager extends Modele {
     {
 
         // filtrer les donnees de l'usager
-        $id = $this->filtre($id);
+        //$id = $this->filtre($id);
         $nom = $this->filtre($nom);
         $prenom = $this->filtre($prenom);
         // pas le mot_de_passe car il est hashé
