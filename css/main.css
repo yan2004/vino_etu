@@ -228,7 +228,7 @@ nav .icon-burger .line {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    height: 30vh;
+    /* height: 30vh; */
     margin-bottom: 3vw;
 }
 .img{
@@ -239,6 +239,7 @@ nav .icon-burger .line {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    padding: 0.5em;
 
 }
 .img img {
@@ -258,6 +259,7 @@ nav .icon-burger .line {
 .description p{
     margin: 1vw;
     font-family: "HindMadurai-Medium";
+    color:  #011C27;
 }
 .description p.pays, .description p.quantite{
     color : #511730;

@@ -150,7 +150,7 @@ window.addEventListener('load', function() {
   // *********************************************************
    
   // construction de l'objet avec les controles qui seront effectués
-  // *** LE NOM N'Y EST PAS, CAR IL Y AURA UN AUTO-COMPLETE ***
+  // *** LE NOM N'Y EST PAS, CAR IL Y A UN AUTO-COMPLETE ***
   let controlesModifBtl = {
     millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
     quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},

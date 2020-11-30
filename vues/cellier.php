@@ -31,7 +31,7 @@ foreach ($data as $cle => $bouteille) {
             </div>
             <div class="description" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <div>
-                    <p class="nom"><?php echo $bouteille['nom'] ?></p>
+                    <a href="<?php echo $bouteille['url_saq'] ?>"><p class="nom"><?php echo $bouteille['nom'] ?></p></a>
                     <p class="pays"><?php echo $bouteille['type'] ?> | <?php echo $bouteille['pays'] ?></p>
                 </div>
                 <div>
@@ -43,9 +43,7 @@ foreach ($data as $cle => $bouteille) {
         </div>
 
         <div class="options">
-            <div>
-                <a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a>
-            </div>
+            
             <div data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <button class='btnSupprimer'>Supprimer</button>
                 <!--<button class='btnModifier'><a href="index.php?requete=modifierBouteilleCellier">Modifier</a></button>-->
