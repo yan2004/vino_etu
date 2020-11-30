@@ -53,7 +53,7 @@ class Controler
 					break;
 				case 'accueilUsager':
 					$this->accueilUsager();
-				    break;
+					break;
 				case 'modifierCompte':
 					$this->modifierCompte();
 					break;
@@ -174,8 +174,8 @@ class Controler
 
 		// cette méthode se nommait "accueil" avant
 		private function accueilUsager()
-		{
-			if(isset($_SESSION['courriel'])){
+		{	
+			if(isset($_SESSION['courriel']) && $_SESSION['courriel'] !== "admin_pw2@cmaisonneuve.qc.ca"){
 				$bte = new Bouteille();
 				$data = $bte->getListeBouteilleCellier();
 
@@ -186,6 +186,11 @@ class Controler
 				include("vues/entete.php");
 				include("vues/cellier.php");
 				include("vues/pied.php");  
+			// si le compt d'ADMIN
+			}else if( isset($_SESSION['courriel']) && $_SESSION['courriel'] == "admin_pw2@cmaisonneuve.qc.ca" ){
+				include("vues/enteteAdmin.php");
+				include("vues/mainAdmin.php");
+				include("vues/pied.php"); 
 			}else{
 				$this->accueil();
 			}  
