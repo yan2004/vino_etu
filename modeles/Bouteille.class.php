@@ -141,12 +141,14 @@ class Bouteille extends Modele {
 		$data->notes = $this->filtre($data->notes);
 		$data->prix = $this->filtre($data->prix);
 		$data->quantite = $this->filtre($data->quantite);
-		$id_usager = $this->filtre($id_usager);
-		
-		// TODO : PRENDRE LE COURRIEL EN SESSION À LA PLACE DE VIA DATA
 
-		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
+		// recuperation de l'id de l'usager en session
+		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $_SESSION["courriel"] . "'";
 		$res = $this->_db->query($requete);
+
+		// $requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
+		// $res = $this->_db->query($requete);
+
 		if($res->num_rows == 1)
 		{
 			$row = $res->fetch_assoc();

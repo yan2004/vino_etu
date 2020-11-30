@@ -26,6 +26,16 @@ foreach ($data as $cle => $bouteille) {
     <!-- <div class="bouteille" data-quantite=""> -->
     <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
         <div class="tuile">
+            <div class="optionsIcones" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
+                <!-- <button class='btnSupprimer'>Supprimer</button>
+                <button class='btnModifier'>Modifier</button>
+                <button class='btnAjouter'>Ajouter</button>
+                <button class='btnBoire'>Boire</button> -->
+                <img src="./images/trash-alt-solid.svg" class='btnSupprimer'/>
+                <img src="./images/edit-solid.svg" class='btnModifier'/>
+                <img src="./images/plus-circle-solid.svg" class='btnAjouter'/>
+                <img src="./images/minus-circle-solid.svg" class='btnBoire'/>
+            </div>
             <div class="img">
                 <img src="https:<?php echo $bouteille['url_image'] ?>"/>
             </div>
@@ -42,17 +52,7 @@ foreach ($data as $cle => $bouteille) {
             </div>
         </div>
 
-        <div class="options">
-            
-            <div data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-                <button class='btnSupprimer'>Supprimer</button>
-                <!--<button class='btnModifier'><a href="index.php?requete=modifierBouteilleCellier">Modifier</a></button>-->
-                <button class='btnModifier'>Modifier</button>
-                <button class='btnAjouter'>Ajouter</button>
-                <button class='btnBoire'>Boire</button>
-            </div>
-            
-        </div>
+        
     </div>
     
 <?php

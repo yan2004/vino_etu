@@ -134,7 +134,6 @@ window.addEventListener('load', function() {
 
   document.querySelectorAll(".btnModifier").forEach(function(element){
 
-    // requête ajax au click d'un des boutons "modifier" de la page
     element.addEventListener("click", function(evt){
 
       // pour empêcher que le formulaire se soumette (submit) au serveur

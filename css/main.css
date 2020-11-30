@@ -228,8 +228,8 @@ nav .icon-burger .line {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    /* height: 30vh; */
-    margin-bottom: 3vw;
+    height: 23vw; 
+    /* margin-bottom: 3vw; */
 }
 .img{
     width: 30%;
@@ -239,18 +239,19 @@ nav .icon-burger .line {
     border-radius: 5px;
     display: flex;
     align-items: center;
-    padding: 0.5em;
-
+    padding: 0.1em;
+    margin: 0 3vw;
 }
 .img img {
     width:100%;
+    max-height:100%;
 }
 .description{
     width: 70%;
-    margin-left: 3vw;
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     /* justify-content: space-between; */
 }
 .description .nom{
@@ -275,11 +276,27 @@ nav .icon-burger .line {
     margin-top: 2vw;
 }
 .options{
-    display: flex;
+    /*display: flex;
     justify-content: space-between;
-    align-items: center;
-
+    align-items: center;*/
     /* border-top: 1px solid #4F646F; */
+}
+/* .options > div {
+    display: flex;
+    flex-direction:column;
+}
+.options img{
+    width: 5vw; 
+}*/
+
+.optionsIcones{
+    display: flex;
+    flex-direction: column;
+}
+
+.optionsIcones img{
+    width: 4vw;
+    margin: 1vw 0;
 }
 
 /* FOOTER */
@@ -388,6 +405,9 @@ form h3{
     .cellier{
         font-size: 1.5em;
     }
+    .tuile{
+        height: 18vh; 
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -397,7 +417,6 @@ form h3{
         max-width: 1400px;
         margin: auto;
     }
-
     h1{
         display: block;
         width: 100%;
