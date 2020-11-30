@@ -275,12 +275,12 @@ nav .icon-burger .line {
     border-top: 1px solid #4F646F;
     margin-top: 2vw;
 }
-.options{
+/*.options{
     /*display: flex;
     justify-content: space-between;
     align-items: center;*/
     /* border-top: 1px solid #4F646F; */
-}
+/*}
 /* .options > div {
     display: flex;
     flex-direction:column;

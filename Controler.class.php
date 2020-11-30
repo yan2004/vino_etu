@@ -173,16 +173,22 @@ class Controler
 		private function accueilUsager()
 		{
 			if(isset($_SESSION['courriel'])){
-				$bte = new Bouteille();
-				$data = $bte->getListeBouteilleCellier();
-
-				// pour afficher le nom d'usager
-				$usager = new Usager();
-				$dataUsager = $usager->getUserByCourriel($_SESSION['courriel']);
-
-				include("vues/entete.php");
-				include("vues/cellier.php");
-				include("vues/pied.php");  
+				if($_SESSION['courriel'] == "admin_pw2@cmaisonneuve.qc.ca"){
+					include("vues/enteteAdmin.php");
+					include("vues/mainAdmin.php");
+					include("vues/pied.php");  
+				}else{
+					$bte = new Bouteille();
+					$data = $bte->getListeBouteilleCellier();
+	
+					// pour afficher le nom d'usager
+					$usager = new Usager();
+					$dataUsager = $usager->getUserByCourriel($_SESSION['courriel']);
+	
+					include("vues/entete.php");
+					include("vues/cellier.php");
+					include("vues/pied.php");  
+				}
 			}else{
 				$this->accueil();
 			}  
