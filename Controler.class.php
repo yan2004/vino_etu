@@ -39,9 +39,6 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
-				case 'modifierBouteilleCellier':
-					$this->modifierBouteilleCellier();
-					break;
 				case 'formModificationBtl':
 				 	$this->formModificationBtl();
 					 break;
@@ -83,7 +80,7 @@ class Controler
 				// test regex
 				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i';
+				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
 
 				if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
 
@@ -132,8 +129,8 @@ class Controler
 
 				// test regex
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexNomPrenom = '/^[a-zà-ÿ]{2,}$/i';
-				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i';
+				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ \',\-"]{1,}$/i';
+				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
 
 				if (preg_match($regexCourriel, $body->courriel) && preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && preg_match($regexPassword, $body->password)){
 					$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
@@ -211,35 +208,12 @@ class Controler
             echo json_encode($listeBouteille);    
 		}
 
-		// ANCIEN CODE SANS VALIDATIONS BACK :
-		// *******************************************************
-		// private function ajouterNouvelleBouteilleCellier()
-		// {
-		// 	$body = json_decode(file_get_contents('php://input'));
-			
-		// 	if(!empty($body)){
-
-		// 		$bte = new Bouteille();
-
-		// 		$resultat = $bte->ajouterBouteilleCellier($body);
-		// 		echo json_encode($resultat);
-		// 	}
-		// 	else{
-		// 		include("vues/entete.php");
-		// 		include("vues/ajouter.php");
-		// 		include("vues/pied.php");
-		// 	}
-		// }
-		// ******************************************************
-
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));
 
 			if(!empty($body)){
 
-				// NOUVEAU CODE AVEC VALIDATIONS BACK END POUR LES CHAMPS :
-				// *********************************************************
 				if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
 					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
 
@@ -247,6 +221,8 @@ class Controler
 					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+					// TODO : RAJOUTER LES VALIDATIONS POUR LES CHAMPS NON OBLIGATOIRES
+					// $regexNoteGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
 					
 					if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat)){
 
@@ -281,7 +257,7 @@ class Controler
 					echo $responseJSON;
 					
 				}
-				// *********************************************************
+
 				
 			}else{
 				// echo json_encode($resultat);
@@ -309,55 +285,15 @@ class Controler
 			echo json_encode($resultat);
 		}
 
-		private function modifierBouteilleCellier()
-		{
-			$bte = new Bouteille();
-			$data = $bte->getListeBouteilleCellierById($_GET['id']);
-			echo json_encode($data);
-
-			//  include("vues/entete.php");
-			//  include("vues/modificationBtl.php");
-			//  include("vues/pied.php");
-			
-		}
-
 		 private function formModificationBtl()
 		 {
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellierById($_GET['id']);
 			
-			   $data =json_decode($_GET['dataBtls'], true);
-			   //var_dump($data[0]);
-		
-			   include("vues/entete.php");
-			   include("vues/modificationBtl.php");
-			   include("vues/pied.php");
-			  
-			   
+			include("vues/entete.php");
+			include("vues/modificationBtl.php");
+			include("vues/pied.php");
 		 }
-
-		// CODE D'AVANT SANS LES VALIDATIONS BACK-END
-		// *******************************************************************
-		// private function sauvegardeBouteille()
-		// {
-		// 	$requestPayload = file_get_contents('php://input');
-		// 	$object = json_decode($requestPayload, true);
-		// 	//var_dump($object);
-
-		// 	$bte = new Bouteille();
-		// 	$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
-			
-		// 	//test
-		// 	$responseObj = new stdClass();
-		// 	if($resultat){
-		// 		$responseObj->success = true;
-		// 	}
-		// 	else{
-		// 		$responseObj->success = false;
-		// 	}
-		// 	echo json_encode($responseObj);
-		// 	// $this->accueilUsager();
-
-		// }
-		// *******************************************************************
 
 		private function sauvegardeBouteille()
 		{
@@ -365,18 +301,20 @@ class Controler
 			$object = json_decode($requestPayload, true);
 			//var_dump($object);
 
-			if(isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
-				&& !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
+			if(isset($object['nomBtl']) && isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
+				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
 
 				// test regex
 				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+				// TODO : RAJOUTER LES VALIDATIONS POUR LES CHAMPS NON OBLIGATOIRES
+				// $regexNoteGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
 
 				if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat'])){
 
 					$bte = new Bouteille();
-					$resultat = $bte->modificationInfoBtl($object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
+					$resultat = $bte->modificationInfoBtl($object['nomBtl'],$object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
 					
 					if($resultat){
 						$responseObj = new stdClass();
@@ -406,7 +344,6 @@ class Controler
 			}
 		}
 
-		// ********************************************************
 		private function supprimerBouteilleCellier(){
 
 			$body = json_decode(file_get_contents('php://input'));
@@ -437,9 +374,8 @@ class Controler
 				echo $responseJSON;
 			}
 
-			
 		}
-		// ********************************************************
+
 
 		private function modifierCompte()
 		{
@@ -452,23 +388,76 @@ class Controler
 
 		}
 
+
 		private function sauvegardeCompte()
 		{
-			/**
-			 * *******************
-			 * To Do
-			 * récupérer id d'usager quand authentification
-			 * *******************
-			 */
-			$usager = new Usager();
-			$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
 
-			$bte = new Bouteille();
-			$data = $bte->getListeBouteilleCellier();
-			include("vues/entete.php");
-			include("vues/cellier.php");
-			include("vues/pied.php"); 
+			$body = json_decode(file_get_contents('php://input'));
+
+			if(isset($_SESSION['courriel']) && isset($body->nom) && isset($body->prenom) && !empty($body->nom) && !empty($body->prenom)){
+
+				// test regex
+				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ \',\-"]{1,}$/i';
+				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
+
+				// cas par defaut si on a pas change le password
+				$passwordValide = true;
+
+				// le seul cas où la validation du password serait incorecte
+				if(isset($body->mot_de_passe) && !empty($body->mot_de_passe) && !preg_match($regexPassword, $body->mot_de_passe)){
+					$passwordValide = false;
+				}
+				
+				if(preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && $passwordValide){
+
+					$usager = new Usager();
+					$resultat = $usager->sauvegardeModificationCompte($body->nom,$body->prenom, $body->mot_de_passe); 
+
+					if($resultat){
+						$responseObj = new stdClass();
+						$responseObj->success = true;
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}else{
+						$responseObj = new stdClass();
+						$responseObj->success = false;
+						$responseObj->msg = "Impossible de modifier les informations.";
+						$responseJSON = json_encode($responseObj);
+						echo $responseJSON;
+					}
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Paramètres Invalides.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
+			}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "Paramètres manquants.";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
+			}
 		}
+
+		// private function sauvegardeCompte()
+		// {
+		// 	/**
+		// 	 * *******************
+		// 	 * To Do
+		// 	 * récupérer id d'usager quand authentification
+		// 	 * *******************
+		// 	 */
+		// 	$usager = new Usager();
+		// 	$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
+
+		// 	$bte = new Bouteille();
+		// 	$data = $bte->getListeBouteilleCellier();
+		// 	include("vues/entete.php");
+		// 	include("vues/cellier.php");
+		// 	include("vues/pied.php"); 
+		// }
 		
 		private function getCurrentUser()
 		{

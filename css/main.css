@@ -228,7 +228,7 @@ nav .icon-burger .line {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    height: 30vh;
+    /* height: 30vh; */
     margin-bottom: 3vw;
 }
 .img{
@@ -239,6 +239,7 @@ nav .icon-burger .line {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    padding: 0.5em;
 
 }
 .img img {
@@ -258,6 +259,7 @@ nav .icon-burger .line {
 .description p{
     margin: 1vw;
     font-family: "HindMadurai-Medium";
+    color:  #011C27;
 }
 .description p.pays, .description p.quantite{
     color : #511730;
@@ -320,6 +322,9 @@ footer p
 	font-family: "HindMadurai-Medium";
 	font-size: 1em;
 }
+form button{
+    background-color: #011C27;
+}
 form, .form-ajouter{
 	display: flex;
 	flex-direction: column;
@@ -334,6 +339,15 @@ form button:hover, .form-ajouter button:hover{
 form h3{
     color: #511730;
 }
+.forms-btns{
+    display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+.btnAnnuler{
+    margin-right: 3vw;
+	background-color: #4F646F;
+}
 
 
 
@@ -342,9 +356,9 @@ form h3{
 .listeAutoComplete{
     margin: 0;
 }
-.ajouter button{
+/* .ajouter button{
     margin-left: auto;
-}
+} */
 .nouvelleBouteille{
     display: flex;
     flex-direction: column;
