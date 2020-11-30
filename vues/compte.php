@@ -1,6 +1,7 @@
 <div class="compte">
     <h2>Modifier mes informations</h2>
-        <form action="index.php?requete=sauvegardeCompte" method="post" class="modifierCompte" id="fCompte">
+        <!-- <form action="index.php?requete=sauvegardeCompte" method="post" class="modifierCompte" id="fCompte"> -->
+        <form class="modifierCompte" id="fCompte">    
                 <h3>Informations générales</h3>
                 
                 <input type="hidden" name="userId" value="<?php echo $data[0]['id']; ?>">
@@ -16,15 +17,16 @@
                 
                 <label for="mot_de_passe">Nouveau mot de passe</label>
                 <input type="password" name="mot_de_passe" id="mot_de_passe">
-                <span id="errMDP"></span>
+                <span id="errMot_de_passe"></span>
 
                 <label for="mot_de_passe_conf">Confirmation du nouveau mot de passe</label>
                 <input type="password" name="mot_de_passe_conf" id="mot_de_passe_conf">
-                <span id="errConf"></span>
+                <span id="errMot_de_passe_conf"></span>
                 
                 <div class="forms-btns">
                         <button value="Annuler" class="btnAnnuler">ANNULER</button>
-                        <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button>
+                        <button value="Modifier" class="btnModifierCompte">MODIFIER</button>
+                        <!-- <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button> -->
                 </div>
         </form>
 </div>

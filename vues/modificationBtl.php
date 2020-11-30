@@ -6,16 +6,12 @@
 
         </ul>
         
-        <form action="" method="post" class="modificationBtl" name="fModificationBtl">
+        <form action="" method="post" name="fModificationBtl">
                 <input type="hidden" name="btlIdPK" value="<?php echo $data[0]['id']; ?>">
                 <input type="hidden" name="nomIdFK" value="<?php echo $data[0]['id_bouteille']; ?>">
 
                 <p>Nom : <span data-id="" class="nom_bouteille"><?php echo $data[0]['nom']; ?></span></p>
                 <span id="errNom"></span> 
-
-                <!-- <label for="nom">Nom</label>
-                <input type="text" name="nom" id="nom" value="" readonly="true"/>
-                <span id="errNom"></span> -->
             
                 <label for="millesime">Millesime</label>
                 <input type="text" name="millesime" id="millesime" value="<?php echo $data[0]['millesime']; ?>">

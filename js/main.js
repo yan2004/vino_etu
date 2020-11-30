@@ -132,8 +132,6 @@ window.addEventListener('load', function() {
   // MODIFIER LES INFOS D'UNE BOUTEILLE
   // **********************************
 
-  // TODO : AJOUTER LA FONCTIONNALITÉ D'AUTO-COMPLETE POUR LE NOM DE LA BOUTEILLE
-
   document.querySelectorAll(".btnModifier").forEach(function(element){
 
     // requête ajax au click d'un des boutons "modifier" de la page
@@ -158,8 +156,8 @@ window.addEventListener('load', function() {
     quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
     date_achat: {requis: true,  regExp: /^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/,  msgRegExp: "Format yyyy-mm-dd."},
     prix:       {requis: true,  regExp: /^(0|[1-9]\d*)(\.[0-9]{2})$/,                                  msgRegExp: "Prix format xx.xx"},
-    garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."},
-    notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-; ]{0,200}$/i,                              msgRegExp: "Maximum 200 caractères alphanumériques."}
+    garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."},
+    notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."}
   };
 
   // si le formulaire est accessible dans le DOM, on effectue les validations
@@ -210,8 +208,7 @@ window.addEventListener('load', function() {
       let dataBtlEnvoyer = {
           'btlIdPK':    fMdBtl.btlIdPK.value,
           'nomIdFK':    fMdBtl.nomIdFK.value,
-          // 'nomBtl':     fMdBtl.nom.value,
-          'nomBtl': eNom.innerText,
+          'nomBtl':     eNom.innerText,
           'millesime':  fMdBtl.millesime.value,
           'quantite':   fMdBtl.quantite.value,
           'date_achat': fMdBtl.date_achat.value,
@@ -441,95 +438,224 @@ window.addEventListener('load', function() {
 
   if(document.getElementById('fCompte')){
 
-    let f = document.getElementById('fCompte');
-    
-    let erreurCmpt = false;
+    let controlesModifCompte = {
+      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
+      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
+      mot_de_passe:   {requis: false, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i,  msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."},
+    };
 
+
+    let f = document.getElementById('fCompte');
+
+    // validation des valeurs d'inputs au "change" avec l'objet des controles
     f.addEventListener('change', (evt)=>{
       let nomChamp = evt.target.name;
-      eval(nomChamp + 'Valider()');
-    })
+      let controles = controlesModifCompte[nomChamp];
+      if(nomChamp === "mot_de_passe_conf"){
+        mot_de_passe_confValider();
+      }else{
+        if(nomChamp === "mot_de_passe") mot_de_passe_confValider();
+        // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
+        validerChamps(f, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+      }
+    });
     
+    //let erreurCmpt = false;
+
+    // f.addEventListener('change', (evt)=>{
+    //   let nomChamp = evt.target.name;
+    //   eval(nomChamp + 'Valider()');
+    // })
+
+    // redirection à l'accueil (cellier) au clic sur le bouton "annuler"
+    let btnAnnuler = document.querySelector(".btnAnnuler");
+    btnAnnuler.addEventListener("click", function(evt){
+      evt.preventDefault();
+      window.location.href = BaseURL+"index.php?requete=accueilUsager";
+    });
+
+
+
     let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
 
-    f.addEventListener("submit", function(evt){
-      console.log("sybmit");
-      erreurCmpt = false;
-      nomValider();
-      prenomValider();
-      mot_de_passeValider();
+    // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
+    btnModCmpt.addEventListener("click", function(evt){
+
+      // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
+      evt.preventDefault();
+
+      errForm = false;
+
+      // validation avec l'objet de controles
+      for(let nomChamp in controlesModifCompte){
+        let controles = controlesModifCompte[nomChamp];
+        // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
+        validerChamps(f, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+      }
+
+      //validation spéciale pour la confirmation de mot de passe
       mot_de_passe_confValider();
+      // let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
+      // let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+      // let msgErr = "";
+      // if(valConf !== val){
+      //   msgErr = "Mot de passe et Confirmation ne correspondent pas!";
+      //   errForm = true;
+      // }
+      // document.getElementById('errMot_de_passe_conf').innerHTML = msgErr;
 
-      if (erreurCmpt) evt.preventDefault();
 
-    })
-  }
-   function nomValider() {
-     let msgErr = "";
-     let val = document.querySelector('#fCompte #nom').value.trim();
-     let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-     
-     //Vérifier si au moins deux caractères
-     let l = val.length;
-     if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
-
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
-      }
-     
-     document.getElementById('errNom').innerHTML = msgErr;
-     if (msgErr !== "") erreurCmpt = true;
-   }
-
-   function prenomValider() {
-      let msgErr = "";
-      let val = document.querySelector('#fCompte #prenom').value.trim();
-      let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
-      
-      //Vérifier si au moins deux caractères
-      let l = val.length;
-      if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
-
-      //Vérifier si les caractères de séparation sont suivantes
-      if(l > 1){
-        if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
-      }
-      
-      document.getElementById('errPrenom').innerHTML = msgErr;
-      if (msgErr !== "") erreurCmpt = true;
-   }
-
-   function mot_de_passeValider() {
-      let msgErr = "";
-      let val = document.querySelector('#fCompte #mot_de_passe').value.trim();
-
-      if(val.length < 5) {
-        msgErr = "Au moins 5 caractères!";
-      }
-      if(val.search(/[a-z]/i) < 0) {
-        msgErr = "Au moins 1 lettres!"
-      }
-      if(val.search(/[0-9]/) < 0) {
-        msgErr = "Au moin 1 chiffre!"
+      // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
+      let dataCompte = {
+          // 'userId':    f.userId.value,
+          'nom':    f.nom.value,
+          'prenom':  f.prenom.value,
+          'mot_de_passe':   f.mot_de_passe.value
       }
 
-      document.getElementById('errMDP').innerHTML = msgErr;
-      if (msgErr !== "") erreurCmpt = true
-   }
+      // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
+      if(!errForm){
 
-   function mot_de_passe_confValider() {
-      let msgErr  = "";
+        // requête ajax pour envoi des données au serveur pour l'update
+        let requete = new Request(BaseURL+"index.php?requete=sauvegardeCompte", {method: 'POST', body: JSON.stringify(dataCompte)});
+
+        fetch(requete)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error('Erreur');
+          }
+        })
+        .then(response => {
+          if(response.success){
+            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+            window.location = BaseURL+"index.php?requete=accueilUsager";
+          }else{
+            // messages d'erreur provenant des validations back-end
+            let eSpanErrAjout = document.getElementById("errNotes");
+            eSpanErrAjout.innerText = response.msg;
+          }
+        })
+        .catch(error => {
+          // TODO : traitement de l'erreur
+          console.error(error);
+        });
+      }
+    });
+
+    function mot_de_passe_confValider() {
       let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
       let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
-      if(valConf !== val) msgErr = "Mot de passe et Confirmation ne correspond pas!";
-      document.getElementById('errConf').innerHTML = msgErr;
-      if (msgErr !== "") erreurCmpt = true
-   }
+      let msgErr = "";
+      if(valConf !== val){
+        if(valConf === ""){
+          msgErr = "Obligatoire.";
+        }else{
+          msgErr = "Mot de passe et Confirmation ne correspondent pas.";
+        }
+        errForm = true;          
+      }
+      document.getElementById('errMot_de_passe_conf').innerHTML = msgErr;
+    }
+    
+    
+  //   let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
+
+  //   // enlever le submit
+  //   f.addEventListener("submit", function(evt){
+  //     console.log("sybmit");
+  //     let erreurCmpt = false;
+  //     nomValider();
+  //     prenomValider();
+  //     mot_de_passeValider();
+  //     mot_de_passe_confValider();
+
+  //     if (erreurCmpt) evt.preventDefault();
+
+  //   })
+  // }
+  //  function nomValider() {
+  //    let msgErr = "";
+  //    let val = document.querySelector('#fCompte #nom').value.trim();
+
+  //    let reg = new RegExp(/^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i);
+  //    if(!reg.test(val)) msgErr = "Au moins 1 caractère alphabétique.";
+
+  //    /*let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
+     
+  //    //Vérifier si au moins deux caractères
+  //    let l = val.length;
+  //    if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
+
+  //     //Vérifier si les caractères de séparation sont suivantes
+  //     if(l > 1){
+  //       if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
+  //     }
+  //    */
+  //    document.getElementById('errNom').innerHTML = msgErr;
+  //    if (msgErr !== "") erreurCmpt = true;
+  //  }
+
+  //  function prenomValider() {
+  //     let msgErr = "";
+  //     let val = document.querySelector('#fCompte #prenom').value.trim();
+      
+  //     let reg = new RegExp(/^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i);
+  //     if(!reg.test(val)) msgErr = "Au moins 1 caractère alphabétique.";
+      
+  //     /*let reg = new RegExp("^((?:\\w|[\\-_ ](?![\\-_ ])|[\\u00C0\\u00C1\\u00C2\\u00C3\\u00C4\\u00C5\\u00C6\\u00C7\\u00C8\\u00C9\\u00CA\\u00CB\\u00CC\\u00CD\\u00CE\\u00CF\\u00D0\\u00D1\\u00D2\\u00D3\\u00D4\\u00D5\\u00D6\\u00D8\\u00D9\\u00DA\\u00DB\\u00DC\\u00DD\\u00DF\\u00E0\\u00E1\\u00E2\\u00E3\\u00E4\\u00E5\\u00E6\\u00E7\\u00E8\\u00E9\\u00EA\\u00EB\\u00EC\\u00ED\\u00EE\\u00EF\\u00F0\\u00F1\\u00F2\\u00F3\\u00F4\\u00F5\\u00F6\\u00F9\\u00FA\\u00FB\\u00FC\\u00FD\\u00FF\\u0153])+)$", "i");
+      
+  //     //Vérifier si au moins deux caractères
+  //     let l = val.length;
+  //     if(l < 2) msgErr = "Au moins deux caractères alphabétiques!";
+
+  //     //Vérifier si les caractères de séparation sont suivantes
+  //     if(l > 1){
+  //       if(!reg.test(val)) msgErr = "Les caractères de séparation (- ou _ ou espace) sont autorisés, mais n'autorise pas qu'ils se suivent!";
+  //     }
+  //     */
+  //     document.getElementById('errPrenom').innerHTML = msgErr;
+  //     if (msgErr !== "") erreurCmpt = true;
+  //  }
+
+  //  function mot_de_passeValider() {
+  //     let msgErr = "";
+  //     let val = document.querySelector('#fCompte #mot_de_passe').value.trim();
+  //     let reg = new RegExp(/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i);
+
+  //     if(!reg.test(val)) msgErr = "Au moins 4 caractères avec 1 chiffre et 1 lettre.";
+
+  //     /*
+  //     if(val.length < 5) {
+  //       msgErr = "Au moins 5 caractères!";
+  //     }
+  //     if(val.search(/[a-z]/i) < 0) {
+  //       msgErr = "Au moins 1 lettres!"
+  //     }
+  //     if(val.search(/[0-9]/) < 0) {
+  //       msgErr = "Au moin 1 chiffre!"
+  //     }
+  //   */
+  //     document.getElementById('errMDP').innerHTML = msgErr;
+  //     if (msgErr !== "") erreurCmpt = true
+  //  }
+
+  //  function mot_de_passe_confValider() {
+  //     let msgErr  = "";
+  //     let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
+  //     let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+  //     if(valConf !== val) msgErr = "Mot de passe et Confirmation ne correspond pas!";
+  //     document.getElementById('errConf').innerHTML = msgErr;
+  //     if (msgErr !== "") erreurCmpt = true
+  //  }
 
 
+  }
+
+  
   // *********************************************************************************************************
-  // REQUET AJAX AU CLIC DU BOUTON "CALL TO ACTION" POUR OUVRIR LE FORMULAIRE D'AJOUT D'UNE NOUVELLE BOUTEILLE
+  // CLIC DU BOUTON "CALL TO ACTION" POUR OUVRIR LE FORMULAIRE D'AJOUT D'UNE NOUVELLE BOUTEILLE
   // *********************************************************************************************************
 
   if(document.getElementById('btnCallActionAjt'))

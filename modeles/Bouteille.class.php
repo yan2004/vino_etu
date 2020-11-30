@@ -308,6 +308,8 @@ class Bouteille extends Modele {
 			$res = $this->_db->query($requete);
 			return $res == 1;
 		}
+
+		return false;
 	}
 }
 
