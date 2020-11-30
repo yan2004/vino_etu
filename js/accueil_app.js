@@ -44,11 +44,14 @@ window.addEventListener('load', function(){
   // ***************************************************
   // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
   // ***************************************************
+
+  // ^[\u4e00-\u9fa5_a-zA-Z0-9]+$ (chinese characters and numbers)
+  // ^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$ (pour permettre les chinese characters)
   let controlesCreation = {
-    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,       msgRegExp: "Courriel invalide."},
-    nom:        {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
-    prenom:     {requis: true, regExp: /^[a-zà-ÿ ',\-"]{2,}$/i,                   msgRegExp: "Au moins 2 caractères alphabétiques."},
-    password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
+    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
+    nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
+    prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
+    password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
   };
 
   // validations inputs au change
@@ -107,8 +110,8 @@ window.addEventListener('load', function(){
   // VALIDATION POUR LE FORMULAIRE DE LOGIN
   // **************************************
   let controlesLogin = {
-    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i, msgRegExp: "Courriel invalide."},
-    password:   {requis: true, regExp: /^[0-9a-z]{4,}$/i,                   msgRegExp: "Au moins 4 caractères alphanumériques."}
+    courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
+    password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
   };
 
   // validations inputs au change
