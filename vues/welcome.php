@@ -1,3 +1,14 @@
+<?php  
+      
+    //    if($_COOKIE['courriel'] !== null && $_COOKIE['password'] !== null && $_SESSION['courriel'] !== null)
+    //    {
+    //         $BaseURL = "http://localhost:8888/vino/vino_etu/";
+    //         //$BaseURL = "http://localhost/projetWeb2/vino_etu/";   
+    //         $url     = "Location:".$BaseURL."index.php?requete=cookieLogin";
+    //         header($url);
+    //    }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,6 +22,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="HandheldFriendly" content="true">
+
+
 </head>
 <body>
     <div class="welcome-container">
