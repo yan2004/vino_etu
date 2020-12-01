@@ -8,8 +8,8 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // console.log(BaseURL);
@@ -29,7 +29,7 @@ window.addEventListener('load', function() {
     element.addEventListener("click", function(evt){
 
         let id = evt.target.parentElement.dataset.id;
-        let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
+        let eQuantite = document.querySelector(`.bulle[data-id='${id}'] .quantite`);
         let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
         fetch(requete)
@@ -44,7 +44,7 @@ window.addEventListener('load', function() {
 
           // update de la quantité sur la page
           if(response.success){
-            eQuantite.innerHTML = `Quantité : ${response.quantite}`;
+            eQuantite.innerHTML = `${response.quantite}`;
           }
         })
         .catch(error => {
@@ -65,7 +65,7 @@ window.addEventListener('load', function() {
 
       // recuperer l'id de la bouteille
       let id = evt.target.parentElement.dataset.id;
-      let eQuantite = document.querySelector(`.description[data-id='${id}'] .quantite`);
+      let eQuantite = document.querySelector(`.bulle[data-id='${id}'] .quantite`);
       let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
       fetch(requete)
@@ -80,7 +80,7 @@ window.addEventListener('load', function() {
 
         // update de la quantité sur la page
         if(response.success){
-          eQuantite.innerHTML = `Quantité : ${response.quantite}`;
+          eQuantite.innerHTML = `${response.quantite}`;
         }
       })
       .catch(error => {

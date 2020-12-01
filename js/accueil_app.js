@@ -6,9 +6,9 @@
  *
  */
 
-  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+  // const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('load', function(){
 
