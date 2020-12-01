@@ -12,6 +12,40 @@
 
 window.addEventListener('load', function(){
 
+  // S'il y a localStorage, rédiger la page de cellier directement
+  if(localStorage.getItem('param')){
+
+    let paramLocal = localStorage.getItem('param');
+  
+    if (JSON.parse(paramLocal).courriel && JSON.parse(paramLocal).password){
+      
+      let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body:paramLocal});
+
+      fetch(requete)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Erreur');
+        }
+      })
+      .then(response => {
+        if(response.success){
+          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+          window.location = BaseURL+"index.php?requete=accueilUsager";
+        }else{
+          let eErrAuth = document.getElementById("errSignInPassword");
+          eErrAuth.innerText = response.msg;
+        }
+      })
+      .catch(error => {
+        // TODO : traitement de l'erreur
+        console.error(error);
+      });
+    }
+
+  }else{                // Si sans localStorage, sign in ou sign up comme d'habitude
+
   // console.log(BaseURL);
 
 	let btnSignIn = document.getElementById("sign-in");
@@ -80,6 +114,11 @@ window.addEventListener('load', function(){
         "password":fS.password.value,
       };
 
+      let paramStorage = {
+        "courriel":param.courriel,
+        "password":param.password
+      };
+      
       let requete = new Request(BaseURL+"index.php?requete=creerCompte", {method: 'POST', body: JSON.stringify(param)});
 
       fetch(requete)
@@ -92,6 +131,9 @@ window.addEventListener('load', function(){
       })
       .then(response => {
         if(response.success){
+          // Quand réussir de login, fait localStorage
+          localStorage.setItem('param', JSON.stringify(paramStorage));
+
           // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
           window.location = BaseURL+"index.php?requete=accueilUsager";
         }else{
@@ -150,8 +192,11 @@ window.addEventListener('load', function(){
       })
       .then(response => {
         if(response.success){
+          // Quand réussir de login, fait localStorage
+          localStorage.setItem('param', JSON.stringify(param));
+
           // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-          window.location = BaseURL+"index.php?requete=accueilUsager";
+          //window.location = BaseURL+"index.php?requete=accueilUsager";
         }else{
           let eErrAuth = document.getElementById("errSignInPassword");
           eErrAuth.innerText = response.msg;
@@ -197,4 +242,6 @@ window.addEventListener('load', function(){
     if (msgErr !== "") errForm = true;
   }
 
+
+}
 });
