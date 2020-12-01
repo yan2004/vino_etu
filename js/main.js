@@ -665,6 +665,19 @@ window.addEventListener('load', function() {
     });
   }
 
+
+/**
+ * **************************
+ * Quand click 'DECONNEXION', supprimer localStorage
+ * **************************
+ */
+if(document.querySelectorAll('.links li')[2]){
+  let btnDeconnexion = document.querySelectorAll('.links li')[2];
+  btnDeconnexion.addEventListener("click", (evt)=>{
+    localStorage.removeItem('param');
+  })
+};
+
 });
 
 
