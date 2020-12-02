@@ -10,7 +10,7 @@
 // const BaseURL = document.baseURI;
 const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
-
+// initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
 
 window.addEventListener('load', function(){
@@ -80,8 +80,6 @@ window.addEventListener('load', function(){
     // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
     // ***************************************************
 
-    // ^[\u4e00-\u9fa5_a-zA-Z0-9]+$ (chinese characters and numbers)
-    // ^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$ (pour permettre les chinese characters)
     let controlesCreation = {
       courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
       nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
