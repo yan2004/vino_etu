@@ -492,15 +492,6 @@ window.addEventListener('load', function() {
           'prenom':  f.prenom.value,
           'mot_de_passe':   f.mot_de_passe.value
       }
-
-      // TODO : AJOUTER INPUT CACHÉ AVEC COURRIEL
-      // ***********************************************
-      // let paramStorage = {
-      //   // "courriel":param.courriel,
-      //   "courriel":??,
-      //   "password":dataCompte.mot_de_passe
-      // };
-      // ***********************************************
       
 
       // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
@@ -519,14 +510,6 @@ window.addEventListener('load', function() {
         })
         .then(response => {
           if(response.success){
-
-            
-            // TODO : DÉCOMMENTER
-            // ***********************************************
-            // Quand réussir de login, fait localStorage
-            // localStorage.setItem('param', JSON.stringify(paramStorage));
-            // ***********************************************
-
 
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
