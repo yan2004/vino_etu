@@ -6,7 +6,7 @@
  *
  */
 
-  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
 //const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
@@ -196,7 +196,7 @@ window.addEventListener('load', function(){
           localStorage.setItem('param', JSON.stringify(param));
 
           // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-          //window.location = BaseURL+"index.php?requete=accueilUsager";
+          window.location = BaseURL+"index.php?requete=accueilUsager";
         }else{
           let eErrAuth = document.getElementById("errSignInPassword");
           eErrAuth.innerText = response.msg;
@@ -209,7 +209,7 @@ window.addEventListener('load', function(){
     }
   });
 
-
+}
   /**
    * Fonction de validation des champs et gestion du message d'erreur
    * @param {*} idForm 
@@ -243,5 +243,5 @@ window.addEventListener('load', function(){
   }
 
 
-}
+
 });
