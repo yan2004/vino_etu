@@ -5,6 +5,8 @@
                 <h3>Informations générales</h3>
                 
                 <input type="hidden" name="userId" value="<?php echo $data[0]['id']; ?>">
+                <input type="hidden" name="courriel" value="<?php echo $data[0]['courriel']; ?>">
+
                 <label for="nom">Nom</label>
                 <input type="text" name="nom" id="nom" value="<?php echo $data[0]['nom']; ?>">
                 <span id="errNom"></span>

@@ -60,6 +60,9 @@ class Controler
 				case 'sauvegardeCompte':
 					$this->sauvegardeCompte();
 					break;
+				case 'importationSAQ':
+					$this->importationSAQ();
+					break;
 				case 'deconnexion':
 					$this->deconnexion();
 					break;
@@ -463,6 +466,10 @@ class Controler
 		private function getCurrentUser()
 		{
 
+		}
+
+		private function importationSAQ(){
+			include("updateSAQ.php");  
 		}
 
 		private function deconnexion(){
