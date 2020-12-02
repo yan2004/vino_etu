@@ -8,7 +8,7 @@
  *
  */
 
-//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+// const BaseURL = "http://localhost:8888/vino/vino_etu/";
 const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
@@ -99,32 +99,31 @@ window.addEventListener('load', function() {
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
-        let id = evt.target.parentElement.dataset.id;
+      let id = evt.target.parentElement.dataset.id;
 
-        let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
-        let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+      let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+      let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
-        fetch(requete)
-        .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              throw new Error('Erreur');
-            }
-        })
-        .then(response => {
-          if(response.success){
-            // supprimer la bouteille du DOM
-            laBouteille.remove();
-          }else{
-            throw response.msg;
+      fetch(requete)
+      .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error('Erreur');
           }
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      })
+      .then(response => {
+        if(response.success){
+          // supprimer la bouteille du DOM
+          laBouteille.remove();
+        }else{
+          throw response.msg;
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
     });
-
   });
 
 
@@ -324,7 +323,6 @@ window.addEventListener('load', function() {
           let prixEle = document.getElementById('prix_ajouter');
           prixEle.setAttribute('value', prix);
         }
-
       }
     });
 
@@ -665,18 +663,17 @@ window.addEventListener('load', function() {
     });
   }
 
-
-/**
- * **************************
- * Quand click 'DECONNEXION', supprimer localStorage
- * **************************
- */
-if(document.querySelectorAll('.links li')[2]){
-  let btnDeconnexion = document.querySelectorAll('.links li')[2];
-  btnDeconnexion.addEventListener("click", (evt)=>{
-    localStorage.removeItem('param');
-  })
-};
+  /**
+   * **************************
+   * Quand click 'DECONNEXION', supprimer localStorage
+   * **************************
+   */
+  if(document.querySelectorAll('.links li')[2]){
+    let btnDeconnexion = document.querySelectorAll('.links li')[2];
+    btnDeconnexion.addEventListener("click", (evt)=>{
+      localStorage.removeItem('param');
+    })
+  };
 
 });
 

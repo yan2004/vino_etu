@@ -34,7 +34,7 @@ class SAQ extends Modele {
 	public function getProduits($nombre = 24, $page = 1) {
 
 		// TEST
-		echo "getProduits</br></br>";
+		// echo "getProduits</br></br>";
 
 		$s = curl_init();
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=1&product_list_limit=24&product_list_order=name_asc";
@@ -64,7 +64,7 @@ class SAQ extends Modele {
 		
 		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
-			var_dump($noeud -> getAttribute('class')) ;
+			//var_dump($noeud -> getAttribute('class')) ;
 			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
 			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
@@ -79,7 +79,7 @@ class SAQ extends Modele {
 				echo "<br>Code de retour : " . $retour -> raison . "<br>";
 				if ($retour -> succes == false) {
 					echo "<pre>";
-					var_dump($info);
+					//var_dump($info);
 					echo "</pre>";
 					echo "<br>";
 				} else {
@@ -196,7 +196,7 @@ class SAQ extends Modele {
 	private function ajouteProduit($bte) {
 
 
-		echo "ajouteProduits";
+		//echo "ajouteProduits";
 
 
 		$retour = new stdClass();

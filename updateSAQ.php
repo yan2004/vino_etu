@@ -6,8 +6,8 @@
 	</head>
 	<body>
 <?php
-	require("dataconf.php");
-	require("config.php");
+	//require("dataconf.php");
+	//require("config.php");
 	$page = 1;
 	$nombreProduit = 24; //48 ou 96	
 	
