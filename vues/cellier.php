@@ -44,7 +44,7 @@
             </div>
             <div class="description" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <div>
-                    <a href="<?php echo $bouteille['url_saq'] ?>"><p class="nom"><?php echo $bouteille['nom'] ?></p></a>
+                    <a target="_blank" href="<?php echo $bouteille['url_saq'] ?>"><p class="nom"><?php echo $bouteille['nom'] ?></p></a>
                     <p class="pays"><?php echo $bouteille['type'] ?> | <?php echo $bouteille['pays'] ?></p>
                     <p class="millesime tiny-text"><?php  if(!empty($bouteille['millesime'])) echo "Millesime : " . $bouteille['millesime'] ?></p>
                 </div>
@@ -52,8 +52,8 @@
                     <!-- <p class="millesime">Millesime : <?php /*echo $bouteille['millesime'] */?></p> -->
                     <!-- <p class="quantite">Quantité : <?php /*echo $bouteille['quantite'] */?></p> -->
                     
-                    <p class="prix tiny-text"><?php  if($bouteille['prix'] !== "0.00") echo $bouteille['prix'] . " $"?></p>
-                    <p class="date_achat tiny-text"><?php  if(empty($bouteille['millesime'])) echo "Acheté le " . $bouteille['date_achat']?></p>
+                    <p class="prix"><?php  if($bouteille['prix'] !== "0.00") echo $bouteille['prix'] . " $"?></p>
+                    <p class="date_achat tiny-text"><?php echo "Acheté le " . $bouteille['date_achat']?></p>
                     <p class="garde tiny-text"><?php  if(!empty($bouteille['garde_jusqua'])) echo "Garde jusqu'à : " . $bouteille['garde_jusqua']?></p>
                     <p class="notes tiny-text"><?php  if(!empty($bouteille['notes'])) echo "Notes : " . $bouteille['notes']?></p>
                     
