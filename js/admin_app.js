@@ -12,7 +12,7 @@ const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('load', function(){
 
-	//deconnexion
+	// supprimer les données de l'usager dans le localStorage lors du click sur le lien de déconnexion
 	if(document.querySelectorAll('.links li')[0]){
 		let btnDeconnexion = document.querySelectorAll('.links li')[0];
 		btnDeconnexion.addEventListener("click", (evt)=>{
@@ -20,20 +20,21 @@ window.addEventListener('load', function(){
 		})
 	  };
 
-	//call 2 action importation 
-	document.getElementById("btnImportation").addEventListener("click", (evt) =>{
+	// call 2 action importation de bouteilles SAQ
+	document.getElementById("btnImportation").addEventListener("click", () =>{
+
 		let requete = new Request(BaseURL+"index.php?requete=importationSAQ", {method: 'POST'});
 		fetch(requete)
         .then(response => {
             if (response.status === 200) {
-			  console.log(response);
-              return response.text();//.json();
+              return response.text();
             } else {
               throw new Error('Erreur');
             }
         })
         .then(response => {
-			console.log(response);
+
+			// affichage du rapport reçue de l'importation des bouteilles dans le DOM
 			document.getElementById("rapportImportation").innerHTML = response;
         })
         .catch(error => {

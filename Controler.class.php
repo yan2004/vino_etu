@@ -3,9 +3,8 @@
  * Class Controler
  * Gère les requêtes HTTP
  * 
- * @author Jonathan Martel
+ * @author Yan Jin et Marianne Soucy
  * @version 1.0
- * @update 2019-01-21
  * @license Creative Commons BY-NC 3.0 (Licence Creative Commons Attribution - Pas d’utilisation commerciale 3.0 non transposé)
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
@@ -264,7 +263,6 @@ class Controler
 
 				
 			}else{
-				// echo json_encode($resultat);
 				include("vues/entete.php");
 				include("vues/ajouter.php");
 				include("vues/pied.php");
@@ -303,7 +301,6 @@ class Controler
 		{
 			$requestPayload = file_get_contents('php://input');
 			$object = json_decode($requestPayload, true);
-			//var_dump($object);
 
 			if(isset($object['nomBtl']) && isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
 				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
@@ -443,29 +440,6 @@ class Controler
 				$responseJSON = json_encode($responseObj);
 				echo $responseJSON;
 			}
-		}
-
-		// private function sauvegardeCompte()
-		// {
-		// 	/**
-		// 	 * *******************
-		// 	 * To Do
-		// 	 * récupérer id d'usager quand authentification
-		// 	 * *******************
-		// 	 */
-		// 	$usager = new Usager();
-		// 	$usager->sauvegardeModificationCompte($_POST['userId'], $_POST['nom'],$_POST['prenom'], $_POST['mot_de_passe']); 
-
-		// 	$bte = new Bouteille();
-		// 	$data = $bte->getListeBouteilleCellier();
-		// 	include("vues/entete.php");
-		// 	include("vues/cellier.php");
-		// 	include("vues/pied.php"); 
-		// }
-		
-		private function getCurrentUser()
-		{
-
 		}
 
 		private function importationSAQ(){

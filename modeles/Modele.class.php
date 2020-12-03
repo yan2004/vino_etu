@@ -25,10 +25,10 @@ class Modele {
 		return $var;
 	}
 	
-	function __destruct ()
-	{
+	// function __destruct ()
+	// {
 		
-	}
+	// }
 }
 
 

@@ -23,18 +23,11 @@
     <?php
     foreach ($data as $cle => $bouteille) {
     ?>
-    <!-- <div class="bouteille" data-quantite=""> -->
     <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
         <div class="tuile">
             <div class="optionsIcones" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-                <!-- <button class='btnSupprimer'>Supprimer</button>
-                <button class='btnModifier'>Modifier</button>
-                <button class='btnAjouter'>Ajouter</button>
-                <button class='btnBoire'>Boire</button> -->
                 <img src="./images/trash-alt-solid.svg" class='btnSupprimer'/>
                 <img src="./images/edit-solid.svg" class='btnModifier'/>
-                <!-- <img src="./images/plus-circle-solid.svg" class='btnAjouter'/>
-                <img src="./images/minus-circle-solid.svg" class='btnBoire'/> -->
             </div>
             <div class="img" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <img src="<?php echo $bouteille['url_image'] ?>"/>
@@ -49,9 +42,6 @@
                     <p class="millesime tiny-text"><?php  if(!empty($bouteille['millesime'])) echo "Millesime : " . $bouteille['millesime'] ?></p>
                 </div>
                 <div>
-                    <!-- <p class="millesime">Millesime : <?php /*echo $bouteille['millesime'] */?></p> -->
-                    <!-- <p class="quantite">Quantité : <?php /*echo $bouteille['quantite'] */?></p> -->
-                    
                     <p class="prix"><?php  if($bouteille['prix'] !== "0.00") echo $bouteille['prix'] . " $"?></p>
                     <p class="date_achat tiny-text"><?php echo "Acheté le " . $bouteille['date_achat']?></p>
                     <p class="garde tiny-text"><?php  if(!empty($bouteille['garde_jusqua'])) echo "Garde jusqu'à : " . $bouteille['garde_jusqua']?></p>
@@ -61,15 +51,10 @@
                 
             </div>
         </div>
-
-        
     </div>
     
     <?php
-
-
     }
-
     ?>	
     </div>
 </div>

@@ -69,8 +69,6 @@ body {
     font-size: 1em;
 }
 main {
-    /* padding-left: 2vw; */
-    /* margin-top: 12vh; */
     margin-top: 80px;
 	display: flex;
 	align-items: center;
@@ -103,7 +101,6 @@ span.nom_bouteille{
     color: #511730;
 }
 button{
-
     align-self: flex-end;
 	margin-top:1vh;
 	font-size: 0.7em;
@@ -214,6 +211,7 @@ nav .icon-burger .line {
 
 
 /* CELLIER */
+
 .cellier{
     padding: 0 3vw;
     width: 100%;
@@ -310,7 +308,6 @@ nav .icon-burger .line {
     justify-content: center;
     align-items: center;
 }
-
 .bulle p {
     margin: 0;
     font-family: "HindMadurai-Medium";
@@ -318,15 +315,12 @@ nav .icon-burger .line {
 .tiny-text{
     font-size: 0.9em;
 }
-
 .optionsIcones{
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
     justify-content: center;
     height: 100%;
 }
-
 .optionsIcones img{
     width: 18px;
     margin: 8px 0;
@@ -414,6 +408,7 @@ form h3{
 }
 
 /* BOUTON CALL2ACTION AJOUTER BOUTEILLE*/
+
 .btn-call-action{
 	text-transform: uppercase;
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);

@@ -9,6 +9,12 @@
  */
 class Authentification extends Modele {
 
+	/**
+	 * Valider l'authentification avec les données entrées par l'usager
+	 * @param string $courriel le courriel de l'usager
+	 * @param string $password le mot de passe de l'usager
+	 * @return boolean si les informations envoyées sont valides ou non
+	 */
 	public function validerAuthentification($courriel, $password){
 
 		// filtrer les donnees de l'usager
@@ -26,6 +32,14 @@ class Authentification extends Modele {
 		return false;
 	}
 
+	/**
+	 * Fonction permettant d'ajouter un usager dans la bd
+	 * @param string $courriel le courriel de l'usager
+	 * @param string $nom le nom de l'usager
+	 * @param string $prenom le prenom de l'usager
+	 * @param string $password le mot de passe de l'usager
+	 * @return boolean si on a pu créer l'usager dans la bd ou non
+	 */
 	public function creerCompte($courriel, $nom, $prenom, $password){
 
 		// filtrer les donnees de l'usager
@@ -33,6 +47,7 @@ class Authentification extends Modele {
 		$nom = $this->filtre($nom);
 		$prenom = $this->filtre($prenom);
 		
+		// on vérifie si un usager avec ce courriel existe déjà
 		$requete ="SELECT * FROM vino__usager WHERE courriel = '". $courriel . "'";
 		$res = $this->_db->query($requete);
 		$row_cnt = $res->num_rows;
@@ -40,8 +55,11 @@ class Authentification extends Modele {
 		// Si le courriel n'existe pas déjà dans la base de données, on créé le compte
 		if ($row_cnt == 0) {
 
+			// on met le courriel dans la session pour usage futur
 			$_SESSION['courriel'] = $courriel;
+			// on hash le mot de passe avant de l'entrer dans la bd
 			$password = password_hash($password, PASSWORD_DEFAULT);
+			
 			$requete = $this->_db->query("INSERT INTO vino__usager (courriel, nom, prenom, mot_de_passe) VALUES ('" . $courriel . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
 
 			if($requete == 1){

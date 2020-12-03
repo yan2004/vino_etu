@@ -14,8 +14,6 @@
 		<link rel="stylesheet" href="./css/base_h5bp.css" type="text/css" media="screen">
 		<link rel="stylesheet" href="./css/main.css" type="text/css" media="screen">
 		<base href="<?php echo BASEURL; ?>">
-		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
-		<!-- <script src="./js/plugins.js"></script> -->
 		<script src="./js/main.js"></script>
 	</head>
 	<body >
@@ -24,7 +22,6 @@
 				<input id="nav-toggle" type="checkbox">
 				<div class="logo"><a href="?requete=accueilUsager"><img src="./images/logo-couleurs-v2.svg" alt="vino-logo"></a></div>
 				<ul class="links">
-					<!--<li><a href="?requete=accueil">MON CELLIER</a></li>-->
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>
 					<li><a href="?requete=modifierCompte">MON COMPTE</a></li>
 					<li><a href="?requete=deconnexion">DÉCONNEXION</a></li>
