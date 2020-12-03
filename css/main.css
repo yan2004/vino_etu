@@ -425,9 +425,39 @@ form h3{
 	background-position: right;
 }
 
+/* ADMIN PANEL */
+
 #rapportImportation{
     font-size: 0.5em;
+    width: 80%;
+    margin: auto;
+    color: #011C27;
 }
+#rapportImportation h2{
+    color: #511730;
+}
+.bouteillesImport{
+    height: 50vh;
+    overflow-y: scroll;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #C6D8D3;
+    border: 1px solid #4F646F;
+}
+.bouteillesImport div{
+    padding: 2px 8px;
+    margin: 13px 0;
+    background-color:#FFFFFF;
+}
+.nbrImport{
+    color: #511730;
+    font-family: "HindMadurai-Medium";
+    border-top: 1px solid #511730;
+    padding-top: 13px;
+    margin-top: 25px;
+}
+
+
 
 /* AUTRES FORMATS */
 

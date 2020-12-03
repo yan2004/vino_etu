@@ -8,8 +8,8 @@
  *
  */
 
-const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+// const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // console.log(BaseURL);
@@ -492,15 +492,6 @@ window.addEventListener('load', function() {
           'prenom':  f.prenom.value,
           'mot_de_passe':   f.mot_de_passe.value
       }
-
-      // TODO : AJOUTER INPUT CACHÉ AVEC COURRIEL
-      // ***********************************************
-      // let paramStorage = {
-      //   // "courriel":param.courriel,
-      //   "courriel":??,
-      //   "password":dataCompte.mot_de_passe
-      // };
-      // ***********************************************
       
 
       // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications

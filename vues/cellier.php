@@ -4,7 +4,7 @@
             <h1>Le cellier de 
             <?php 
                 if(isset($_SESSION["courriel"])){
-                    $usager = /*$dataUsager[0]['nom']." ".*/$dataUsager[0]['prenom'];
+                    $usager = $dataUsager[0]['prenom'];
                     echo $usager;
                 }
             ?>
@@ -37,7 +37,7 @@
                 <img src="./images/minus-circle-solid.svg" class='btnBoire'/> -->
             </div>
             <div class="img" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-                <img src="https:<?php echo $bouteille['url_image'] ?>"/>
+                <img src="<?php echo $bouteille['url_image'] ?>"/>
                 <div class="bulle" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>"><p class="quantite"><?php echo $bouteille['quantite']?></p></div>
                 <img class='btnAjouter' src="./images/plus-circle-solid.svg" />
                 <img class='btnBoire' src="./images/minus-circle-solid.svg" />
