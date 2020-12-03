@@ -511,6 +511,18 @@ window.addEventListener('load', function() {
         .then(response => {
           if(response.success){
 
+            
+            // TODO : DÉCOMMENTER
+            // ***********************************************
+            // Quand réussir de login, fait localStorage
+            // localStorage.setItem('param', JSON.stringify(paramStorage));
+            // ***********************************************
+            let paramStorage = {
+              "courriel":f.courriel.value,
+              "password":f.mot_de_passe.value
+            };
+            localStorage.setItem('param', JSON.stringify(paramStorage));
+
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
           }else{

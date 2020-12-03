@@ -72,20 +72,21 @@ class SAQ extends Modele {
 
 				// récupérer les informations pertinentes des "li"
 				$info = self::recupereInfo($noeud);
-				echo "<p>".$info->nom;
+				echo "<div><h3>".$info->nom . "</h3>";
 
 				// ajouter les produits récupérés à la bd
 				$retour = $this -> ajouteProduit($info);
-				echo "<br>Code de retour : " . $retour -> raison . "<br>";
+				echo "<p>Code de retour : " . $retour -> raison . "</p>";
 				if ($retour -> succes == false) {
-					echo "<pre>";
+					// echo "<pre>";
 					//var_dump($info);
-					echo "</pre>";
-					echo "<br>";
+					// echo "</pre>";
+					// echo "<br>";
 				} else {
 					$i++;
 				}
-				echo "</p>";
+				// echo "</h3>";
+				echo "</div>";
 			}
 		}
 
@@ -132,13 +133,23 @@ class SAQ extends Modele {
 		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
 		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
+		// var_dump($a_titre);
+
 		$info -> url_saq = $a_titre->getAttribute('href');
 		
-		$info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));	//TODO : Retirer le format de la bouteille du titre.
-		
+		// $info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));	//TODO : Retirer le format de la bouteille du titre.
+		// var_dump($info->nom);
+
 		// Type, format et pays
 		$aElements = $noeud -> getElementsByTagName("strong");
 		foreach ($aElements as $node) {
+			// on récupère le nom de la bouteille
+			if ($node -> getAttribute('class') == 'product name product-item-name'){
+				$info -> nom = self::nettoyerEspace(trim($node -> textContent));
+			}
+			// var_dump($info->nom);
+
+
 			if ($node -> getAttribute('class') == 'product product-item-identity-format') {
 				$info -> desc = new stdClass();
 				$info -> desc -> texte = $node -> textContent;
@@ -182,7 +193,7 @@ class SAQ extends Modele {
 			}
 		}
 
-		//var_dump($info);
+		// var_dump($info);
 		return $info;
 	}
 

@@ -14,6 +14,7 @@ const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 let errForm = false;
 
 window.addEventListener('load', function(){
+// document.addEventListener('DOMContentLoaded', function(){
 
   // S'il y a localStorage, rédiger la page de cellier directement
   if(localStorage.getItem('param')){
@@ -46,8 +47,8 @@ window.addEventListener('load', function(){
         console.error(error);
       });
     }
-
-  }else{                // Si sans localStorage, sign in ou sign up comme d'habitude
+  // Si sans localStorage, sign in ou sign up comme d'habitude
+  }else{
 
     // console.log(BaseURL);
 
@@ -210,7 +211,9 @@ window.addEventListener('load', function(){
         });
       }
     });
+
   }
+
 });
 
 
