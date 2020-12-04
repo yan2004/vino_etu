@@ -79,7 +79,7 @@ main {
 .main-title-welcome{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 .main-title-welcome h1{
     display: flex;
@@ -478,7 +478,7 @@ form h3{
         height: 185px;
     }
     main{
-        margin: 130px 0 30px 0;
+        margin: 100px 0 30px 0;
     }
     nav{
         height: 80px;
@@ -543,6 +543,9 @@ form h3{
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 1025px) {
 
+    main{
+        margin: 137px 0 30px 0;
+    }
     nav{
         height: 110px;
     }

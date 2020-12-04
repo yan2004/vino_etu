@@ -217,14 +217,14 @@ class Controler
 			if(!empty($body)){
 
 				if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
-					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix) && !empty(trim($body->quantite))){
+					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix)){
 
 					// test regex
 					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 					// champs non obligatoires
-					$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+					$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i';
 					$regexMillesime = '/^[1-2][0-9]{3}$/';
 
 					
@@ -313,14 +313,14 @@ class Controler
 			$object = json_decode($requestPayload, true);
 
 			if(isset($object['nomBtl']) && isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
-				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix']) && !empty(trim($object['quantite']))){
+				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix'])){
 
 				// test regex
 				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 				// champs non obligatoires
-				$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+				$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i';
 				$regexMillesime = '/^[1-2][0-9]{3}$/';
 
 				$champsOptValides = true;
