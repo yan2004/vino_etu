@@ -9,9 +9,6 @@
                 }
             ?>
             &#8239;:
-                <!-- <div class="main-title-call-action">
-                    <button class="btn-call-action" id="btnCallActionAjt">Ajouter une bouteille</button>
-                </div> -->
             </h1>
             
             <div class="main-title-call-action">

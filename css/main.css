@@ -138,7 +138,6 @@ nav {
     left: 0;
     right: 0;
     top: 0;
-    /* height: 10vh; */
     height: 65px;
     background-color: #011C27;
     display:flex;
@@ -162,7 +161,6 @@ nav .links {
     z-index: 9;
     left: 0;
     right: 0;
-    /* top: 10vh; */
     top: 64px;
     bottom: 100%;
     width: auto;
@@ -429,7 +427,6 @@ form h3{
     font-size: 0.7em;
 }
 .btn-call-action:hover, .btn-call-action:active{
-    /* background-position: right; */
     background-position: 80px;
 }
 
