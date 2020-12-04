@@ -80,7 +80,6 @@ class Controler
 			if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
 
 				// test regex
-				// $regexCourriel = '/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i';
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
 				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
 
@@ -131,7 +130,7 @@ class Controler
 
 				// test regex
 				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ \',\-"]{1,}$/i';
+				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ\d \',\-"\.]{1,50}$/i';
 				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
 
 				if (preg_match($regexCourriel, $body->courriel) && preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && preg_match($regexPassword, $body->password)){
@@ -224,10 +223,21 @@ class Controler
 					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
-					// TODO : RAJOUTER LES VALIDATIONS POUR LES CHAMPS NON OBLIGATOIRES
-					// $regexNoteGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+					// champs non obligatoires
+					$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+					$regexMillesime = '/^[1-2][0-9]{3}$/';
+
 					
-					if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat)){
+					$champsOptValides = true;
+
+					// validation des champs non-obligatoires
+					if(isset($body->notes) && !empty($body->notes) && !preg_match($regexNotesGarde, $body->notes) || 
+					isset($body->garde) && !empty($body->garde) && !preg_match($regexNotesGarde, $body->garde) || 
+					isset($body->millesime) && !empty($body->millesime) && !preg_match($regexMillesime, $body->millesime)){
+						$champsOptValides = false;
+					}
+					
+					if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat) && $champsOptValides){
 
 						$bte = new Bouteille();
 
@@ -309,10 +319,20 @@ class Controler
 				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
-				// TODO : RAJOUTER LES VALIDATIONS POUR LES CHAMPS NON OBLIGATOIRES
-				// $regexNoteGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+				// champs non obligatoires
+				$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/';
+				$regexMillesime = '/^[1-2][0-9]{3}$/';
 
-				if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat'])){
+				$champsOptValides = true;
+
+				// validation des champs non-obligatoires
+				if(isset($object['notes']) && !empty($object['notes']) && !preg_match($regexNotesGarde, $object['notes']) || 
+				isset($object['garde']) && !empty($object['garde']) && !preg_match($regexNotesGarde, $object['garde']) || 
+				isset($object['millesime']) && !empty($object['millesime']) && !preg_match($regexMillesime, $object['millesime'])){
+					$champsOptValides = false;
+				}
+				
+				if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat']) && $champsOptValides){
 
 					$bte = new Bouteille();
 					$resultat = $bte->modificationInfoBtl($object['nomBtl'],$object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
@@ -398,7 +418,7 @@ class Controler
 			if(isset($_SESSION['courriel']) && isset($body->nom) && isset($body->prenom) && !empty($body->nom) && !empty($body->prenom)){
 
 				// test regex
-				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ \',\-"]{1,}$/i';
+				$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ\d \',\-"\.]{1,50}$/i';
 				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
 
 				// cas par defaut si on a pas change le password

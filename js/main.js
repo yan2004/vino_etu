@@ -441,8 +441,8 @@ window.addEventListener('load', function() {
 
     // objet avec les controles à effectuer pour chaque champs
     let controlesModifCompte = {
-      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
-      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
+      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
+      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
       mot_de_passe:   {requis: false, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i,  msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."},
     };
 

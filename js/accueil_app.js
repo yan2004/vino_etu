@@ -79,12 +79,10 @@ window.addEventListener('load', function(){
     // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
     // ***************************************************
 
-    // /^[\u4e00-\u9fa5a-zà-ÿa-z\d]+((([', -][\u4e00-\u9fa5a-zà-ÿ\da-z ])?|\.)[\u4e00-\u9fa5a-zà-ÿa-z\d]*)$/
-    // /^[\u4e00-\u9fa5a-zà-ÿ/d ',\-"]{1,50}$/i
     let controlesCreation = {
       courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
-      nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
-      prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
+      nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
+      prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
       password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
     };
 

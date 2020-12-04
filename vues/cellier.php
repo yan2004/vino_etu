@@ -9,15 +9,15 @@
                 }
             ?>
             &#8239;:
-                <div class="main-title-call-action">
+                <!-- <div class="main-title-call-action">
                     <button class="btn-call-action" id="btnCallActionAjt">Ajouter une bouteille</button>
-                </div>
+                </div> -->
             </h1>
             
+            <div class="main-title-call-action">
+                <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
+            </div>
        </div>
-       <!-- <div class="main-title-call-action">
-           <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
-       </div> -->
     </div>
     <div class="bouteilles gallery gallery--2">
     <?php

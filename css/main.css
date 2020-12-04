@@ -76,9 +76,19 @@ main {
 .main-title{
     width: 100%;
 }
+.main-title-welcome{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .main-title-welcome h1{
     display: flex;
     justify-content: space-between;
+    margin: 0;
+}
+.main-title-call-action{
+    display: flex;
+    justify-content: flex-end;
 }
 h1{
     font-family: "PoiretOne-Regular";
@@ -233,6 +243,7 @@ nav .icon-burger .line {
     height: 85px;
 }
 .img{
+    min-width: 65px;
     width: 30%;
     max-width: fit-content;
     width: -moz-max-content;
@@ -241,6 +252,7 @@ nav .icon-burger .line {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0.1em;
     margin: 0 20px 0 10px;
     position: relative;
@@ -414,10 +426,11 @@ form h3{
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
     transition: 0.6s;
     width: 90%;
-    font-size: 0.4em;
+    font-size: 0.7em;
 }
-.btn-call-action:hover{
-	background-position: right;
+.btn-call-action:hover, .btn-call-action:active{
+    /* background-position: right; */
+    background-position: 80px;
 }
 
 /* ADMIN PANEL */
