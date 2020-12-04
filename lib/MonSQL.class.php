@@ -36,7 +36,7 @@ class MonSQL {
 	 * @param void
 	 * @return Singleton
 	 */
-	
+
 	public static function getInstance() {
 
 		if (is_null(self::$_instance)) {
