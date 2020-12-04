@@ -515,15 +515,18 @@ window.addEventListener('load', function() {
         .then(response => {
           if(response.success){
 
+            // on veut juste modifier le mot de passe dans le local storage s'il a ete change
+            if(f.mot_de_passe.value !== ""){
+              
+              // construction de l'objet avec valeurs à enregistrer dans le localStorage
+              let paramStorage = {
+                "courriel":f.courriel.value,
+                "password":f.mot_de_passe.value
+              };
 
-            // construction de l'objet avec valeurs à enregistrer dans le localStorage
-            let paramStorage = {
-              "courriel":f.courriel.value,
-              "password":f.mot_de_passe.value
-            };
-
-            // si le mot de passe a été modifié avec succes, on update les valeurs dans le localStorage
-            localStorage.setItem('param', JSON.stringify(paramStorage));
+              // si le mot de passe a été modifié avec succes, on update les valeurs dans le localStorage
+              localStorage.setItem('param', JSON.stringify(paramStorage));
+            }
 
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
