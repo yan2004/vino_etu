@@ -8,7 +8,7 @@
                     echo $usager;
                 }
             ?>
-            &#8239;:
+            <!-- &#8239;: -->
             </h1>
             
             <div class="main-title-call-action">
