@@ -30,9 +30,6 @@
 }
 
 
-/* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) { ... } */
-
 /* MOBILE FIRST */
 
 body {
@@ -79,6 +76,7 @@ body {
 }
 
 /* FORMULAIRES */
+
 .form-accueil{
 	box-sizing: border-box;
 	margin: auto;

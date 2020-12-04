@@ -27,7 +27,6 @@
                 <span  id="errPrix"></span>
 
                 <label for="garde_jusqua_ajouter">Garde : </label>
-                <!-- <input type="text" name="garde_jusqua" id="garde_jusqua_ajouter"> -->
                 <input type="text" name="garde" id="garde_jusqua_ajouter">
                 <span  id="errGarde"></span>
 
@@ -44,11 +43,6 @@
                 </div>
             
             </form>
-
-
-            <!-- <button name="ajouterBouteilleCellier" id="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE</button> -->
         </div>
     </div>
 </div>
-<!--<script src="./js/xxx.js"></script>-->
-

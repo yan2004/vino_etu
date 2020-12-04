@@ -12,8 +12,6 @@
 //const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
-// console.log(BaseURL);
-
 // initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
 
@@ -28,8 +26,10 @@ window.addEventListener('load', function() {
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
+        // on prend l'id de la bouteille et la quantité
         let id = evt.target.parentElement.dataset.id;
         let eQuantite = document.querySelector(`.bulle[data-id='${id}'] .quantite`);
+
         let requete = new Request(BaseURL+"index.php?requete=boireBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
         fetch(requete)
@@ -63,9 +63,10 @@ window.addEventListener('load', function() {
     // requête ajax au click d'un des boutons "ajouter" de la page
     element.addEventListener("click", function(evt){
 
-      // recuperer l'id de la bouteille
+      // recuperer l'id de la bouteille et la quantité
       let id = evt.target.parentElement.dataset.id;
       let eQuantite = document.querySelector(`.bulle[data-id='${id}'] .quantite`);
+
       let requete = new Request(BaseURL+"index.php?requete=ajouterBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
       fetch(requete)
@@ -99,9 +100,12 @@ window.addEventListener('load', function() {
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
+      // récupération de l'id de la bouteille
       let id = evt.target.parentElement.dataset.id;
 
+      // récupération de l'élément du DOM contenant la bouteille en question
       let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+
       let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
 
       fetch(requete)
@@ -137,8 +141,11 @@ window.addEventListener('load', function() {
 
       // pour empêcher que le formulaire se soumette (submit) au serveur
       evt.preventDefault();
+
+      // récupération de l'id de la bouteille
       let id = evt.target.parentElement.dataset.id;
 
+      // redirection vers le template avec formulaire de modification d'une bouteille
       window.location.href = BaseURL+"index.php?requete=formModificationBtl&id="+id;
     });
   });
@@ -148,7 +155,6 @@ window.addEventListener('load', function() {
   // *********************************************************
    
   // construction de l'objet avec les controles qui seront effectués
-  // *** LE NOM N'Y EST PAS, CAR IL Y A UN AUTO-COMPLETE ***
   let controlesModifBtl = {
     millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
     quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
@@ -240,7 +246,6 @@ window.addEventListener('load', function() {
           }
         })
         .catch(error => {
-          // TODO : traitement de l'erreur
           console.error(error);
         });
       }
@@ -330,7 +335,6 @@ window.addEventListener('load', function() {
     // VALIDATIONS DU FORMULAIRE D'AJOUT D'UNE NOUVELLE BOUTEILLE
     // **********************************************************
     
-    //let fAjtBtlCellier = document.getElementById('form-ajouter-btl');
     if(typeof fAjtBtlCellier !== 'undefined'){
 
       let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
@@ -435,9 +439,10 @@ window.addEventListener('load', function() {
 
   if(document.getElementById('fCompte')){
 
+    // objet avec les controles à effectuer pour chaque champs
     let controlesModifCompte = {
-      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
-      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                        msgRegExp: "Au moins 1 caractère alphabétique."},
+      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
+      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
       mot_de_passe:   {requis: false, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i,  msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."},
     };
 
@@ -449,6 +454,7 @@ window.addEventListener('load', function() {
       let nomChamp = evt.target.name;
       let controles = controlesModifCompte[nomChamp];
       if(nomChamp === "mot_de_passe_conf"){
+        // validation spéciale pour la confirmation du mot de passe
         mot_de_passe_confValider();
       }else{
         if(nomChamp === "mot_de_passe") mot_de_passe_confValider();
@@ -487,13 +493,11 @@ window.addEventListener('load', function() {
 
       // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
       let dataCompte = {
-          // 'userId':    f.userId.value,
           'nom':    f.nom.value,
           'prenom':  f.prenom.value,
           'mot_de_passe':   f.mot_de_passe.value
       }
       
-
       // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
       if(!errForm){
 
@@ -511,16 +515,14 @@ window.addEventListener('load', function() {
         .then(response => {
           if(response.success){
 
-            
-            // TODO : DÉCOMMENTER
-            // ***********************************************
-            // Quand réussir de login, fait localStorage
-            // localStorage.setItem('param', JSON.stringify(paramStorage));
-            // ***********************************************
+
+            // construction de l'objet avec valeurs à enregistrer dans le localStorage
             let paramStorage = {
               "courriel":f.courriel.value,
               "password":f.mot_de_passe.value
             };
+
+            // si le mot de passe a été modifié avec succes, on update les valeurs dans le localStorage
             localStorage.setItem('param', JSON.stringify(paramStorage));
 
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
@@ -532,16 +534,21 @@ window.addEventListener('load', function() {
           }
         })
         .catch(error => {
-          // TODO : traitement de l'erreur
           console.error(error);
         });
       }
     });
 
+    /**
+     * Fonction servant à valider le champs de confirmation de mot de passe
+     */
     function mot_de_passe_confValider() {
       let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
       let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+
       let msgErr = "";
+
+      // vérifier si le mot de passe inscrit dans le champs de confirmation est de même valeur que celui dans le champs mot de passe
       if(valConf !== val){
         if(valConf === ""){
           msgErr = "Obligatoire.";
@@ -550,9 +557,9 @@ window.addEventListener('load', function() {
         }
         errForm = true;          
       }
+      // affichage du message d'erreur
       document.getElementById('errMot_de_passe_conf').innerHTML = msgErr;
     }
-    
   }
 
   
@@ -564,6 +571,7 @@ window.addEventListener('load', function() {
   {
     let btnCallActionAjt = document.getElementById('btnCallActionAjt');
     btnCallActionAjt.addEventListener("click", function(){
+      // redirection vers template avec formulaire d'ajout d'une nouvelle bouteille
       window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
     });
   }
@@ -599,6 +607,7 @@ window.addEventListener('load', function() {
 function validerChamps(form, nomChamp, requis=false, regExp=null, msgRegExp=null){
 
   let val = "";
+  // récupération de l'élément
   let e = form[nomChamp];
 
   // recuperation de la valeur du champ

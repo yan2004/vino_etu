@@ -14,15 +14,16 @@
 let errForm = false;
 
 window.addEventListener('load', function(){
-// document.addEventListener('DOMContentLoaded', function(){
 
   // S'il y a localStorage, rédiger la page de cellier directement
   if(localStorage.getItem('param')){
 
+    // aller chercher les valeurs dans le localStorage
     let paramLocal = localStorage.getItem('param');
   
     if (JSON.parse(paramLocal).courriel && JSON.parse(paramLocal).password){
       
+      // envoi des valeurs du localStorage pour l'authentification
       let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body:paramLocal});
 
       fetch(requete)
@@ -43,14 +44,11 @@ window.addEventListener('load', function(){
         }
       })
       .catch(error => {
-        // TODO : traitement de l'erreur
         console.error(error);
       });
     }
   // Si sans localStorage, sign in ou sign up comme d'habitude
   }else{
-
-    // console.log(BaseURL);
 
     let btnSignIn = document.getElementById("sign-in");
     let btnSignUp = document.getElementById("sign-up");
@@ -83,12 +81,12 @@ window.addEventListener('load', function(){
 
     let controlesCreation = {
       courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
-      nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
-      prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ ',\-"]{1,}$/i,                      msgRegExp: "Au moins 1 caractère alphabétique."},
+      nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
+      prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
       password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
     };
 
-    // validations inputs au change
+    // validations des inputs au change
     fS.addEventListener('change', (evt)=>{
       let nomChamp = evt.target.name;
       let controles = controlesCreation[nomChamp];
@@ -98,15 +96,20 @@ window.addEventListener('load', function(){
     // requête ajax au click du bouton "soumettre" lors de la creation de compte
     btnSoumettre.addEventListener("click", (evt) =>{
 
+      // pour ne pas que le formulaire se soumette
       evt.preventDefault();
 
       errForm = false;
+
+      // on valide tous les champs
       for(let nomChamp in controlesCreation){
         let controles = controlesCreation[nomChamp];
         validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
       }
+
       if (!errForm){
 
+        // objet avec paramètres du nouveau compte
         let param = {
           "courriel":fS.courriel.value,
           "nom":fS.nom.value,
@@ -114,6 +117,7 @@ window.addEventListener('load', function(){
           "password":fS.password.value,
         };
  
+        // objet avec paramètres du nouveau compte qui seront enregistrés dans le locaStorage
         let paramStorage = {
           "courriel":param.courriel,
           "password":param.password
@@ -143,7 +147,6 @@ window.addEventListener('load', function(){
           }
         })
         .catch(error => {
-          // TODO : traitement de l'erreur
           console.error(error);
         });
       }
@@ -167,15 +170,20 @@ window.addEventListener('load', function(){
     // requête ajax au click du bouton "entrer" lors de l'authentification
     btnEntrer.addEventListener("click", (evt) => {
 
+      // pour ne pas que le formulaire se soumette
       evt.preventDefault();
 
       errForm = false;
+
+      // on valide tous les champs
       for(let nomChamp in controlesLogin){
         let controles = controlesLogin[nomChamp];
         validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
       }
+
       if (!errForm){
 
+        // objet avec paramètres d'authentification
         let param = {
           "courriel":fL.courriel.value,
           "password":fL.password.value,
@@ -206,14 +214,11 @@ window.addEventListener('load', function(){
           }
         })
         .catch(error => {
-          // TODO : traitement de l'erreur
           console.error(error);
         });
       }
     });
-
   }
-
 });
 
 

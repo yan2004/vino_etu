@@ -1,6 +1,5 @@
 <div class="compte">
     <h2>Modifier mes informations</h2>
-        <!-- <form action="index.php?requete=sauvegardeCompte" method="post" class="modifierCompte" id="fCompte"> -->
         <form class="modifierCompte" id="fCompte">    
                 <h3>Informations générales</h3>
                 
@@ -28,7 +27,6 @@
                 <div class="forms-btns">
                         <button value="Annuler" class="btnAnnuler">ANNULER</button>
                         <button value="Modifier" class="btnModifierCompte">MODIFIER</button>
-                        <!-- <button type="submit" value="Modifier" class="btnModifierCompte">MODIFIER</button> -->
                 </div>
         </form>
 </div>

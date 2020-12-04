@@ -64,11 +64,8 @@ class SAQ extends Modele {
 		
 		// aller chercher tous les éléments "li" qui contiennent la classe "product-item" pour traiter les informations des produits
 		foreach ($elements as $key => $noeud) {
-			//var_dump($noeud -> getAttribute('class')) ;
-			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
-			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
-				//echo $this->get_inner_html($noeud);
+			if (strpos($noeud -> getAttribute('class'), "product-item") !== false) {
 
 				// récupérer les informations pertinentes des "li"
 				$info = self::recupereInfo($noeud);
@@ -79,36 +76,18 @@ class SAQ extends Modele {
 				echo "<p>Code de retour : " . $retour -> raison . "</p>";
 				if ($retour -> succes == false) {
 					// echo "<pre>";
-					//var_dump($info);
 					// echo "</pre>";
 					// echo "<br>";
 				} else {
 					$i++;
 				}
-				// echo "</h3>";
+
 				echo "</div>";
 			}
 		}
-
 		return $i;
 	}
 
-	/**
-	 * Récupérer le contenu des nodes
-	 * 
-	 * @param object $node
-	 * 
-	 * @return string contenu textuel du node
-	 */
-	// private function get_inner_html($node) {
-	// 	$innerHTML = '';
-	// 	$children = $node -> childNodes;
-	// 	foreach ($children as $child) {
-	// 		$innerHTML .= $child -> ownerDocument -> saveXML($child);
-	// 	}
-
-	// 	return $innerHTML;
-	// }
 
 	/**
 	 * Supprimer les espaces dans une chaine
@@ -128,33 +107,29 @@ class SAQ extends Modele {
 	 */
 	private function recupereInfo($noeud) {
 
-		
 		$info = new stdClass();
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); //TODO : Nettoyer le lien
+
+		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
 		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
-		// var_dump($a_titre);
 
 		$info -> url_saq = $a_titre->getAttribute('href');
-		
-		// $info -> nom = self::nettoyerEspace(trim($a_titre -> textContent));	//TODO : Retirer le format de la bouteille du titre.
-		// var_dump($info->nom);
 
 		// Type, format et pays
 		$aElements = $noeud -> getElementsByTagName("strong");
 		foreach ($aElements as $node) {
+
 			// on récupère le nom de la bouteille
 			if ($node -> getAttribute('class') == 'product name product-item-name'){
 				$info -> nom = self::nettoyerEspace(trim($node -> textContent));
 			}
-			// var_dump($info->nom);
 
-
+			// on récupère les autres informations : type, format, pays
 			if ($node -> getAttribute('class') == 'product product-item-identity-format') {
 				$info -> desc = new stdClass();
 				$info -> desc -> texte = $node -> textContent;
 				$info->desc->texte = self::nettoyerEspace($info->desc->texte);
-				$aDesc = explode("|", $info->desc->texte); // Type, Format, Pays
+				$aDesc = explode("|", $info->desc->texte);
 				if (count ($aDesc) == 3) {
 					
 					$info -> desc -> type = trim($aDesc[0]);
@@ -181,19 +156,18 @@ class SAQ extends Modele {
 		// prix
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
+
+			// traitement de la chaine pour envoi à la bd
 			if ($node -> getAttribute('class') == 'price') {
 
 				$info -> prix = trim($node -> textContent);
+				// on enlève le signe de $
 				$info -> prix = rtrim($info -> prix, "$");
-				// echo ($info -> prix);
-
-				// 
+				// on remplace la virgule par un point
 				$info -> prix = str_replace(",", ".", $info -> prix);
-				// echo ($info -> prix);
+
 			}
 		}
-
-		// var_dump($info);
 		return $info;
 	}
 
@@ -206,15 +180,9 @@ class SAQ extends Modele {
 	 */
 	private function ajouteProduit($bte) {
 
-
-		//echo "ajouteProduits";
-
-
 		$retour = new stdClass();
 		$retour -> succes = false;
 		$retour -> raison = '';
-
-		//var_dump($bte);
 
 		// Récupérer l'id du type de la bouteille
 		$rows = $this -> _db -> query("select id from vino__type where type = '" . $bte -> desc -> type . "'");
@@ -222,7 +190,6 @@ class SAQ extends Modele {
 		// si le type existe dans la base de données
 		if ($rows -> num_rows == 1) {
 			$type = $rows -> fetch_assoc();
-			//var_dump($type);
 			$type = $type['id'];
 
 			// Récupérer l'id de la bouteille qui a le code de la SAQ qu'on lui envoi
@@ -234,7 +201,6 @@ class SAQ extends Modele {
 				$this -> stmt -> bind_param("sssssdssi", $bte -> nom, $bte -> img, $bte -> desc -> code_SAQ, $bte -> desc -> pays, $bte -> desc -> texte, $bte -> prix, $bte -> url_saq, $bte -> desc -> format, $type);
 				$retour -> succes = $this -> stmt -> execute();
 				$retour -> raison = self::INSERE;
-				//var_dump($this->stmt);
 			} else {
 				$retour -> succes = false;
 				$retour -> raison = self::DUPLICATION;

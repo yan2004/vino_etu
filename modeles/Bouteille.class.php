@@ -146,14 +146,12 @@ class Bouteille extends Modele {
 		$requete = "SELECT id FROM vino__usager WHERE courriel ='" . $_SESSION["courriel"] . "'";
 		$res = $this->_db->query($requete);
 
-		// $requete = "SELECT id FROM vino__usager WHERE courriel ='" . $data->courriel . "'";
-		// $res = $this->_db->query($requete);
-
 		if($res->num_rows == 1)
 		{
 			$row = $res->fetch_assoc();
 			$id_usager = $row["id"];
 
+			// si le champs millesime est vide, on met null pour bonne insertion dans la bd
 			if(empty($data->millesime)) $data->millesime = 'NULL';
 
 			$requete = "INSERT INTO vino__bouteille__collection(id_bouteille, date_achat, garde_jusqua, notes, prix, quantite, millesime, id_usager) VALUES (".
@@ -166,14 +164,11 @@ class Bouteille extends Modele {
 			$data->millesime.",".
 			"'".$id_usager."')";
 
-			
 			$res = $this->_db->query($requete);
 			
 			return $res;
 		}
-
 		return false;
-
     }
     
     
@@ -249,10 +244,11 @@ class Bouteille extends Modele {
 		// si nous avons trouvé un id on l'ajoute aux paramètres pour modifier la bouteille
 		if($res->num_rows == 1){
 			$row = $res->fetch_assoc();
+			// récupération de l'id de la bouteille
 			$id_bouteille = $row["id"];
 
 			$requete = "UPDATE vino__bouteille__collection SET id_bouteille=" .$id_bouteille . ",date_achat='". $date_achat. "',garde_jusqua='". $garde_jusqua. "',notes='". $notes. "',prix='". $prix. "',quantite='". $quantite. "',millesime=". $millesime ." WHERE id=". $id;
-			//echo $requete;
+
 			$res = $this->_db->query($requete);
 			return $res;
 		}else{
@@ -260,8 +256,10 @@ class Bouteille extends Modele {
 		}
 	}
 
-	// TODO : DOCUMENTER CETTE FONCTION :
 
+	/**
+	 * 
+	 */
 	public function getListeBouteilleCellierById($id)
 	{
 		// filtrer les donnees de l'usager
@@ -271,7 +269,7 @@ class Bouteille extends Modele {
 		$requete = "SELECT c.*, b.nom FROM vino__bouteille__collection c
 					INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
 					WHERE c.id ='". $id . "'";
-		//echo $requete;
+
 		$res = $this->_db->query($requete);
 		if($res->num_rows)		
 		{
@@ -301,16 +299,13 @@ class Bouteille extends Modele {
 		
 		if($res->num_rows == 1){
 			$row = $res->fetch_assoc();
+			// on récupère l'id de l'usager
 			$id_usager = $row["id"];
-
-			// echo $id_usager;
-			// echo $data->id;
 
 			$requete = "DELETE FROM vino__bouteille__collection WHERE id =" . $data->id . " AND id_usager =" . $id_usager;
 			$res = $this->_db->query($requete);
 			return $res == 1;
 		}
-
 		return false;
 	}
 }

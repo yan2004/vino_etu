@@ -15,7 +15,6 @@
 		<link rel="stylesheet" href="./css/main.css" type="text/css" media="screen">
 		<base href="<?php echo BASEURL; ?>">
 		
-		<!-- <script src="./js/main.js"></script> -->
 		<script src="./js/admin_app.js"></script>
 	</head>
 	<body >
