@@ -6,9 +6,9 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 // initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
