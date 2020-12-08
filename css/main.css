@@ -93,6 +93,7 @@ main {
 h1{
     font-family: "PoiretOne-Regular";
     margin: auto;
+    font-size: 1.5em;
 }
 h2{
     font-family: "Lora-Medium";
@@ -430,7 +431,7 @@ form h3{
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
     transition: 0.6s;
     width: 90%;
-    font-size: 0.7em;
+    font-size: 0.5em;
 }
 .btn-call-action:hover, .btn-call-action:active{
     background-position: 80px;
@@ -522,6 +523,9 @@ form h3{
     }
     nav .links {
         top: 80px;    
+    }
+    .btn-call-action{
+        font-size: 0.6em;
     }
     .bouteille{
         padding: 15px;
