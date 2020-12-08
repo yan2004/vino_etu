@@ -469,6 +469,37 @@ form h3{
 }
 
 
+/* MODAL FENÊTRE */
+.modal-container {
+    display: none;
+}
+
+.modal-container-display {
+    top:-40vh;
+    left: 0;
+    height: 0vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.modal-content {
+    background-color: #FFF;
+    margin-top: 30vh;
+    width: 60vw;
+    height: 30vh;
+    padding: 0vh 5vw;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 5;
+}
+
+.modal-header p:last-child {
+    visibility: hidden;
+}
+
 
 /* AUTRES FORMATS */
 
