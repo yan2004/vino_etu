@@ -8,8 +8,8 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // initialisation de la variable errForm pour la validation des différents formulaires
@@ -97,7 +97,6 @@ window.addEventListener('load', function() {
 
   document.querySelectorAll(".btnSupprimer").forEach(function(element){
 
-
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
@@ -163,45 +162,50 @@ window.addEventListener('load', function() {
               modal.setAttribute("class", "modal-container");
               
             })
-          };
+          }
         }
-
-
-      //btnModalSupprimer.addEventListener('click', (evt)=>{
-        // récupération de l'id de la bouteille
-        //let id = evt.target.parentElement.dataset.id;
-        //let id = evt.target.parentElement.parentElement.firstElementChild.lastElementChild.textContent;
-        //console.log(id);
-        // // récupération de l'élément du DOM contenant la bouteille en question
-        // let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
-
-        // let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
-
-        // fetch(requete)
-        // .then(response => {
-        //     if (response.status === 200) {
-        //       return response.json();
-        //     } else {
-        //       throw new Error('Erreur');
-        //     }
-        // })
-        // .then(response => {
-        //   if(response.success){
-        //     // supprimer la bouteille du DOM
-        //     laBouteille.remove();
-        //   }else{
-        //     throw response.msg;
-        //   }
-        // })
-        // .catch(error => {
-        //   console.error(error);
-        // });
-      //});
-
-      };
+      }
     });
-    
   });
+
+    // **********************AVANT***************************************************
+    // document.querySelectorAll(".btnSupprimer").forEach(function(element){
+
+    //   // requête ajax au click d'un des boutons "boire" de la page
+    //   element.addEventListener("click", function(evt){
+  
+    //     // récupération de l'id de la bouteille
+    //     let id = evt.target.parentElement.dataset.id;
+  
+    //     // récupération de l'élément du DOM contenant la bouteille en question
+    //     let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+
+    //     let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+  
+    //     fetch(requete)
+    //     .then(response => {
+    //         if (response.status === 200) {
+    //           return response.json();
+    //         } else {
+    //           throw new Error('Erreur');
+    //         }
+    //     })
+    //     .then(response => {
+    //       if(response.success){
+    //         // supprimer la bouteille du DOM
+    //         laBouteille.remove();
+    //       }else{
+    //         throw response.msg;
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    //   });
+    // });
+    // **********************AVANT***************************************************
+    
+  // });
 
 
   // **********************************
