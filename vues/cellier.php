@@ -23,7 +23,7 @@
     
     <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
 
-        <!--Modal Start-->
+    <!--Modal Start-->
     <div class="modal-container" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
         <div class="modal-content">
             <div class="modal-header">
