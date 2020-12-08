@@ -60,7 +60,7 @@ class Authentification extends Modele {
 			// on hash le mot de passe avant de l'entrer dans la bd
 			$password = password_hash($password, PASSWORD_DEFAULT);
 			
-			$requete = $this->_db->query("INSERT INTO vino__usager (courriel, nom, prenom, mot_de_passe) VALUES ('" . $courriel . "', '" . $nom . "', '" . $prenom . "', '" . $password . "')");
+			$requete = $this->_db->query("INSERT INTO vino__usager (courriel, nom, prenom, mot_de_passe, admin) VALUES ('" . $courriel . "', '" . $nom . "', '" . $prenom . "', '" . $password . "', false)");
 
 			if($requete == 1){
 				return true;
