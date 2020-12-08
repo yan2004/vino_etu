@@ -170,8 +170,7 @@ window.addEventListener('load', function() {
       //btnModalSupprimer.addEventListener('click', (evt)=>{
         // récupération de l'id de la bouteille
         //let id = evt.target.parentElement.dataset.id;
-        //let id = evt.target.parentElement.parentElement.firstElementChild.lastElementChild.textContent;
-        //console.log(id);
+        
         // // récupération de l'élément du DOM contenant la bouteille en question
         // let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
 
