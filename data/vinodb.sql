@@ -76,6 +76,7 @@ CREATE TABLE `vino__usager`
   `nom` VARCHAR(50) NOT NULL,
   `prenom` VARCHAR(50) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
+  `admin` BOOLEAN DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -86,7 +87,7 @@ CREATE TABLE `vino__usager`
 -- courriel : admin_pw2@cmaisonneuve.qc.ca
 -- mot de passe : sm1994
 
-INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK');
+INSERT INTO `vino__usager` VALUES(NULL, 'admin_pw2@cmaisonneuve.qc.ca', 'Aran', 'Samus', '$2y$10$F40ZapQ5dZBPq3YEJjJs.eV5zRPlaO9YCnvxijECSx9T.HJrfwucK', true);
 
 
 -- -----------------------------------------------------

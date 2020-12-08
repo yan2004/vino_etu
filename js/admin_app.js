@@ -12,14 +12,6 @@
 
 window.addEventListener('load', function(){
 
-	// supprimer les données de l'usager dans le localStorage lors du click sur le lien de déconnexion
-	if(document.querySelectorAll('.links li')[0]){
-		let btnDeconnexion = document.querySelectorAll('.links li')[0];
-		btnDeconnexion.addEventListener("click", (evt)=>{
-		  localStorage.removeItem('param');
-		})
-	  };
-
 	// call 2 action importation de bouteilles SAQ
 	document.getElementById("btnImportation").addEventListener("click", () =>{
 
