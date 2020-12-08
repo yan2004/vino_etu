@@ -592,19 +592,6 @@ window.addEventListener('load', function() {
         .then(response => {
           if(response.success){
 
-            // on veut juste modifier le mot de passe dans le local storage s'il a ete change
-            if(f.mot_de_passe.value !== ""){
-              
-              // construction de l'objet avec valeurs à enregistrer dans le localStorage
-              let paramStorage = {
-                "courriel":f.courriel.value,
-                "password":f.mot_de_passe.value
-              };
-
-              // si le mot de passe a été modifié avec succes, on update les valeurs dans le localStorage
-              localStorage.setItem('param', JSON.stringify(paramStorage));
-            }
-
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
           }else{
@@ -655,18 +642,6 @@ window.addEventListener('load', function() {
       window.location.href = BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier";
     });
   }
-
-  /**
-   * **************************
-   * Quand click 'DECONNEXION', supprimer localStorage
-   * **************************
-   */
-  if(document.querySelectorAll('.links li')[2]){
-    let btnDeconnexion = document.querySelectorAll('.links li')[2];
-    btnDeconnexion.addEventListener("click", (evt)=>{
-      localStorage.removeItem('param');
-    })
-  };
 
 });
 

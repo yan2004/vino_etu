@@ -15,41 +15,6 @@ let errForm = false;
 
 window.addEventListener('load', function(){
 
-  // S'il y a localStorage, rédiger la page de cellier directement
-  if(localStorage.getItem('param')){
-
-    // aller chercher les valeurs dans le localStorage
-    let paramLocal = localStorage.getItem('param');
-  
-    if (JSON.parse(paramLocal).courriel && JSON.parse(paramLocal).password){
-      
-      // envoi des valeurs du localStorage pour l'authentification
-      let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body:paramLocal});
-
-      fetch(requete)
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        } else {
-          throw new Error('Erreur');
-        }
-      })
-      .then(response => {
-        if(response.success){
-          // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-          window.location = BaseURL+"index.php?requete=accueilUsager";
-        }else{
-          let eErrAuth = document.getElementById("errSignInPassword");
-          eErrAuth.innerText = response.msg;
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    }
-  // Si sans localStorage, sign in ou sign up comme d'habitude
-  }else{
-
     let btnSignIn = document.getElementById("sign-in");
     let btnSignUp = document.getElementById("sign-up");
 
@@ -136,9 +101,6 @@ window.addEventListener('load', function(){
         .then(response => {
           if(response.success){
 
-            // Quand réussir de login, fait localStorage
-            localStorage.setItem('param', JSON.stringify(paramStorage));
-
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
           }else{
@@ -202,9 +164,6 @@ window.addEventListener('load', function(){
         .then(response => {
           if(response.success){
 
-            // Quand réussir de login, fait localStorage
-            localStorage.setItem('param', JSON.stringify(param));
-
             // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
             window.location = BaseURL+"index.php?requete=accueilUsager";
 
@@ -218,7 +177,6 @@ window.addEventListener('load', function(){
         });
       }
     });
-  }
 });
 
 
