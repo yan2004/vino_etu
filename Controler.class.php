@@ -220,7 +220,7 @@ class Controler
 					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix)){
 
 					// test regex
-					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
+					$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 					// champs non obligatoires
@@ -316,7 +316,7 @@ class Controler
 				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix'])){
 
 				// test regex
-				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
+				$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 				// champs non obligatoires
