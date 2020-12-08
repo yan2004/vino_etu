@@ -1,15 +1,7 @@
 <div class="cellier">
    <div class="main-title">
        <div class="main-title-welcome">
-            <h1>Le cellier de 
-            <?php 
-                if(isset($_SESSION["courriel"])){
-                    $usager = $dataUsager[0]['prenom'];
-                    echo $usager;
-                }
-            ?>
-            <!-- &#8239;: -->
-            </h1>
+            <h1>Mon cellier</h1>
             
             <div class="main-title-call-action">
                 <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
