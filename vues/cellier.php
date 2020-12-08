@@ -20,7 +20,25 @@
     <?php
     foreach ($data as $cle => $bouteille) {
     ?>
+    
     <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
+
+        <!--Modal Start-->
+    <div class="modal-container" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Supprimer le bouteille</h5>
+                <p>Êtes-vous sûr de vouloir supprime le bouteille de <?php echo $bouteille['nom'] ?></p>
+                <p><?php echo $bouteille['id_bouteille_collection'] ?></p>
+            </div>
+            <div class="modal-footer">
+                <button value="Annuler" class="btnModalAnnuler" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">ANNULER</button>
+                <button value="Supprimer" class="btnModalSupprimer" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">SUPPRIMER</button>
+            </div>
+        </div>
+    </div>
+    <!--Modal End-->
+
         <div class="tuile">
             <div class="optionsIcones" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
                 <img src="./images/trash-alt-solid.svg" class='btnSupprimer'/>
@@ -43,9 +61,7 @@
                     <p class="date_achat tiny-text"><?php echo "Acheté le " . $bouteille['date_achat']?></p>
                     <p class="garde tiny-text"><?php  if(!empty($bouteille['garde_jusqua'])) echo "Garde jusqu'à : " . $bouteille['garde_jusqua']?></p>
                     <p class="notes tiny-text"><?php  if(!empty($bouteille['notes'])) echo "Notes : " . $bouteille['notes']?></p>
-                    
-                </div>
-                
+                </div>   
             </div>
         </div>
     </div>

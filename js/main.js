@@ -97,37 +97,110 @@ window.addEventListener('load', function() {
 
   document.querySelectorAll(".btnSupprimer").forEach(function(element){
 
+
     // requête ajax au click d'un des boutons "boire" de la page
     element.addEventListener("click", function(evt){
 
-      // récupération de l'id de la bouteille
-      let id = evt.target.parentElement.dataset.id;
+      //assurer s'il y a un modal, on ne peux pas cliquer une autre btn de supprimer
+      if(document.querySelectorAll('.modal-container-display') && document.querySelectorAll('.modal-container-display').length==0){
 
-      // récupération de l'élément du DOM contenant la bouteille en question
-      let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+        // traiter modal
+        let modalId = evt.target.parentElement.parentElement.parentElement.firstElementChild.dataset.id;
+        let modals = document.getElementsByClassName('modal-container');
+        for (let i = 0; i < modals.length; i++){
+          //obtenir la valeur de dataset
+          if(modals[i].getAttribute('data-id') == modalId){
+            
+            modals[i].setAttribute("class", "modal-container-display");
+            
 
-      let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+            //select l'élément de modal
+            let modal = document.querySelector('.modal-container-display');
+            let btnModalSupprimer = modal.querySelector('.btnModalSupprimer');
+            let btnModalAnnuler = modal.querySelector('.btnModalAnnuler');
 
-      fetch(requete)
-      .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-      })
-      .then(response => {
-        if(response.success){
-          // supprimer la bouteille du DOM
-          laBouteille.remove();
-        }else{
-          throw response.msg;
+            // quand cliquer le bouton de confirmation de SUPPRIMER
+            btnModalSupprimer.addEventListener('click', (evt)=>{
+              let id = evt.target.dataset.id;
+
+              // récupération de l'élément du DOM contenant la bouteille en question
+                let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+
+                let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+
+                fetch(requete)
+                .then(response => {
+                    if (response.status === 200) {
+                      return response.json();
+                    } else {
+                      throw new Error('Erreur');
+                    }
+                })
+                .then(response => {
+                  if(response.success){
+                    // supprimer la bouteille du DOM
+                    laBouteille.remove();
+                  }else{
+                    throw response.msg;
+                  }
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+
+            })
+
+            // quand cliquer le bouton de ANNULER de supprimer
+            btnModalAnnuler.addEventListener('click', (evt)=>{
+
+              //La méthode suiviant va rechager une fois la page
+              //La solution est à prendre css display:none
+              //evt.preventDefault();
+              //window.location.href = BaseURL+"index.php?requete=accueilUsager";
+              
+              evt.preventDefault();
+              let modal = evt.target.parentElement.parentElement.parentElement;
+              modal.setAttribute("class", "modal-container");
+              
+            })
+          };
         }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+
+
+      //btnModalSupprimer.addEventListener('click', (evt)=>{
+        // récupération de l'id de la bouteille
+        //let id = evt.target.parentElement.dataset.id;
+        //let id = evt.target.parentElement.parentElement.firstElementChild.lastElementChild.textContent;
+        //console.log(id);
+        // // récupération de l'élément du DOM contenant la bouteille en question
+        // let laBouteille = document.querySelector(`.bouteille[data-id='${id}']`);
+
+        // let requete = new Request(BaseURL+"index.php?requete=supprimerBouteilleCellier", {method: 'POST', body: '{"id": '+id+'}'});
+
+        // fetch(requete)
+        // .then(response => {
+        //     if (response.status === 200) {
+        //       return response.json();
+        //     } else {
+        //       throw new Error('Erreur');
+        //     }
+        // })
+        // .then(response => {
+        //   if(response.success){
+        //     // supprimer la bouteille du DOM
+        //     laBouteille.remove();
+        //   }else{
+        //     throw response.msg;
+        //   }
+        // })
+        // .catch(error => {
+        //   console.error(error);
+        // });
+      //});
+
+      };
     });
+    
   });
 
 
