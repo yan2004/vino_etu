@@ -43,6 +43,7 @@ class Bouteille extends Modele {
 	 */
 	public function getListeBouteilleCellier($valRecherche = null)
 	{
+		// construction de la chaine avec HAVING pour la requête avec une valeur de recherche
 		if($valRecherche === null){
 			$having = "";
 		}else{

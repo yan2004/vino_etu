@@ -22,17 +22,32 @@ window.addEventListener('load', function() {
   // ******************
 
   let barreRecherche = document.getElementById("searchInput");
+  let flecheRecherche = document.getElementById("searchArrow");
 
+  // au change dans le input
   barreRecherche.addEventListener("change", (evt) => {
 
     evt.preventDefault();
-    // console.log("recherche");
-    
+    // console.log("au change");
+
     //recuperer la valeur de l'input
     let valRecherche = evt.target.value.trim();
+
     // console.log(valRecherche);
     window.location.href = BaseURL+"index.php?requete=resultatRecherche&recherche="+valRecherche;
+  });
 
+  // au clic sur la flèche
+  flecheRecherche.addEventListener("click", (evt) => {
+
+    evt.preventDefault();
+    // console.log("au click");
+
+    //recuperer la valeur de l'input
+    let valRecherche = barreRecherche.value.trim();
+ 
+    // console.log(valRecherche);
+    window.location.href = BaseURL+"index.php?requete=resultatRecherche&recherche="+valRecherche;
   });
 
 

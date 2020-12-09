@@ -217,21 +217,26 @@ nav .icon-burger .line {
     margin: 5px;
     border-radius: 3px;
 }
-/* #searchInput{
-    margin: 0 15px 0 auto;
-    
-}
+/* barre de recherche */
 #recherche{
     position: relative;
+    background-color: #FFFFFF;
+    margin: 0 15px 0 auto;
 }
 #searchArrow{
-    width: 30px;
+    height: 22px;
     position: absolute;
-    top: 15px;
-    right: -30px;
-} */
+    top: 2.2px;
+    right: 3px;
+}
+#searchArrow:hover, #searchArrow:active{
+    opacity: 0.6;
+}
 #searchInput{
-    margin: 0 15px 0 auto;
+    margin: 0;
+    border: none;
+    width: 200px;
+    height: 25px;
 }
 
 
@@ -319,12 +324,10 @@ nav .icon-burger .line {
     height: 20px;
 }
 .btnAjouter{
-    /* top: calc(50% - 12.5px - 13px - 9px); */
     top: 0;
     left: calc(100% - 10px);
 }
 .btnBoire{
-    /* top: calc(50% + 12.5px + 4px); */
     bottom: 0;
     left: calc(100% - 10px);
 }
@@ -430,7 +433,6 @@ form h3{
 
 
 
-
 /* AJOUTER BOUTEILLE  */
 
 .listeAutoComplete{
@@ -448,7 +450,7 @@ form h3{
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
     transition: 0.6s;
     width: 90%;
-    font-size: 0.5em;
+    font-size: 0.6em;
 }
 .btn-call-action:hover, .btn-call-action:active{
     background-position: 80px;
@@ -541,9 +543,11 @@ form h3{
     nav .links {
         top: 80px;    
     }
-    #searchInput{
+    #recherche{
         margin: 0 30px 0 auto;
-        width: 250px;
+    }
+    #searchInput{
+        width: 350px;
     }
     .btn-call-action{
         font-size: 0.6em;
@@ -620,9 +624,11 @@ form h3{
     nav .links {
         top: 110px;    
     }
-    #searchInput{
+    #recherche{
         margin: 0 35px 0 auto;
-        width: 350px;
+    }
+    #searchInput{
+        width: 450px;
     }
     .bouteilles{
         padding: 0;
