@@ -41,8 +41,23 @@ class Bouteille extends Modele {
 	 * 
 	 * @return array toutes les rangées représentant chacune des bouteilles du cellier
 	 */
-	public function getListeBouteilleCellier()
+	public function getListeBouteilleCellier($valRecherche = null)
 	{
+		if($valRecherche === null){
+			$having = "";
+		}else{
+			$having = " HAVING b.nom 		LIKE '%$valRecherche%' 
+						OR t.type 			LIKE '%$valRecherche%' 
+						OR b.code_saq 		LIKE '%$valRecherche%' 
+						OR b.pays 			LIKE '%$valRecherche%' 
+						OR c.millesime 		LIKE '%$valRecherche%' 
+						OR c.notes 			LIKE '%$valRecherche%' 
+						OR c.prix 			LIKE '%$valRecherche%' 
+						OR c.garde_jusqua 	LIKE '%$valRecherche%' 
+						OR c.date_achat 	LIKE '%$valRecherche%' 
+						";
+		}
+		
 		$rows = Array();
 		$requete ='SELECT 
 						c.id as id_bouteille_collection,
@@ -67,8 +82,11 @@ class Bouteille extends Modele {
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
 						INNER JOIN vino__type t ON t.id = b.id_type 
 						INNER JOIN vino__usager u ON u.id = c.id_usager
-						WHERE u.courriel = "' . $_SESSION["courriel"] . '" ORDER BY id_bouteille_collection
-						'; 
+						WHERE u.courriel = "' . $_SESSION["courriel"] . '"' . $having .
+						' ORDER BY id_bouteille_collection'; 
+
+		// echo $requete;
+						
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
 			if($res->num_rows)

@@ -26,6 +26,9 @@ class Controler
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
+				case 'resultatRecherche':
+					$this->resultatRecherche();
+					break;
 				case 'autocompleteBouteille':
 					$this->autocompleteBouteille();
 					break;
@@ -195,10 +198,29 @@ class Controler
 			}  
 		}
 
+		// ********************************************
+		// resultatRecherche
+		private function resultatRecherche()
+		{
+			$recherche = $_GET['recherche'];
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellier($recherche);
+
+			// pour afficher le nom d'usager
+			$usager = new Usager();
+			$dataUsager = $usager->getUserByCourriel($_SESSION['courriel']);
+
+			include("vues/entete.php");
+			include("vues/cellier.php");
+			include("vues/pied.php");    
+		}
+		// ********************************************
+
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
-            $cellier = $bte->getListeBouteilleCellier();
+			$cellier = $bte->getListeBouteilleCellier();
+
             echo json_encode($cellier);  
 		}
 		
@@ -220,7 +242,7 @@ class Controler
 					&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix)){
 
 					// test regex
-					$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
+					$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
 					$regexQuantite = '/^(0|[1-9]\d*)$/';
 					$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 					// champs non obligatoires
@@ -316,7 +338,7 @@ class Controler
 				&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix'])){
 
 				// test regex
-				$regexPrix = '/^(0|[1-9]\d*)(\.[0-9]{2})$/';
+				$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
 				$regexQuantite = '/^(0|[1-9]\d*)$/';
 				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
 				// champs non obligatoires
