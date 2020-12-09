@@ -17,6 +17,25 @@ let errForm = false;
 
 window.addEventListener('load', function() {
 
+  // ******************
+  // BARRE DE RECHERCHE
+  // ******************
+
+  let barreRecherche = document.getElementById("searchInput");
+
+  barreRecherche.addEventListener("change", (evt) => {
+
+    evt.preventDefault();
+    // console.log("recherche");
+    
+    //recuperer la valeur de l'input
+    let valRecherche = evt.target.value.trim();
+    // console.log(valRecherche);
+    window.location.href = BaseURL+"index.php?requete=resultatRecherche&recherche="+valRecherche;
+
+  });
+
+
   // ************************************
   // DIMINUER LA QUANTITÉ D'UNE BOUTEILLE
   // ************************************
