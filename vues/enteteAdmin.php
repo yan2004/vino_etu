@@ -23,9 +23,8 @@
 				<input id="nav-toggle" type="checkbox">
 				<div class="logo"><a href="?requete="><img src="./images/logo-couleurs-v2.svg" alt="vino-logo"></a></div>
 				<ul class="links">
-                    <!--Gérer Usager et Collection seront traitées dans le sprint 2-->
-					<!--<li><a href="?requete=">Gérer Usager</a></li>
-					<li><a href="?requete=">Gérer Collection</a></li>-->
+					<li><a href="?requete=gererUsager">Gérer Usager</a></li>
+					<!--<li><a href="?requete=">Gérer Collection</a></li>-->
 					<li><a href="?requete=deconnexion">DÉCONNEXION</a></li>
 				</ul>
 				<label for="nav-toggle" class="icon-burger">
