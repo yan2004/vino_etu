@@ -22,18 +22,11 @@
 				<input id="nav-toggle" type="checkbox">
 				<div class="logo"><a href="?requete=accueilUsager"><img src="./images/logo-couleurs-v2.svg" alt="vino-logo"></a></div>
 
-				<!-- TEST AVEC ARROW À SUIVRE !-->
-				<!-- <div id="recherche">
-					<input name="searchInput" type="text" id="searchInput" placeholder="rechercher dans le cellier">
+				<!-- Barre de recherche -->
+				<div id="recherche">
+					<input name="searchInput" type="text" id="searchInput" value="<?= $_GET['recherche'] ?>" placeholder="rechercher dans le cellier">
 					<img id="searchArrow" src="./images/arrow-alt-circle-right-solid.svg"></img>
-				</div> -->
-
-
-				<!-- INPUT POUR LA RECHERCHE POUR LE MOMENT SANS ARROW -->
-				<!-- MAIS IL VA FALLOIR QUE J'AJOUTE UN ARROW POUR VERSION MOBILE AU CLIC POUR RECHERCHER VERSUS "ENTER" -->
-				<input name="searchInput" type="text" id="searchInput" value="<?= $_GET['recherche'] ?>" placeholder="rechercher dans le cellier">
-
-				
+				</div>
 
 				<ul class="links">
 					<li><a href="?requete=ajouterNouvelleBouteilleCellier">AJOUTER UNE BOUTEILLE</a></li>
