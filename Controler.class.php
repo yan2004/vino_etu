@@ -26,6 +26,9 @@ class Controler
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
+				case 'resultatRecherche':
+					$this->resultatRecherche();
+					break;
 				case 'autocompleteBouteille':
 					$this->autocompleteBouteille();
 					break;
@@ -195,10 +198,29 @@ class Controler
 			}  
 		}
 
+		// ********************************************
+		// resultatRecherche
+		private function resultatRecherche()
+		{
+			$recherche = $_GET['recherche'];
+			$bte = new Bouteille();
+			$data = $bte->getListeBouteilleCellier($recherche);
+
+			// pour afficher le nom d'usager
+			$usager = new Usager();
+			$dataUsager = $usager->getUserByCourriel($_SESSION['courriel']);
+
+			include("vues/entete.php");
+			include("vues/cellier.php");
+			include("vues/pied.php");    
+		}
+		// ********************************************
+
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
-            $cellier = $bte->getListeBouteilleCellier();
+			$cellier = $bte->getListeBouteilleCellier();
+
             echo json_encode($cellier);  
 		}
 		
