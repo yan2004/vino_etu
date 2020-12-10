@@ -521,6 +521,86 @@ form h3{
 }
 
 
+/* TABLE DE GÉRER USAGER PAR ADMIN */
+tbody {
+    counter-reset:sectioncounter;
+ }                      
+ 
+.SortCLASS:before {
+    content:counter(sectioncounter); 
+    counter-increment:sectioncounter;
+ 
+ }
+
+ .gererUsager {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .tableUsager {
+     margin: 5vh 2vw;
+ }
+
+ .tableUsager table {
+     border-collapse: collapse;
+     font-size: 0.9em;
+     min-width: 80vw;
+     border-radius: 5px 5px 0 0;
+     overflow: hidden;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+ }
+
+ .tableUsager table thead tr {
+     background-color: #4F646F;
+     color: #FFF;
+     text-align: left;
+ }
+
+ .tableUsager table th,
+ .tableUsager table td {
+     padding: 10px 12px;
+ }
+
+ .tableUsager table tbody tr {
+     border-bottom: 1px solid #c3d1d9;
+ }
+
+ .tableUsager table tbody tr:nth-of-type(even) {
+     background-color: #f3f3f3;
+ }
+
+ .tableUsager table tbody tr:last-of-type {
+     border-bottom: 2px solid #4F646F;
+ }
+
+ .tableUsager table tbody tr:hover {
+    font-weight: bold;
+    color: #4F646F;
+ }
+
+ /* Modale de supprimer l'usager */
+
+#modaleUsager {
+    position: relative;
+    width: 50vw;
+    margin-left: 25vw;
+    border: none;
+    border-radius: 5px 5px 0 0;
+}
+
+#modale-focus {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+}
+
+.sauvegarderSupprimer {
+    position: absolute;
+    right: 5vw;
+    bottom: 0.3vh;
+}
+
 /* AUTRES FORMATS */
 
 /* Medium devices (tablets, 768px and up) */

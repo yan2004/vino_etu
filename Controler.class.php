@@ -65,6 +65,12 @@ class Controler
 				case 'importationSAQ':
 					$this->importationSAQ();
 					break;
+				case 'gererUsager':
+					$this->gererUsager();
+					break;
+				case 'sauvegarderSupprimer':
+					$this->sauvegarderSupprimer();
+					break;
 				case 'deconnexion':
 					$this->deconnexion();
 					break;
@@ -486,6 +492,50 @@ class Controler
 
 		private function importationSAQ(){
 			include("updateSAQ.php");  
+		}
+
+		private function gererUsager(){
+
+			$usager = new Admin();
+			$data = $usager->getListeUsagers();
+			//echo json_encode($data);
+			//var_dump($data);
+			include("vues/enteteAdmin.php");
+			include("vues/gererUsager.php");
+			include("vues/pied.php");
+		}
+
+		private function sauvegarderSupprimer(){
+
+			$body = json_decode(file_get_contents('php://input'));
+			
+			 if(isset($body->idUsagerSupr)){
+
+			 	$usager = new Admin();
+
+				$resultat = $usager->supprimerUsager($body->idUsagerSupr);
+				 
+
+				if($resultat){
+					$responseObj = new stdClass();
+					$responseObj->success = true;
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Impossible de supprimer l'usager.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
+		 	}else{
+				$responseObj = new stdClass();
+				$responseObj->success = false;
+				$responseObj->msg = "Paramètres manquants.";
+				$responseJSON = json_encode($responseObj);
+				echo $responseJSON;
+			}
+
 		}
 
 		private function deconnexion(){
