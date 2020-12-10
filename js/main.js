@@ -12,10 +12,41 @@
 //const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
+// déclaration de l'objet avec les controles à effectuer pour chaque champs de la modification de compte
+const controlesModifCompte = {
+  nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
+  prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
+  mot_de_passe:   {requis: false, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i,  msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."},
+};
+
+// déclaration de l'objet avec les controles à effectuer pour chaque champs d'une bouteille
+const controlesModifBtl = {
+  millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
+  quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
+  date_achat: {requis: true,  regExp: /^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/,  msgRegExp: "Format yyyy-mm-dd."},
+  prix:       {requis: true,  regExp: /^(0|00|[1-9]\d*)(\.[0-9]{2})$/,                               msgRegExp: "Prix format xx.xx"},
+  garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."},
+  notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."}
+};
+
+
+
 // initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
 
 window.addEventListener('load', function() {
+
+  // création de l'objet "bouteille" avec tous les champs du form
+  let bouteille = {
+    nom : document.querySelector(".nom_bouteille"),
+    millesime : document.querySelector("[name='millesime']"),
+    quantite : document.querySelector("[name='quantite']"),
+    date_achat : document.querySelector("[name='date_achat']"),
+    prix : document.querySelector("[name='prix']"),
+    garde_jusqua : document.querySelector("[name='garde']"),
+    notes : document.querySelector("[name='notes']"),
+    courriel : document.querySelector("[name='courriel_usager']"), // courriel de l'usager en session
+  };
 
   // ******************
   // BARRE DE RECHERCHE
@@ -265,15 +296,6 @@ window.addEventListener('load', function() {
   // VALIDATIONS DU FORMULAIRE DE MODIFICATION D'UNE BOUTEILLE
   // *********************************************************
    
-  // construction de l'objet avec les controles qui seront effectués
-  let controlesModifBtl = {
-    millesime:  {requis: false, regExp: /^[1-2][0-9]{3}$/,                                             msgRegExp: "4 chiffres commencent par 1YYY ou 2YYY."},
-    quantite:   {requis: true,  regExp: /^(0|[1-9]\d*)$/,                                              msgRegExp: "Inscrire un entier naturel (de 0 à ...)"},
-    date_achat: {requis: true,  regExp: /^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/,  msgRegExp: "Format yyyy-mm-dd."},
-    prix:       {requis: true,  regExp: /^(0|00|[1-9]\d*)(\.[0-9]{2})$/,                               msgRegExp: "Prix format xx.xx"},
-    garde:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."},
-    notes:      {requis: false, regExp: /^[0-9a-zà-ÿ'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i,                msgRegExp: "Maximum 200 caractères alphanumériques."}
-  };
 
   // si le formulaire est accessible dans le DOM, on effectue les validations
   if(typeof fModificationBtl !== 'undefined'){
@@ -302,63 +324,21 @@ window.addEventListener('load', function() {
       // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
       evt.preventDefault();
 
-      errForm = false;
+      // appel de la fonction pour le traitement du formulaire
+      processModifBouteille();
+    });
 
-      // validation avec l'objet de controles
-      for(let nomChamp in controlesModifBtl){
-        let controles = controlesModifBtl[nomChamp];
-        // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
-        validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
-      }
+    // évènement pour la touche "enter" lors de l'authentification
+    fMdBtl.addEventListener("keyup", (evt) => {
 
-      //validation spéciale pour la date
-      if(new Date(fMdBtl.date_achat.value + " EST") > new Date()){
-        errForm = true;
-        document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
-      }
+      // pour ne pas que le formulaire se soumette
+      evt.preventDefault();
 
-      let eNom = document.querySelector("span.nom_bouteille");
+      let key = evt.key || evt.keyCode;
 
-      // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
-      let dataBtlEnvoyer = {
-          'btlIdPK':    fMdBtl.btlIdPK.value,
-          'nomIdFK':    fMdBtl.nomIdFK.value,
-          'nomBtl':     eNom.innerText,
-          'millesime':  fMdBtl.millesime.value,
-          'quantite':   fMdBtl.quantite.value,
-          'date_achat': fMdBtl.date_achat.value,
-          'prix':       fMdBtl.prix.value,
-          'garde':      fMdBtl.garde.value,
-          'notes':      fMdBtl.notes.value
-      }
-
-      // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
-      if(!errForm){
-
-        // requête ajax pour envoi des données au serveur pour l'update
-        let requete = new Request(BaseURL+"index.php?requete=sauvegardeBouteille", {method: 'POST', body: JSON.stringify(dataBtlEnvoyer)});
-
-        fetch(requete)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          if(response.success){
-            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
-          }else{
-            // messages d'erreur provenant des validations back-end
-            let eSpanErrAjout = document.getElementById("errNotes");
-            eSpanErrAjout.innerText = response.msg;
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      if(key === 'Enter' || key === 13){
+        // appel de la fonction pour le traitement du login
+        processModifBouteille();
       }
     });
   }
@@ -408,18 +388,6 @@ window.addEventListener('load', function() {
       }
     });
 
-    // création de l'objet "bouteille" avec tous les champs du form
-    let bouteille = {
-      nom : document.querySelector(".nom_bouteille"),
-      millesime : document.querySelector("[name='millesime']"),
-      quantite : document.querySelector("[name='quantite']"),
-      date_achat : document.querySelector("[name='date_achat']"),
-      prix : document.querySelector("[name='prix']"),
-      garde_jusqua : document.querySelector("[name='garde']"),
-      notes : document.querySelector("[name='notes']"),
-      courriel : document.querySelector("[name='courriel_usager']"), // courriel de l'usager en session
-    };
-
     liste.addEventListener("click", function(evt){
 
       if(evt.target.tagName == "LI"){
@@ -429,16 +397,24 @@ window.addEventListener('load', function() {
 
         // on met le nom de la bouteille suggérée dans le champs "nom"
         bouteille.nom.innerHTML = evt.target.innerHTML;
-        
-        liste.innerHTML = "";
-        inputNomBouteille.value = "";
 
         // on va cherche le prix de bouteille choisi et le met dans le champ de Prix
         let prix = evt.target.dataset.prix;
         if(document.getElementById('prix_ajouter')){
           let prixEle = document.getElementById('prix_ajouter');
-          prixEle.setAttribute('value', prix);
+
+          // NON : prixEle.setAttribute('value', prix);
+          prixEle.value = prix;
+
+          // vide le span d'erreur lors de la selection
+          document.getElementById("errPrix").innerHTML = "";
         }
+        
+        liste.innerHTML = "";
+        inputNomBouteille.value = "";
+
+        // vide le span d'erreur lors de la selection
+        document.getElementById("errNom_ajouter").innerHTML = "";
       }
     });
 
@@ -477,68 +453,21 @@ window.addEventListener('load', function() {
         // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
         evt.preventDefault();
 
-        errForm = false;
+        // appel de la fonction pour le traitement de l'ajout
+        processAjoutBouteille(bouteille);
+      });
 
-        // validation avec l'objet de controles
-        for(let nomChamp in controlesModifBtl){
-          let controles = controlesModifBtl[nomChamp];
-          validerChamps(fAjtBtlCellier, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
-        }
-  
-        //validation spéciale pour la date
-        if(new Date(fAjtBtlCellier.date_achat.value + " EST") > new Date()){
-          errForm = true;
-          document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
-        }
+      // évènement pour la touche "enter" lors de l'ajout
+      fAjtBtlCellier.addEventListener("keyup", (evt) => {
 
-        //validation spéciale pour le nom : obligatoire seulement, car il s'agit d'un autocomplete
-        let spanNom = document.getElementsByClassName('nom_bouteille')[0];
-        if(spanNom.innerText === ""){
-          errForm = true;
-          document.getElementById("errNom_ajouter").innerHTML = "Obligatoire.";
-        }
+        // pour ne pas que le formulaire se soumette
+        evt.preventDefault();
 
-        // toutes les valeurs de notre formulaire (données prêtes à être envoyées au back end)
-        var param = {
-          "id_bouteille":bouteille.nom.dataset.id,
-          "date_achat":bouteille.date_achat.value,
-          "garde_jusqua":bouteille.garde_jusqua.value,
-          "notes":bouteille.notes.value,
-          "prix":bouteille.prix.value,
-          "quantite":bouteille.quantite.value,
-          "millesime":bouteille.millesime.value,
-          "courriel":bouteille.courriel.value,
-        };
+        let key = evt.key || evt.keyCode;
 
-        // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur la nouvelle bouteille
-        if(!errForm){
-
-          // requete ajax pour ajouter une bouteille dans le cellier
-          let requete = new Request(BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
-
-          fetch(requete)
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-              // return response.text();
-            } else {
-              throw new Error('Erreur');
-            }
-          })
-          .then(response => {
-            if(response.success) {
-              
-              // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-              window.location = BaseURL+"index.php?requete=accueilUsager";
-            }else{
-              // messages d'erreur provenant des validations back-end
-              let eSpanErrAjout = document.getElementById("errNotes");
-              eSpanErrAjout.innerText = response.msg;
-            }
-          })
-          .catch(error => {
-            console.error(error);
-          });
+        if(key === 'Enter' || key === 13){
+          // appel de la fonction pour le traitement de l'ajout
+          processAjoutBouteille(bouteille);
         }
       });
     }
@@ -549,14 +478,6 @@ window.addEventListener('load', function() {
   // ********************************************************************
 
   if(document.getElementById('fCompte')){
-
-    // objet avec les controles à effectuer pour chaque champs
-    let controlesModifCompte = {
-      nom:            {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
-      prenom:         {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                  msgRegExp: "1 à 50 caractères."},
-      mot_de_passe:   {requis: false, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i,  msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."},
-    };
-
 
     let f = document.getElementById('fCompte');
 
@@ -581,7 +502,6 @@ window.addEventListener('load', function() {
       window.location.href = BaseURL+"index.php?requete=accueilUsager";
     });
 
-
     let btnModCmpt = document.getElementsByClassName('btnModifierCompte')[0];
 
     // validation des valeurs au clic sur le bouton "modifier", avant l'envoi des infos au serveur
@@ -590,77 +510,25 @@ window.addEventListener('load', function() {
       // empêcher que le formulaire se soumette (submit) au serveur et refresh la page
       evt.preventDefault();
 
-      errForm = false;
-
-      // validation avec l'objet de controles
-      for(let nomChamp in controlesModifCompte){
-        let controles = controlesModifCompte[nomChamp];
-        // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
-        validerChamps(f, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
-      }
-
-      //validation spéciale pour la confirmation de mot de passe
-      mot_de_passe_confValider();
-
-      // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
-      let dataCompte = {
-          'nom':    f.nom.value,
-          'prenom':  f.prenom.value,
-          'mot_de_passe':   f.mot_de_passe.value
-      }
+      // appel de la fonction pour le traitement de la modification des infos de compte
+      processModifCompte();
       
-      // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
-      if(!errForm){
-
-        // requête ajax pour envoi des données au serveur pour l'update
-        let requete = new Request(BaseURL+"index.php?requete=sauvegardeCompte", {method: 'POST', body: JSON.stringify(dataCompte)});
-
-        fetch(requete)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          if(response.success){
-
-            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
-          }else{
-            // messages d'erreur provenant des validations back-end
-            let eSpanErrAjout = document.getElementById("errNotes");
-            eSpanErrAjout.innerText = response.msg;
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      }
     });
 
-    /**
-     * Fonction servant à valider le champs de confirmation de mot de passe
-     */
-    function mot_de_passe_confValider() {
-      let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
-      let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+    // évènement pour la touche "enter" lors de la modification des infos de compte
+    f.addEventListener("keyup", (evt) => {
 
-      let msgErr = "";
+      // pour ne pas que le formulaire se soumette tout de suite
+      evt.preventDefault();
 
-      // vérifier si le mot de passe inscrit dans le champs de confirmation est de même valeur que celui dans le champs mot de passe
-      if(valConf !== val){
-        if(valConf === ""){
-          msgErr = "Obligatoire.";
-        }else{
-          msgErr = "Mot de passe et Confirmation ne correspondent pas.";
-        }
-        errForm = true;          
+      let key = evt.key || evt.keyCode;
+
+      if(key === 'Enter' || key === 13){
+        
+        // appel de la fonction pour le traitement de la modification des infos de compte
+        processModifCompte();
       }
-      // affichage du message d'erreur
-      document.getElementById('errMot_de_passe_conf').innerHTML = msgErr;
-    }
+    });
   }
 
   
@@ -684,6 +552,227 @@ window.addEventListener('load', function() {
 // ************************************
 // FONCTIONS UTILISÉES DANS LE DOCUMENT
 // ************************************
+
+/**
+ * Fonction qui traite les champs du formulaire de modification de bouteille, et la requête ajax
+ */
+function processModifBouteille(){
+
+  errForm = false;
+  let fMdBtl = fModificationBtl;
+  let eNom = document.querySelector("span.nom_bouteille");
+
+  // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
+  let dataBtlEnvoyer = {
+      'btlIdPK':    fMdBtl.btlIdPK.value,
+      'nomIdFK':    fMdBtl.nomIdFK.value,
+      'nomBtl':     eNom.innerText,
+      'millesime':  fMdBtl.millesime.value,
+      'quantite':   fMdBtl.quantite.value,
+      'date_achat': fMdBtl.date_achat.value,
+      'prix':       fMdBtl.prix.value,
+      'garde':      fMdBtl.garde.value,
+      'notes':      fMdBtl.notes.value
+  }
+
+  // validation avec l'objet de controles
+  for(let nomChamp in controlesModifBtl){
+    let controles = controlesModifBtl[nomChamp];
+    // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
+    validerChamps(fMdBtl, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  }
+
+  //validation spéciale pour la date
+  if(new Date(fMdBtl.date_achat.value + " EST") > new Date()){
+    errForm = true;
+    document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
+  }
+
+  // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
+  if(!errForm){
+
+    // requête ajax pour envoi des données au serveur pour l'update
+    let requete = new Request(BaseURL+"index.php?requete=sauvegardeBouteille", {method: 'POST', body: JSON.stringify(dataBtlEnvoyer)});
+
+    fetch(requete)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error('Erreur');
+      }
+    })
+    .then(response => {
+      if(response.success){
+        // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+        window.location = BaseURL+"index.php?requete=accueilUsager";
+      }else{
+        // messages d'erreur provenant des validations back-end
+        let eSpanErrAjout = document.getElementById("errNotes");
+        eSpanErrAjout.innerText = response.msg;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+}
+
+/**
+ * Fonction qui traite les champs du formulaire de l'ajout de bouteille, et la requête ajax
+ */
+function processAjoutBouteille(data){
+
+  // toutes les valeurs de notre formulaire (données prêtes à être envoyées au back end)
+  let param = {
+    "id_bouteille":data.nom.dataset.id,
+    "date_achat":data.date_achat.value,
+    "garde_jusqua":data.garde_jusqua.value,
+    "notes":data.notes.value,
+    "prix":data.prix.value,
+    "quantite":data.quantite.value,
+    "millesime":data.millesime.value,
+    "courriel":data.courriel.value,
+  };
+
+  let fAjtBtlCellier = document.getElementById('form-ajouter-btl');
+  errForm = false;
+
+  // validation avec l'objet de controles
+  for(let nomChamp in controlesModifBtl){
+    let controles = controlesModifBtl[nomChamp];
+    validerChamps(fAjtBtlCellier, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  }
+
+  //validation spéciale pour la date
+  if(new Date(fAjtBtlCellier.date_achat.value + " EST") > new Date()){
+    errForm = true;
+    document.getElementById("errDate_achat").innerHTML = "Date d'achat invalide.";
+  }
+
+  //validation spéciale pour le nom : obligatoire seulement, car il s'agit d'un autocomplete
+  let spanNom = document.getElementsByClassName('nom_bouteille')[0];
+  if(spanNom.innerText === ""){
+    errForm = true;
+    document.getElementById("errNom_ajouter").innerHTML = "Obligatoire.";
+  }else{
+    document.getElementById("errNom_ajouter").innerHTML = "";
+  }
+
+  // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur la nouvelle bouteille
+  if(!errForm){
+
+    // requete ajax pour ajouter une bouteille dans le cellier
+    let requete = new Request(BaseURL+"index.php?requete=ajouterNouvelleBouteilleCellier", {method: 'POST', body: JSON.stringify(param)});
+
+    fetch(requete)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+        // return response.text();
+      } else {
+        throw new Error('Erreur');
+      }
+    })
+    .then(response => {
+      if(response.success) {
+        
+        // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+        window.location = BaseURL+"index.php?requete=accueilUsager";
+      }else{
+        // messages d'erreur provenant des validations back-end
+        let eSpanErrAjout = document.getElementById("errNotes");
+        eSpanErrAjout.innerText = response.msg;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+}
+
+/**
+ * Fonction qui traite les champs du formulaire de modification de compte, et la requête ajax
+ */
+function processModifCompte(){
+
+  let f = document.getElementById('fCompte');
+
+  // Création de l'objet contenant les valeurs des inputs pour envoi au serveur
+  let dataCompte = {
+    'nom':    f.nom.value,
+    'prenom':  f.prenom.value,
+    'mot_de_passe':   f.mot_de_passe.value
+  } 
+
+  errForm = false;
+
+  // validation avec l'objet de controles
+  for(let nomChamp in controlesModifCompte){
+    let controles = controlesModifCompte[nomChamp];
+    // appel de la fonction qui valide et detecte les erreurs lors du remplissage des champs
+    validerChamps(f, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  }
+
+  //validation spéciale pour la confirmation de mot de passe
+  mot_de_passe_confValider();
+
+  // si la validation du formulaire n'a détecté aucune erreur, on envoi au serveur les modifications
+  if(!errForm){
+
+    // requête ajax pour envoi des données au serveur pour l'update
+    let requete = new Request(BaseURL+"index.php?requete=sauvegardeCompte", {method: 'POST', body: JSON.stringify(dataCompte)});
+
+    fetch(requete)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error('Erreur');
+      }
+    })
+    .then(response => {
+      if(response.success){
+
+        // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+        window.location = BaseURL+"index.php?requete=accueilUsager";
+      }else{
+        // messages d'erreur provenant des validations back-end
+        let eSpanErrAjout = document.getElementById("errNotes");
+        eSpanErrAjout.innerText = response.msg;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+}
+
+/**
+ * Fonction servant à valider le champs de confirmation de mot de passe
+ */
+function mot_de_passe_confValider() {
+  let valConf = document.querySelector('#fCompte #mot_de_passe_conf').value.trim();
+  let val     = document.querySelector('#fCompte #mot_de_passe').value.trim();
+
+  let msgErr = "";
+
+  // vérifier si le mot de passe inscrit dans le champs de confirmation est de même valeur que celui dans le champs mot de passe
+  if(valConf !== val){
+    if(valConf === ""){
+      msgErr = "Obligatoire.";
+    }else{
+      msgErr = "Mot de passe et Confirmation ne correspondent pas.";
+    }
+    errForm = true;          
+  }
+  // affichage du message d'erreur
+  document.getElementById('errMot_de_passe_conf').innerHTML = msgErr;
+}
+
 
 /**
  * Fonction de validation des champs et gestion des messages d'erreur
