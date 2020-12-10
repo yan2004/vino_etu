@@ -38,8 +38,8 @@
                 <input type="hidden" name="courriel_usager" value="<?= $_SESSION["courriel"] ?>">
 
                 <div class="forms-btns">
-                        <button value="Annuler" class="btnAnnuler">ANNULER</button>
-                        <button name="ajouterBouteilleCellier" id="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE</button>
+                        <button type="button" value="Annuler" class="btnAnnuler">ANNULER</button>
+                        <button type="button" name="ajouterBouteilleCellier" id="ajouterBouteilleCellier">AJOUTER LA BOUTEILLE</button>
                 </div>
             
             </form>

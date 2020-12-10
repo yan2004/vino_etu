@@ -25,8 +25,8 @@
                 <span id="errMot_de_passe_conf"></span>
                 
                 <div class="forms-btns">
-                        <button value="Annuler" class="btnAnnuler">ANNULER</button>
-                        <button value="Modifier" class="btnModifierCompte">MODIFIER</button>
+                        <button type="button" value="Annuler" class="btnAnnuler">ANNULER</button>
+                        <button type="button" value="Modifier" class="btnModifierCompte">MODIFIER</button>
                 </div>
         </form>
 </div>
