@@ -37,7 +37,6 @@
                 <div class="login-btns">
                     <button type="button" id="sign-up">S'INSCRIRE</button>
                     <button type="button" name="entrer">ENTRER</button>
-                    
                 </div>
                 
             </form>

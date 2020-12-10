@@ -13,6 +13,23 @@ const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // initialisation de la variable errForm pour la validation des différents formulaires
 let errForm = false;
 
+// déclaration de l'objet pour les controles du formulaire de login
+const controlesLogin = {
+  courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
+  password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
+};
+
+const ID_FORM_SIGNUP = "SignUp";
+const ID_FORM_SIGNIN = "SignIn";
+
+// déclaration de l'objet pour les controles du formulaire de création de compte
+const controlesCreation = {
+  courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
+  nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
+  prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
+  password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
+};
+
 window.addEventListener('load', function(){
 
     let btnSignIn = document.getElementById("sign-in");
@@ -23,9 +40,6 @@ window.addEventListener('load', function(){
 
     let btnEntrer = fL.entrer;
     let btnSoumettre = fS.soumettre;
-
-    const ID_FORM_SIGNUP = "SignUp";
-    const ID_FORM_SIGNIN = "SignIn";
 
     // pour faire apparaitre le formulaire de login
     btnSignIn.addEventListener("click", () =>{
@@ -44,13 +58,6 @@ window.addEventListener('load', function(){
     // VALIDATION POUR LE FORMULAIRE DE CREATION DE COMPTE
     // ***************************************************
 
-    let controlesCreation = {
-      courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
-      nom:        {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
-      prenom:     {requis: true, regExp: /^[\u4e00-\u9fa5a-zà-ÿ\d ',\-"\.]{1,50}$/i,                msgRegExp: "1 à 50 caractères."},
-      password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
-    };
-
     // validations des inputs au change
     fS.addEventListener('change', (evt)=>{
       let nomChamp = evt.target.name;
@@ -58,130 +65,170 @@ window.addEventListener('load', function(){
       validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
 
-    // requête ajax au click du bouton "soumettre" lors de la creation de compte
+    // évènement au clic du bouton "soumettre" lors de la création de compte
     btnSoumettre.addEventListener("click", (evt) =>{
 
       // pour ne pas que le formulaire se soumette
       evt.preventDefault();
 
-      errForm = false;
+      // appel de la fonction pour le traitement de la création de compte
+      processSignUp();
+    });
 
-      // on valide tous les champs
-      for(let nomChamp in controlesCreation){
-        let controles = controlesCreation[nomChamp];
-        validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
-      }
+    // évènement pour la touche "enter" lors de la création de compte
+    fS.addEventListener("keyup", (evt) => {
 
-      if (!errForm){
+      // pour ne pas que le formulaire se soumette
+      evt.preventDefault();
 
-        // objet avec paramètres du nouveau compte
-        let param = {
-          "courriel":fS.courriel.value,
-          "nom":fS.nom.value,
-          "prenom":fS.prenom.value,
-          "password":fS.password.value,
-        };
- 
-        // objet avec paramètres du nouveau compte qui seront enregistrés dans le locaStorage
-        let paramStorage = {
-          "courriel":param.courriel,
-          "password":param.password
-        };
-
-        let requete = new Request(BaseURL+"index.php?requete=creerCompte", {method: 'POST', body: JSON.stringify(param)});
-
-        fetch(requete)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          if(response.success){
-
-            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
-          }else{
-            let eErrCreation = document.getElementById("errSignUpPassword");
-            eErrCreation.innerText = response.msg;
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      let key = evt.key || evt.keyCode;
+      
+      if(key === 'Enter' || key === 13){
+        // appel de la fonction pour le traitement de la création de compte
+        processSignUp();
       }
     });
 
     // **************************************
     // VALIDATION POUR LE FORMULAIRE DE LOGIN
     // **************************************
-    let controlesLogin = {
-      courriel:   {requis: true, regExp: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,                       msgRegExp: "Courriel invalide."},
-      password:   {requis: true, regExp: /^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_'"]{4,})$/i, msgRegExp: "Au moins 4 caractères avec 1 chiffre et 1 lettre."}
-    };
-
-    // validations inputs au change
+    
+    // validations d'un input au "change"
     fL.addEventListener('change', (evt)=>{
       let nomChamp = evt.target.name;
       let controles = controlesLogin[nomChamp];
       validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
     });
 
-    // requête ajax au click du bouton "entrer" lors de l'authentification
+    // évènement au clic du bouton "entrer" lors de l'authentification
     btnEntrer.addEventListener("click", (evt) => {
 
       // pour ne pas que le formulaire se soumette
       evt.preventDefault();
 
-      errForm = false;
+      // appel de la fonction pour le traitement du login
+      processLogin();
+    });
 
-      // on valide tous les champs
-      for(let nomChamp in controlesLogin){
-        let controles = controlesLogin[nomChamp];
-        validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
-      }
+    // évènement pour la touche "enter" lors de l'authentification
+    fL.addEventListener("keyup", (evt) => {
 
-      if (!errForm){
+      // pour ne pas que le formulaire se soumette
+      evt.preventDefault();
 
-        // objet avec paramètres d'authentification
-        let param = {
-          "courriel":fL.courriel.value,
-          "password":fL.password.value,
-        };
+      let key = evt.key || evt.keyCode;
 
-        let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body: JSON.stringify(param)});
-
-        fetch(requete)
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            throw new Error('Erreur');
-          }
-        })
-        .then(response => {
-          if(response.success){
-
-            // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
-            window.location = BaseURL+"index.php?requete=accueilUsager";
-
-          }else{
-            let eErrAuth = document.getElementById("errSignInPassword");
-            eErrAuth.innerText = response.msg;
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      if(key === 'Enter' || key === 13){
+        // appel de la fonction pour le traitement du login
+        processLogin();
       }
     });
 });
 
 
+
 /**
- * Fonction de validation des champs et gestion du message d'erreur
+ * Fonction qui traite les champs du formulaire de création de compte, et la requête ajax
+ */
+function processSignUp(){
+
+  errForm = false;
+  let fS = formSignUp;
+
+  // on valide tous les champs
+  for(let nomChamp in controlesCreation){
+    let controles = controlesCreation[nomChamp];
+    validerChamps(fS, ID_FORM_SIGNUP, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  }
+
+  if (!errForm){
+
+    // objet avec paramètres du nouveau compte
+    let param = {
+      "courriel":fS.courriel.value,
+      "nom":fS.nom.value,
+      "prenom":fS.prenom.value,
+      "password":fS.password.value,
+    };
+
+    let requete = new Request(BaseURL+"index.php?requete=creerCompte", {method: 'POST', body: JSON.stringify(param)});
+
+    fetch(requete)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error('Erreur');
+      }
+    })
+    .then(response => {
+      if(response.success){
+
+        // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+        window.location = BaseURL+"index.php?requete=accueilUsager";
+      }else{
+        let eErrCreation = document.getElementById("errSignUpPassword");
+        eErrCreation.innerText = response.msg;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+}
+
+/**
+ * Fonction qui traite les champs du formulaire de login, et la requête ajax
+ */
+function processLogin(){
+
+  errForm = false;
+  let fL = formLogin;
+
+  // on valide tous les champs
+  for(let nomChamp in controlesLogin){
+    let controles = controlesLogin[nomChamp];
+    validerChamps(fL, ID_FORM_SIGNIN, nomChamp, controles.requis, controles.regExp, controles.msgRegExp);
+  }
+
+  if (!errForm){
+
+    // objet avec paramètres d'authentification
+    let param = {
+      "courriel":fL.courriel.value,
+      "password":fL.password.value,
+    };
+
+    let requete = new Request(BaseURL+"index.php?requete=authentification", {method: 'POST', body: JSON.stringify(param)});
+
+    fetch(requete)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        throw new Error('Erreur');
+      }
+    })
+    .then(response => {
+      if(response.success){
+
+        // redirection vers l'accueilUsager pour affichage des bouteilles dans son cellier
+        window.location = BaseURL+"index.php?requete=accueilUsager";
+
+      }else{
+        let eErrAuth = document.getElementById("errSignInPassword");
+        eErrAuth.innerText = response.msg;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+}
+
+
+/**
+ * Fonction de validation d'un champ et gestion du message d'erreur
  * @param {*} idForm 
  * @param {*} nomChamp 
  * @param {*} requis 
