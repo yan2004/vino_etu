@@ -6,7 +6,7 @@
 
         </ul>
         
-        <form action="" method="post" name="fModificationBtl">
+        <form method="post" name="fModificationBtl">
                 <input type="hidden" name="btlIdPK" value="<?php echo $data[0]['id']; ?>">
                 <input type="hidden" name="nomIdFK" value="<?php echo $data[0]['id_bouteille']; ?>">
 
@@ -38,8 +38,8 @@
                 <span id="errNotes"></span>
                 
                 <div class="forms-btns">
-                        <button value="Annuler" class="btnAnnuler">ANNULER</button>
-                        <button value="Modifier" class="btnModifierBtl">MODIFIER</button>
+                        <button type="button" value="Annuler" class="btnAnnuler">ANNULER</button>
+                        <button type="button" value="Modifier" class="btnModifierBtl">MODIFIER</button>
                 </div>
         </form>
     
