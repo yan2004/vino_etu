@@ -104,7 +104,7 @@ main {
 h1{
     font-family: "PoiretOne-Regular";
     margin: auto;
-    font-size: 2em;
+    font-size: 1.6em;
     color: #011C27;
 }
 h1:hover, h1:active{
@@ -252,7 +252,7 @@ nav .icon-burger .line {
 #searchInput{
     margin: 0;
     border: none;
-    width: 225px;
+    width: 200px;
     height: 25px;
 }
 
@@ -636,6 +636,9 @@ tbody {
     main{
         margin: 100px 0 30px 0;
     }
+    h1{
+        font-size: 2em;
+    }
     nav{
         height: 80px;
     }
@@ -721,7 +724,7 @@ tbody {
         font-size: 2.5em;
     }
     .main-title-welcome{
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
     nav{
         height: 110px;
