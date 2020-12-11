@@ -757,7 +757,8 @@ tbody {
     }
     .bouteille{
         padding: 15px;
-        width: 33.33%;
+        /* width: 33.33%; */
+        width: 46%;
         margin: 10px 10px;
         /* max-width: 750px; */
         min-width: 400px;
