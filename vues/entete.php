@@ -41,4 +41,14 @@
 			</nav>
 		</header>
 		<main>
+		<!-- test -->
+		<div class="main-title">
+			<div class="main-title-welcome">
+				<a href="?requete=accueilUsager"><h1>Mon cellier</h1></a>
+				
+				<div class="main-title-call-action">
+					<button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
+				</div>
+			</div>
+		</div>
 			
