@@ -69,9 +69,16 @@ body {
     font-size: 1em;
 }
 main {
-    margin-top: 80px;
-	display: flex;
-	align-items: center;
+    /* margin-top: 80px; */
+    display: flex;
+    align-items: center;
+    /* test */
+    flex-direction: column;
+    width: 100%;
+    margin: 80px auto 0 auto;
+    box-sizing: border-box;
+    padding: 0 3vw;
+    
 }
 .main-title{
     width: 100%;
@@ -80,6 +87,9 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    align-items: center;
+    /* margin: 10px; */
+    margin-bottom: 5px;
 }
 .main-title-welcome h1{
     display: flex;
@@ -89,11 +99,18 @@ main {
 .main-title-call-action{
     display: flex;
     justify-content: flex-end;
+    
 }
 h1{
     font-family: "PoiretOne-Regular";
     margin: auto;
-    font-size: 1.5em;
+    font-size: 1.6em;
+    color: #011C27;
+}
+h1:hover, h1:active{
+    /* color: #4F646F;
+    color: #511730; */
+    color: #C3979F;
 }
 h2{
     font-family: "Lora-Medium";
@@ -243,7 +260,7 @@ nav .icon-burger .line {
 /* CELLIER */
 
 .cellier{
-    padding: 0 3vw;
+    /* padding: 0 3vw; */
     width: 100%;
 }
 .bouteille{
@@ -449,8 +466,10 @@ form h3{
 	text-transform: uppercase;
 	background-image: linear-gradient(to left,#F54EA2,#FF7676,#F54EA2);
     transition: 0.6s;
-    width: 90%;
-    font-size: 0.6em;
+    width: 80%;
+    /* font-size: 0.7em; */
+    align-self: center;
+    margin: 0;
 }
 .btn-call-action:hover, .btn-call-action:active{
     background-position: 80px;
@@ -617,6 +636,9 @@ tbody {
     main{
         margin: 100px 0 30px 0;
     }
+    h1{
+        font-size: 2em;
+    }
     nav{
         height: 80px;
     }
@@ -629,9 +651,9 @@ tbody {
     #searchInput{
         width: 350px;
     }
-    .btn-call-action{
+    /* .btn-call-action{
         font-size: 0.6em;
-    }
+    } */
     .bouteille{
         padding: 15px;
         margin: 15px auto;
@@ -698,6 +720,12 @@ tbody {
     main{
         margin: 137px 0 30px 0;
     }
+    h1{
+        font-size: 2.5em;
+    }
+    .main-title-welcome{
+        margin-bottom: 40px;
+    }
     nav{
         height: 110px;
     }
@@ -710,22 +738,36 @@ tbody {
     #searchInput{
         width: 450px;
     }
+    /* .cellier{
+        width: 100%;
+    } */
     .bouteilles{
         padding: 0;
-        margin: 20px auto;
-        max-width: 2340px;
-        
+        margin: 0 auto;
+        /* max-width: 2340px; */
+        max-width: 1800px;
+        /* width: 100%; */
+        width: 89%;
+        /* min-width: 1600px; */
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
+        /* justify-content: center; */
+        justify-content: flex-start;
     }
     .bouteille{
-        padding: 30px;
-        width: 45%;
+        padding: 15px;
+        /* width: 33.33%; */
+        width: 46%;
         margin: 10px 10px;
-        max-width: 750px;
+        /* max-width: 750px; */
+        min-width: 400px;
+        max-width: 500px;
     }
+    /* .bouteille:last-of-type{
+        margin-right: auto;
+
+    } */
     .tuile{
         height: 225px;
     }

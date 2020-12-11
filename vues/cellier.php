@@ -1,5 +1,5 @@
 <div class="cellier">
-   <div class="main-title">
+   <!-- <div class="main-title">
        <div class="main-title-welcome">
             <h1>Mon cellier</h1>
             
@@ -7,8 +7,8 @@
                 <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
             </div>
        </div>
-    </div>
-    <div class="bouteilles gallery gallery--2">
+    </div> -->
+    <div class="bouteilles">
     <?php
     foreach ($data as $cle => $bouteille) {
     ?>
