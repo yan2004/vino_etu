@@ -746,8 +746,9 @@ tbody {
         margin: 0 auto;
         /* max-width: 2340px; */
         max-width: 1800px;
-        width: 100%;
-        
+        /* width: 100%; */
+        width: 89%;
+        /* min-width: 1600px; */
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
