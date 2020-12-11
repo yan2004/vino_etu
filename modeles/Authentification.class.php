@@ -21,7 +21,7 @@ class Authentification extends Modele {
 		$courriel = $this->filtre($courriel);
 
 		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE courriel='" . $courriel . "'");
-
+		
 		if($row = mysqli_fetch_assoc($requete)){
 
 			// comparaison du mot de passe avec le hash de la base de données 
@@ -73,6 +73,22 @@ class Authentification extends Modele {
 		} else {
 			return false;
 		}
+	}
+
+
+	public function adminVerification($courriel) {
+		$requete ="SELECT admin FROM vino__usager WHERE courriel = '". $courriel . "'";
+		$res = $this->_db->query($requete);
+		
+		if ($row = mysqli_fetch_assoc($res)) {
+			if($row['admin'] == 1){
+				return true;
+			}else{
+				return false;
+			};
+		}
+		
+		
 	}
 }
 
