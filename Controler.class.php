@@ -21,7 +21,7 @@ class Controler
 		{
 			switch ($_GET['requete']) {
 				case 'authentification':
-					$this->authentification();
+					$this->authentification("");
 					break;
 				case 'listeBouteille':
 					$this->listeBouteille();
@@ -74,40 +74,84 @@ class Controler
 				case 'deconnexion':
 					$this->deconnexion();
 					break;
+				case 'cookieLogin':
+					$this->authentification("cookieLogin");
+					break;
 				default:
 					$this->accueil();
 					break;
 			}
 		}
 
-		private function authentification()
+		private function authentification($mode)
 		{
 			$auth = new Authentification();
 			$body = json_decode(file_get_contents('php://input'));
 
-			//validations back end
-			if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
+			//autologin avec COOKIE
+			if($mode == "cookieLogin")
+			{
 
-				// test regex
-				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
+				$valide = $auth->validerAuthentification($_COOKIE['courriel'], $_COOKIE['password']);
+				
+				if($valide){
+					// sauvegarde de l'usager authentifié
+					$_SESSION["courriel"] = $_COOKIE['courriel'];
+					
+					$responseObj = new stdClass();
+					$responseObj->success = true;
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
 
-				if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
 
-					$valide = $auth->validerAuthentification($body->courriel, $body->password);
+					$BaseURL = "http://localhost:8888/vino/vino_etu/";
+					//$BaseURL = "http://localhost/projetWeb2/vino_etu/";
+					$url     = "Location:".$BaseURL."index.php?requete=accueilUsager";
+					header($url);
+					
+				}else{
+					$responseObj = new stdClass();
+					$responseObj->success = false;
+					$responseObj->msg = "Combinaison invalide.";
+					$responseJSON = json_encode($responseObj);
+					echo $responseJSON;
+				}
 
-					if($valide){
-						// sauvegarde de l'usager authentifié
-						$_SESSION["courriel"] = $body->courriel;
+			}else
+			{
+				//validations back end
+				if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
 
-						$responseObj = new stdClass();
-						$responseObj->success = true;
-						$responseJSON = json_encode($responseObj);
-						echo $responseJSON;
+					// test regex
+					$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
+					$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
+
+					if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
+
+						$valide = $auth->validerAuthentification($body->courriel, $body->password);
+
+						if($valide){
+							// sauvegarde de l'usager authentifié
+							$_SESSION["courriel"] = $body->courriel;
+
+							setcookie("courriel", $body->courriel, time()+(60*60*24*30));
+							setcookie("password", $body->password, time()+(60*60*24*30));
+
+							$responseObj = new stdClass();
+							$responseObj->success = true;
+							$responseJSON = json_encode($responseObj);
+							echo $responseJSON;
+						}else{
+							$responseObj = new stdClass();
+							$responseObj->success = false;
+							$responseObj->msg = "Combinaison invalide.";
+							$responseJSON = json_encode($responseObj);
+							echo $responseJSON;
+						}
 					}else{
 						$responseObj = new stdClass();
 						$responseObj->success = false;
-						$responseObj->msg = "Combinaison invalide.";
+						$responseObj->msg = "";
 						$responseJSON = json_encode($responseObj);
 						echo $responseJSON;
 					}
@@ -118,12 +162,6 @@ class Controler
 					$responseJSON = json_encode($responseObj);
 					echo $responseJSON;
 				}
-			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
 			}
 		}
 
@@ -146,6 +184,10 @@ class Controler
 					$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
 
 					if($valide){
+						$_SESSION["courriel"] = $body->courriel;
+						setcookie("courriel", $body->courriel, time()+(60*60*24*30));
+						setcookie("password", $body->password, time()+(60*60*24*30));
+
 						$responseObj = new stdClass();
 						$responseObj->success = true;
 						$responseJSON = json_encode($responseObj);
@@ -548,6 +590,19 @@ class Controler
 
 			//fermer la session usager
 			session_destroy();
+
+			//Supprimer $_COOKIE
+			if(isset($_COOKIE['courriel']))
+			{
+				setcookie('courriel', NULL);
+				unset($_COOKIE['courriel']);
+			}
+
+			if(isset($_COOKIE['password']))
+			{
+				setcookie('password', NULL);
+				unset($_COOKIE['password']); 
+			}
 
 			$this->accueil();
 		}
