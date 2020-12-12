@@ -19,7 +19,9 @@ window.addEventListener('DOMContentLoaded', function(){
     let f = formImport;
 
     // call 2 action importation de bouteilles SAQ
-    document.getElementById("btnImportation").addEventListener("click", () =>{
+    document.getElementById("btnImportation").addEventListener("click", (evt) =>{
+
+      evt.preventDefault();
 
       // création de l'objet avec data des inputs pour requête importation
       let dataImport = {

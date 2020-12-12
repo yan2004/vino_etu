@@ -406,7 +406,7 @@ footer p
 /* FORMULAIRE MODIFICATION DE COMPTE */
 /* FORMULAIRE MODIFICATION DE BOUTEILLE DE CELLIER */
 
-.compte, .ajouter, .modificationBtl{
+.compte, .ajouter, .modificationBtl, .formImport{
     margin: auto;
     margin-top: 20px;
     padding: 18px;
@@ -447,6 +447,7 @@ form h3{
     margin-right: 15px;
 	background-color: #4F646F;
 }
+
 
 
 
@@ -523,7 +524,7 @@ form h3{
 }
 
 .modal-content {
-    background-color: #FFF;
+    background-color: #FFFFFF;
     margin-top: 30vh;
     width: 60vw;
     height: 30vh;
@@ -555,20 +556,30 @@ tbody {
      align-items: center;
      justify-content: center;
      flex-direction: row;
+     width: 100%;
+     margin-top: 20px;
+     overflow: auto;
  }
 
- .tableUsager {
-     margin: 5vh 2vw;
+ .tableUsager button{
+     /* margin: 5vh 2vw; */
+     /* width: 100%; */
+     margin: 0;
  }
+
 
  .tableUsager table {
      border-collapse: collapse;
      font-size: 0.9em;
-     min-width: 80vw;
+     /* min-width: 80vw; */
+     max-width: 100%;
      border-radius: 5px 5px 0 0;
      overflow: hidden;
      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
  }
+ /* table{
+     width: 100%;
+ } */
 
  .tableUsager table thead tr {
      background-color: #4F646F;
@@ -594,8 +605,9 @@ tbody {
  }
 
  .tableUsager table tbody tr:hover {
-    font-weight: bold;
-    color: #4F646F;
+    /* font-weight: bold; */
+    /* color: #4F646F; */
+    color: #C3979F;
  }
 
  /* Modale de supprimer l'usager */
@@ -734,8 +746,12 @@ tbody {
     span{
         font-size: 0.9em;
     }
-    .ajouter, .compte, .modificationBtl{
+    .ajouter, .compte, .modificationBtl, .formImport{
         padding: 35px;
+    }
+    .formImport{
+        /* align-items: flex-start; */
+        max-width: 500px;
     }
     form button{
         padding: 10px 20px;
@@ -743,13 +759,31 @@ tbody {
     .btnAnnuler{
         margin-right: 25px;
     }
+    .tableUsager{
+        width: 100%;
+        margin: auto;
+    }
+    .tableUsager table{
+        width: 60%;
+        margin: auto;
+    }
+    .tableUsager button{
+        /* margin: 5vh 2vw; */
+        /* width: 100%; */
+        padding: 5px 10px;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 1025px) {
 
     main{
-        margin: 137px 0 30px 0;
+        margin: 137px auto 30px auto;
+        width: 80%;
+        
+        /* border-left: 1px solid rgb(128, 111, 119); */
+        /* border-right: 1px solid rgb(128, 111, 119); */
+        /* height: 100%; */
     }
     h1{
         font-size: 2.5em;
@@ -807,4 +841,8 @@ tbody {
         width: 60%;
         max-width: 1100px;
     }
+    .formImport{
+        margin: auto;
+    }
+
 }

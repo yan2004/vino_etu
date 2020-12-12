@@ -42,7 +42,7 @@
 			</nav>
 		</header>
 		<main>
-		<!-- test -->
+		<!-- header du main -->
 		<div class="main-title">
 			<div class="main-title-welcome">
 				<a href="?requete=accueilUsager"><h1>Mon cellier</h1></a>
