@@ -35,6 +35,6 @@
     </div>
 
     <!--Modal Start-->
-    <div class="modal-container"><div id="supprimerUs"></div></div>
+    <div class="modal-container-usager"><div id="supprimerUs"></div></div>
     <!--Modal End-->
 </div>
