@@ -8,8 +8,8 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // déclaration de l'objet avec les controles à effectuer pour chaque champs de la modification de compte
