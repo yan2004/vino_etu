@@ -30,9 +30,9 @@
             </tbody>
         </table>
     </div>
-    <div class="modale">
+    <!-- <div class="modale">
         <dialog id="modaleUsager"></dialog>
-    </div>
+    </div> -->
 
     <!--Modal Start-->
     <div class="modal-container-usager"><div id="supprimerUs"></div></div>
