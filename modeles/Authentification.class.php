@@ -21,7 +21,7 @@ class Authentification extends Modele {
 		$courriel = $this->filtre($courriel);
 
 		$requete = $this->_db->query("SELECT mot_de_passe FROM vino__usager WHERE courriel='" . $courriel . "'");
-
+		
 		if($row = mysqli_fetch_assoc($requete)){
 
 			// comparaison du mot de passe avec le hash de la base de données 
@@ -63,6 +63,9 @@ class Authentification extends Modele {
 			$requete = $this->_db->query("INSERT INTO vino__usager (courriel, nom, prenom, mot_de_passe, admin) VALUES ('" . $courriel . "', '" . $nom . "', '" . $prenom . "', '" . $password . "', false)");
 
 			if($requete == 1){
+				$_SESSION['password'] = $password;
+				setcookie("courriel", $courriel, time()+(60*60*24*30));
+				setcookie("password", $password, time()+(60*60*24*30));
 				return true;
 			}
 			// la requete n'a pas pu être effectuée
@@ -73,6 +76,22 @@ class Authentification extends Modele {
 		} else {
 			return false;
 		}
+	}
+
+
+	public function adminVerification($courriel) {
+		$requete ="SELECT admin FROM vino__usager WHERE courriel = '". $courriel . "'";
+		$res = $this->_db->query($requete);
+		
+		if ($row = mysqli_fetch_assoc($res)) {
+			if($row['admin'] == 1){
+				return true;
+			}else{
+				return false;
+			};
+		}
+		
+		
 	}
 }
 

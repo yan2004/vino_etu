@@ -6,9 +6,9 @@
  *
  */
 
-  // const BaseURL = "http://localhost:8888/vino/vino_etu/";
+ const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
-const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('DOMContentLoaded', function(){
   // at current page, it does'nt exite this element;
@@ -43,6 +43,10 @@ window.addEventListener('DOMContentLoaded', function(){
    */
   if(document.querySelectorAll('.btnAdminSupr'))
   {
+
+    /**
+     * showModal() n'est pas supporté par safari et firefox
+     */
         document.querySelectorAll(".btnAdminSupr").forEach(function(element){
             element.addEventListener('click', usagerModal);
         });
@@ -58,8 +62,8 @@ window.addEventListener('DOMContentLoaded', function(){
             <h6>Êtes-vous sûr de vouloir supprimer ${courreil} ?</h6>
             <button value="sauvegarderSupprimer" class="sauvegarderSupprimer" data-id="${idUsager}">Supprimer</button>
                 `;
-             eDialog.innerHTML = html;
-             eDialog.showModal();
+              eDialog.innerHTML = html;
+              eDialog.showModal();
              document.getElementById('modale-focus').focus();
 
              if(uModaleWindow.length > 0){
@@ -109,6 +113,7 @@ window.addEventListener('DOMContentLoaded', function(){
              let eDialog  = document.getElementById('modaleUsager');
              eDialog.close();
         }
+
         
     }
     

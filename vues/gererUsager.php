@@ -33,4 +33,8 @@
     <div class="modale">
         <dialog id="modaleUsager"></dialog>
     </div>
+
+    <!--Modal Start-->
+    <div class="modal-container"><div id="supprimerUs"></div></div>
+    <!--Modal End-->
 </div>
