@@ -103,9 +103,12 @@ class Controler
 					$responseJSON = json_encode($responseObj);
 					echo $responseJSON;
 
+					// ****************************************************************
+					// TODO : FAIRE UNE CONSTANTE AVEC L'URL DANS LE HAUT DU DOCUMENT
+					// POUR QUE ÇA SOIT PLUS ACCESSIBLE/FACILE À REPÉRER ET CHANGER
 
-					$BaseURL = "http://localhost:8888/vino/vino_etu/";
-					//$BaseURL = "http://localhost/projetWeb2/vino_etu/";
+					// $BaseURL = "http://localhost:8888/vino/vino_etu/";
+					$BaseURL = "http://localhost/projetWeb2/vino_etu/";
 					$url     = "Location:".$BaseURL."index.php?requete=accueilUsager";
 					header($url);
 					
@@ -252,7 +255,6 @@ class Controler
 			   }
 		}
 
-		// ********************************************
 		// resultatRecherche
 		private function resultatRecherche()
 		{
@@ -268,7 +270,7 @@ class Controler
 			include("vues/cellier.php");
 			include("vues/pied.php");    
 		}
-		// ********************************************
+
 
 		private function listeBouteille()
 		{
@@ -539,6 +541,12 @@ class Controler
 		}
 
 		private function importationSAQ(){
+
+			$body = json_decode(file_get_contents('php://input'));
+
+			$nbrPages = $body->nbrPages;
+			$nombreItems = $body->nbrItems; //48 ou 96
+
 			include("updateSAQ.php");  
 		}
 
