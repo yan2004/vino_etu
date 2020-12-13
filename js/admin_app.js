@@ -6,18 +6,32 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
 // const BaseURL = document.baseURI;
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('DOMContentLoaded', function(){
-  // at current page, it does'nt exite this element;
-  if(document.getElementById("btnImportation"))
-  {
-    // call 2 action importation de bouteilles SAQ
-    document.getElementById("btnImportation").addEventListener("click", () =>{
 
-      let requete = new Request(BaseURL+"index.php?requete=importationSAQ", {method: 'POST'});
+  
+  // if(document.getElementById("btnImportation")){
+  if(typeof formImport !== 'undefined'){
+
+    let f = formImport;
+
+    // call 2 action importation de bouteilles SAQ
+    document.getElementById("btnImportation").addEventListener("click", (evt) =>{
+
+      evt.preventDefault();
+
+      // création de l'objet avec data des inputs pour requête importation
+      let dataImport = {
+        "nbrPages": f.nbrPages.value,
+        "nbrItems": f.nbrItems.value
+      }
+  
+      // console.log(dataImport);
+  
+      let requete = new Request(BaseURL+"index.php?requete=importationSAQ", {method: 'POST', body: JSON.stringify(dataImport)});
       fetch(requete)
           .then(response => {
               if (response.status === 200) {
@@ -28,8 +42,8 @@ window.addEventListener('DOMContentLoaded', function(){
           })
           .then(response => {
 
-        // affichage du rapport reçue de l'importation des bouteilles dans le DOM
-        document.getElementById("rapportImportation").innerHTML = response;
+            // affichage du rapport reçue de l'importation des bouteilles dans le DOM
+            document.getElementById("rapportImportation").innerHTML = response;
           })
           .catch(error => {
             console.error(error);
@@ -53,13 +67,19 @@ window.addEventListener('DOMContentLoaded', function(){
           let courreilUsagerSupr = evt.target.dataset.courreil;
           let dialogContainer    = document.getElementsByClassName('modal-container-usager')[0];
           let dialogUsagerSupr   = document.getElementById('supprimerUs');
+          let modalOverlay       = document.querySelector("#modal-overlay");
+
           let html = `
-          <h5>Êtes-vous sûr de vouloir supprimer ${courreilUsagerSupr} ?</h5>
+          <h3>SUPPRIMER L'USAGER </h3>
+          <p>Voulez-vous vraiment supprimer ${courreilUsagerSupr} ?</p>
           <button value="annulerSupprimer" class="annulerSupprimer" data-id="${idUsagerSupr}">ANNULER</button>
           <button value="sauvegarderSupprimer" class="sauvegarderSupprimer" data-id="${idUsagerSupr}">SUPPRIMER</button>
               `;
           dialogUsagerSupr.innerHTML = html;
           dialogContainer.setAttribute("class", "modal-container-usager-display");
+
+          modalOverlay.setAttribute("class", "modal-overlay");
+
 
           let modal             = document.querySelector('.modal-container-usager-display');
           let btnModalAnnuler   = modal.querySelector('.annulerSupprimer');
@@ -105,6 +125,8 @@ window.addEventListener('DOMContentLoaded', function(){
               let modal = evt.target.parentElement.parentElement;
               modal.setAttribute("class", "modal-container-usager");
 
+              modalOverlay.setAttribute("class", "display--none");
+
               document.querySelectorAll(".btnAdminSupr").forEach(function(element){
                 element.removeAttribute("disabled");
               });
@@ -117,6 +139,8 @@ window.addEventListener('DOMContentLoaded', function(){
             evt.preventDefault();
             let modal = evt.target.parentElement.parentElement;
             modal.setAttribute("class", "modal-container-usager");
+
+            modalOverlay.setAttribute("class", "display--none");
 
             document.querySelectorAll(".btnAdminSupr").forEach(function(element){
               element.removeAttribute("disabled");

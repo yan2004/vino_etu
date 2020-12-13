@@ -30,7 +30,12 @@
             </tbody>
         </table>
     </div>
-    <!--Modal Start-->
-    <div class="modal-container-usager"><div id="supprimerUs"></div></div>
-    <!--Modal End-->
+    
 </div>
+<!--Modal Start-->
+<div class="display--none" id="modal-overlay">
+    <div class="modal-container-usager">
+        <div id="supprimerUs"></div>
+    </div>
+</div>
+    <!--Modal End-->

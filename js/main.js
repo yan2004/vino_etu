@@ -8,8 +8,8 @@
  *
  */
 
- const BaseURL = "http://localhost:8888/vino/vino_etu/";
-//const BaseURL = "http://localhost/projetWeb2/vino_etu/";
+//  const BaseURL = "http://localhost:8888/vino/vino_etu/";
+const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 // const BaseURL = document.baseURI;
 
 // déclaration de l'objet avec les controles à effectuer pour chaque champs de la modification de compte
@@ -169,7 +169,8 @@ window.addEventListener('load', function() {
       if(document.querySelectorAll('.modal-container-display') && document.querySelectorAll('.modal-container-display').length==0){
 
         // traiter modal
-        let modalId = evt.target.parentElement.parentElement.parentElement.firstElementChild.dataset.id;
+        // let modalId = evt.target.parentElement.parentElement.parentElement.firstElementChild.dataset.id;
+        let modalId = evt.target.parentElement.dataset.id;
         let modals = document.getElementsByClassName('modal-container');
         for (let i = 0; i < modals.length; i++){
           //obtenir la valeur de dataset
@@ -204,6 +205,8 @@ window.addEventListener('load', function() {
                   if(response.success){
                     // supprimer la bouteille du DOM
                     laBouteille.remove();
+                    // console.log(id);
+                    modal.setAttribute("class", "modal-container");
                   }else{
                     throw response.msg;
                   }

@@ -23,7 +23,7 @@
 				<input id="nav-toggle" type="checkbox">
 				<div class="logo"><a href="?requete="><img src="./images/logo-couleurs-v2.svg" alt="vino-logo"></a></div>
 				<ul class="links">
-					<li><a href="?requete=gererUsager">Gérer Usager</a></li>
+					<li><a href="?requete=gererUsager">GÉRER USAGER</a></li>
 					<!--<li><a href="?requete=">Gérer Collection</a></li>-->
 					<li><a href="?requete=deconnexion">DÉCONNEXION</a></li>
 				</ul>
@@ -34,5 +34,10 @@
 				</label>
 			</nav>
 		</header>
-		<main>
+		<main class="admin">
+		<div class="main-title">
+			<div class="main-title-welcome">
+				<a href="?requete=accueilUsager"><h1>Panneau Admin</h1></a>
+			</div>
+		</div>
 			

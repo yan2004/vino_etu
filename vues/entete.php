@@ -24,7 +24,7 @@
 
 				<!-- Barre de recherche -->
 				<div id="recherche">
-					<input name="searchInput" type="text" id="searchInput" value="<?= $_GET['recherche'] ?>" placeholder="rechercher dans le cellier">
+					<input name="searchInput" type="text" id="searchInput" value="<?php echo isset($_GET['recherche']) ? $_GET['recherche'] : "" ?>" placeholder="rechercher dans le cellier">
 					<img id="searchArrow" src="./images/arrow-alt-circle-right-solid.svg"></img>
 				</div>
 
@@ -42,7 +42,7 @@
 			</nav>
 		</header>
 		<main>
-		<!-- test -->
+		<!-- header du main -->
 		<div class="main-title">
 			<div class="main-title-welcome">
 				<a href="?requete=accueilUsager"><h1>Mon cellier</h1></a>
