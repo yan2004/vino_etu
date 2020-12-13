@@ -109,7 +109,18 @@ class SAQ extends Modele {
 
 		$info = new stdClass();
 
-		$info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
+		// $info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); // NON!
+
+		// récupération des éléments "span"
+		$eSpans = $noeud -> getElementsByTagName("span");
+		foreach ($eSpans as $node){
+			// on récupère l'image
+			if ($node -> getAttribute('class') === 'product-image-wrapper'){
+				$info -> img = $node -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
+			}
+		}
+		
+		
 		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 
