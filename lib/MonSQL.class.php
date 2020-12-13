@@ -43,6 +43,8 @@ class MonSQL {
 			self::$_instance = new mysqli(HOST, USER, PASSWORD, DATABASE);
 			if (self::$_instance-> connect_errno) {
 				echo "Echec lors de la connexion à MySQL : (" . self::$_instance -> connect_errno . ") " . self::$_instance-> connect_error;
+				// 
+				exit();
 			}
 			else {
 				self::$_instance->set_charset("UTF-8");	
