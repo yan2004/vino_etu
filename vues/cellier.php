@@ -12,16 +12,14 @@
     <?php
     foreach ($data as $cle => $bouteille) {
     ?>
-    
-    <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
 
     <!--Modal Start-->
     <div class="modal-container" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Supprimer le bouteille</h5>
-                <p>Êtes-vous sûr de vouloir supprime le bouteille de <?php echo $bouteille['nom'] ?></p>
-                <p><?php echo $bouteille['id_bouteille_collection'] ?></p>
+                <h3>SUPPRIMER LA BOUTEILLE</h3>
+                <p>Êtes-vous sûr de vouloir supprimer la bouteille de <?php echo $bouteille['nom'] ?></p>
+                <!-- <p><?php //echo $bouteille['id_bouteille_collection'] ?></p> -->
             </div>
             <div class="modal-footer">
                 <button value="Annuler" class="btnModalAnnuler" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">ANNULER</button>
@@ -30,6 +28,11 @@
         </div>
     </div>
     <!--Modal End-->
+
+    <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
+
+    
+        <!-- modal avant -->
 
         <div class="tuile">
             <div class="optionsIcones" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">

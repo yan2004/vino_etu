@@ -34,7 +34,7 @@
 				</label>
 			</nav>
 		</header>
-		<main>
+		<main class="admin">
 		<div class="main-title">
 			<div class="main-title-welcome">
 				<a href="?requete=accueilUsager"><h1>Panneau Admin</h1></a>

@@ -131,7 +131,7 @@ button{
     align-self: flex-end;
 	margin-top:1vh;
 	font-size: 0.7em;
-	padding: 1vw 2vw;
+    padding: 1vw 2vw;
 	background-color: #4F646F;
     color: #FFFFFF;
     font-family: "HindMadurai-Bold";
@@ -139,7 +139,7 @@ button{
     border-radius: 5px;
     text-align: center;
 }
-button:hover {
+button:hover, button:active {
 	background-color: #C3979F;
 }
 a{
@@ -432,7 +432,7 @@ input{
 	margin-bottom: 8px;
     height: 15px;
 }
-form button:hover, .form-ajouter button:hover{
+form button:hover, .form-ajouter button:hover, form button:active, .form-ajouter button:active{
     background-color: #C3979F;
 }
 form h3{
@@ -514,30 +514,51 @@ form h3{
 }
 
 .modal-container-display {
-    top:-40vh;
+    /* top:-40vh;
     left: 0;
     height: 0vh;
     width: 100vw;
     display: flex;
     justify-content: center;
-    position: relative;
+    position: relative; */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 15;
 }
 
 .modal-content {
     background-color: #FFFFFF;
-    margin-top: 30vh;
-    width: 60vw;
-    height: 30vh;
-    padding: 0vh 5vw;
+    /* margin-top: 30vh; */
+    /* width: 60vw; */
+    width: 60%;
+    max-width: 500px;
+    /* height: 30vh; */
+
+    /* padding: 0vh 5vw; */
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+    box-shadow: 7px 7px 5px 0px rgba(88, 88, 88, 0.75);
+    border: 1px solid #4F646F;
     position: relative;
     z-index: 5;
 }
-
-.modal-header p:last-child {
-    visibility: hidden;
+.modal-content h3{
+    color: #511730;
 }
+/* .modal-content h5{
+    margin: 3px;
+} */
+
+/* .modal-header p:last-child {
+    visibility: hidden;
+} */
 
 
 /* TABLE DE GÉRER USAGER PAR ADMIN */
@@ -610,10 +631,10 @@ tbody {
     color: #C3979F;
  }
 
- /* Modale de supprimer l'usager */
-
+/* Modale de supprimer l'usager */
 #modaleUsager {
-    position: relative;
+    /* position: relative; */
+    /* width: 50vw; */
     width: 50vw;
     margin-left: 25vw;
     border: none;
@@ -621,15 +642,15 @@ tbody {
 }
 
 #modale-focus {
-    position: absolute;
+    /* position: absolute;
     right: 5vw;
-    top: 0;
+    top: 0; */
 }
 
 .sauvegarderSupprimer {
-    position: absolute;
+    /* position: absolute;
     right: 5vw;
-    bottom: 0.3vh;
+    bottom: 0.3vh; */
 }
 
 .modal-container-usager {
@@ -772,18 +793,24 @@ tbody {
         /* width: 100%; */
         padding: 5px 10px;
     }
+    button{
+        padding: 10px 20px;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 1025px) {
 
-    main{
+    main.admin{
         margin: 137px auto 30px auto;
         width: 80%;
         
         /* border-left: 1px solid rgb(128, 111, 119); */
         /* border-right: 1px solid rgb(128, 111, 119); */
         /* height: 100%; */
+    }
+    main{
+        margin: 137px auto 30px auto;
     }
     h1{
         font-size: 2.5em;
@@ -804,28 +831,46 @@ tbody {
         width: 450px;
     }
     .bouteilles{
-        padding: 0;
+        /* padding: 0;
         margin: 0 auto;
-        /* max-width: 2340px; */
         max-width: 1800px;
-        /* width: 100%; */
         width: 89%;
-        
-        /* min-width: 1600px; */
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: flex-start; */
+
+        /* max-width: 2340px; */
+        /* width: 100%; */
+        /* min-width: 1600px; */
         /* justify-content: center; */
-        justify-content: flex-start;
+
+        padding: 0;
+        margin: 0 auto;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 1100px;
+        
+        
     }
     .bouteille{
-        padding: 15px;
-        /* width: 33.33%; */
+        /* padding: 15px;
         width: 46%;
         margin: 10px 10px;
-        /* max-width: 750px; */
         min-width: 400px;
-        max-width: 500px;
+        max-width: 500px; */
+
+        /* max-width: 750px; */
+        /* width: 33.33%; */
+
+        padding: 15px;
+        margin: 10px 10px;
+        flex: 1 0 500px;
+        box-sizing: border-box;
+        /* min-width: 400px; */
+        max-width: calc(50% - 1em);
     }
     .tuile{
         height: 225px;
@@ -844,5 +889,16 @@ tbody {
     .formImport{
         margin: auto;
     }
+    
 
+}
+
+/* Super Large devices (desktops, 992px and up) */
+@media (min-width: 1845.33px){
+    .bouteille{
+        max-width: calc(33% - 1em);
+    }
+    .bouteilles{
+        max-width: 1670px;
+    }
 }
