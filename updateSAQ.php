@@ -10,10 +10,6 @@
 		//require("config.php");
 		// $nbrPages = $_POST['nbrPages'];
 		// $nombreItems = $_POST['nbrItems']; //48 ou 96	
-
-		echo $nbrPages;
-		echo $nombreItems;
-		echo "test";
 		
 		$saq = new SAQ();
 		for($i=1; $i<=$nbrPages; $i++)	//permet d'importer séquentiellement plusieurs pages.
