@@ -9,10 +9,8 @@
         </select>
         <label for="nbrPages">Nombre de pages</label>
         <input type="number" id="inputNbrPages" name="nbrPages" min="1" max="10" id="nbrPages" value="1"/>
-        
         <button type="button" id="btnImportation">Importer les bouteilles</button>
     </form>
 
-        <div id="rapportImportation"></div>
-
+    <div id="rapportImportation"></div>
 </div>

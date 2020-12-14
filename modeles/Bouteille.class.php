@@ -3,9 +3,9 @@
  * Class Bouteille
  * Cette classe possède les fonctions de gestion des bouteilles dans le cellier et des bouteilles dans le catalogue complet.
  * 
- * @author Jonathan Martel
+ * @author Jin Yan, Marianne Soucy et Jonathan Martel
  * @version 1.0
- * @update 2019-01-21
+ * @update 2020
  * @license Creative Commons BY-NC 3.0 (Licence Creative Commons Attribution - Pas d'utilisation commerciale 3.0 non transposé)
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
@@ -21,7 +21,6 @@ class Bouteille extends Modele {
 	 */
 	public function getListeBouteille()
 	{
-		
 		$rows = Array();
 		$res = $this->_db->query('Select * from '. self::TABLE);
 		if($res->num_rows)		
@@ -38,7 +37,7 @@ class Bouteille extends Modele {
 	 * Cette méthode permet d'obtenir la liste des bouteilles d'un cellier (en ce moment un seul)
 	 * 
 	 * @throws Exception Erreur de requête sur la base de données
-	 * 
+	 * @param string $valRecherche la valeur de la chaine dans le champs de recherche
 	 * @return array toutes les rangées représentant chacune des bouteilles du cellier
 	 */
 	public function getListeBouteilleCellier($valRecherche = null)
@@ -85,8 +84,6 @@ class Bouteille extends Modele {
 						INNER JOIN vino__usager u ON u.id = c.id_usager
 						WHERE u.courriel = "' . $_SESSION["courriel"] . '"' . $having .
 						' ORDER BY id_bouteille_collection'; 
-
-		// echo $requete;
 						
 		if(($res = $this->_db->query($requete)) ==	 true)
 		{
@@ -94,8 +91,6 @@ class Bouteille extends Modele {
 			{
 				while($row = $res->fetch_assoc())
 				{
-
-					// $row['nom'] = trim(utf8_encode($row['nom'])); // NON!
 					$row['nom'] = trim($row['nom']);
 					$rows[] = $row;
 				}
@@ -132,7 +127,6 @@ class Bouteille extends Modele {
 			{
 				while($row = $res->fetch_assoc())
 				{
-					// $row['nom'] = trim(utf8_encode($row['nom'])); // NON!
 					$row['nom'] = trim($row['nom']); 
 					$rows[] = $row;
 				}

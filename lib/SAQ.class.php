@@ -109,8 +109,6 @@ class SAQ extends Modele {
 
 		$info = new stdClass();
 
-		// $info -> img = $noeud -> getElementsByTagName("img") -> item(0) -> getAttribute('src'); // NON!
-
 		// récupération des éléments "span"
 		$eSpans = $noeud -> getElementsByTagName("span");
 		foreach ($eSpans as $node){
@@ -119,8 +117,6 @@ class SAQ extends Modele {
 				$info -> img = $node -> getElementsByTagName("img") -> item(0) -> getAttribute('src');
 			}
 		}
-		
-		
 		
 		$a_titre = $noeud -> getElementsByTagName("a") -> item(0);
 
@@ -147,7 +143,6 @@ class SAQ extends Modele {
 					$info -> desc -> format = trim($aDesc[1]);
 					$info -> desc -> pays = trim($aDesc[2]);
 				}
-				
 				$info -> desc -> texte = trim($info -> desc -> texte);
 			}
 		}
@@ -163,20 +158,17 @@ class SAQ extends Modele {
 			}
 		}
 
-
 		// prix
 		$aElements = $noeud -> getElementsByTagName("span");
 		foreach ($aElements as $node) {
 
 			// traitement de la chaine pour envoi à la bd
 			if ($node -> getAttribute('class') == 'price') {
-
 				$info -> prix = trim($node -> textContent);
 				// on enlève le signe de $
 				$info -> prix = rtrim($info -> prix, "$");
 				// on remplace la virgule par un point
 				$info -> prix = str_replace(",", ".", $info -> prix);
-
 			}
 		}
 		return $info;
@@ -219,11 +211,9 @@ class SAQ extends Modele {
 		} else {
 			$retour -> succes = false;
 			$retour -> raison = self::ERREURDB;
-
 		}
 		return $retour;
 	}
 }
-
 
 ?>

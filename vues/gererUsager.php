@@ -19,7 +19,6 @@
                 <td><?php echo $usager['courriel'] ?></td>
                 <td><?php echo $usager['nom']. " ". $usager['prenom'] ?></td>
                 <td>
-                    <!--<button value="Modifier" class="btnAdminMod" data-id="<?php //echo $usager['id'] ?>" data-courreil="<?php //echo $usager['courriel'] ?>">Modifier</button>-->
                     <button value="Supprimer" class="btnAdminSupr" data-id="<?php echo $usager['id'] ?>" data-courreil="<?php echo $usager['courriel'] ?>">Supprimer</button>
                 </td>
             </tr>
@@ -38,4 +37,4 @@
         <div id="supprimerUs"></div>
     </div>
 </div>
-    <!--Modal End-->
+<!--Modal End-->

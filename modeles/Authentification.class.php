@@ -3,7 +3,7 @@
  * Class Authentification
  * Cette classe possède les fonctions de gestion de l'authentification d'un usager sur l'application
  * 
- * @author Marianne Soucy
+ * @author Marianne Soucy et Jin Yan
  * @version 1.0
  * 
  */
@@ -78,11 +78,17 @@ class Authentification extends Modele {
 		}
 	}
 
-
+	/**
+	 * Fonction pour vérifier si le login est celui d'un admin
+	 * @param string $courriel le courriel de l'authentification
+	 * @return boolean si la requête a fonctionné ou non
+	 */
 	public function adminVerification($courriel) {
+
 		$requete ="SELECT admin FROM vino__usager WHERE courriel = '". $courriel . "'";
 		$res = $this->_db->query($requete);
 		
+		// vérifier si la valeur de la colonne "admin" est a "true"
 		if ($row = mysqli_fetch_assoc($res)) {
 			if($row['admin'] == 1){
 				return true;
@@ -90,8 +96,6 @@ class Authentification extends Modele {
 				return false;
 			};
 		}
-		
-		
 	}
 }
 

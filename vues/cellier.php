@@ -1,13 +1,5 @@
 <div class="cellier">
-   <!-- <div class="main-title">
-       <div class="main-title-welcome">
-            <h1>Mon cellier</h1>
-            
-            <div class="main-title-call-action">
-                <button class="btn-call-action" id="btnCallActionAjt">Ajouter bouteille</button>
-            </div>
-       </div>
-    </div> -->
+
     <div class="bouteilles">
     <?php
     foreach ($data as $cle => $bouteille) {
@@ -19,7 +11,6 @@
             <div class="modal-header">
                 <h3>SUPPRIMER LA BOUTEILLE</h3>
                 <p>Êtes-vous sûr de vouloir supprimer la bouteille de <?php echo $bouteille['nom'] ?></p>
-                <!-- <p><?php //echo $bouteille['id_bouteille_collection'] ?></p> -->
             </div>
             <div class="modal-footer">
                 <button value="Annuler" class="btnModalAnnuler" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">ANNULER</button>
@@ -30,9 +21,6 @@
     <!--Modal End-->
 
     <div class="bouteille" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">
-
-    
-        <!-- modal avant -->
 
         <div class="tuile">
             <div class="optionsIcones" data-id="<?php echo $bouteille['id_bouteille_collection'] ?>">

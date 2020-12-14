@@ -6,13 +6,11 @@
 	</head>
 	<body>
 	<?php
-		//require("dataconf.php");
-		//require("config.php");
-		// $nbrPages = $_POST['nbrPages'];
-		// $nombreItems = $_POST['nbrItems']; //48 ou 96	
 		
 		$saq = new SAQ();
-		for($i=1; $i<=$nbrPages; $i++)	//permet d'importer séquentiellement plusieurs pages.
+
+		// importation séquentielle de plisieurs pages selon les paramètres envoyés
+		for($i=1; $i<=$nbrPages; $i++)
 		{
 			echo "<h2>PAGE ". ($i)."</h2>";
 			echo '<div class="bouteillesImport">';
