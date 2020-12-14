@@ -1,14 +1,12 @@
 <?php  
-      // j'ai ajouter des isset, dans webdev ca ne marchait pas (ERREUR PHP)
-      // ********************************************************************
-       if(isset($_COOKIE['courriel']) && $_COOKIE['courriel'] !== null && isset($_COOKIE['password']) && $_COOKIE['password'] !== null && $_SESSION['courriel'] !== null)
-       {
-            
-            // $BaseURL = "http://localhost:8888/vino/vino_etu/";
-            $BaseURL = "http://localhost/projetWeb2/vino_etu/";   
-            $url     = "Location:".$BaseURL."index.php?requete=cookieLogin";
-            header($url);
-       }
+
+    if(isset($_COOKIE['courriel']) && $_COOKIE['courriel'] !== null && isset($_COOKIE['password']) && $_COOKIE['password'] !== null && $_SESSION['courriel'] !== null)
+    {
+        // $BaseURL = "http://localhost:8888/vino/vino_etu/";
+        $BaseURL = "http://localhost/projetWeb2/vino_etu/";   
+        $url     = "Location:".$BaseURL."index.php?requete=cookieLogin";
+        header($url);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -17,16 +15,12 @@
     <meta charset="UTF-8"/>
     <link rel="icon" href="data:,">
     <title>Accueil</title>
-
     <link rel="stylesheet" href="./css/accueil_app.css" type="text/css" media="screen">
-
     <script src="./js/accueil_app.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="HandheldFriendly" content="true">
-
-
 </head>
+
 <body>
     <div class="welcome-container">
         <div class="welcome-img">

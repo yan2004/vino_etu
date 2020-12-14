@@ -19,17 +19,6 @@ class MonSQL {
 	private static $_instance = null;
 
 	/**
-	 * Constructeur de la classe
-	 *
-	 * @param void
-	 * @return void
-	 */
-	// private function __construct($host, $user, $password, $database) 
-	// {
-		
-	// }
-
-	/**
 	 * Méthode qui crée l'unique instance de la classe
 	 * si elle n'existe pas encore puis la retourne.
 	 *
@@ -50,11 +39,7 @@ class MonSQL {
 				self::$_instance->set_charset("UTF-8");	
 			}
 		}
-
 		return self::$_instance;
 	}
-	
-
-
 }
 ?>

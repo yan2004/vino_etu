@@ -4,6 +4,7 @@
  * Cette class permet aux utilisateurs de modifier les informations de compte, telles que les emails
  */
 class Usager extends Modele {
+
     const TABLE = 'vino__usager';
 
     /**
@@ -12,10 +13,8 @@ class Usager extends Modele {
      * @param string $courriel, $nom, $prenom, $mot_de_passe
      * @return Boolean Succès ou échec à modifiér.
      */
-
     public function sauvegardeModificationCompte($nom, $prenom, $mot_de_passe)
     {
-
         // filtrer les donnees de l'usager
         $nom = $this->filtre($nom);
         $prenom = $this->filtre($prenom);
@@ -45,6 +44,8 @@ class Usager extends Modele {
 
     /**
      * Cette méthode récupère les valeurs de table vino_usager
+     * @param string $courriel courriel de l'usager
+     * @return array toutes les rangées de l'usager en question
      */
     public function getUserByCourriel($courriel)
     {

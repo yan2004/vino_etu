@@ -3,9 +3,9 @@
  * Class Modele
  * Template de classe modèle. Dupliquer et modifier pour votre usage.
  * 
- * @author Jonathan Martel
+ * @author Jin Yan, Marianne Soucy et Jonathan Martel
  * @version 1.0
- * @update 2019-01-21
+ * @update 2020
  * @license Creative Commons BY-NC 3.0 (Licence Creative Commons Attribution - Pas d’utilisation commerciale 3.0 non transposé)
  * @license http://creativecommons.org/licenses/by-nc/3.0/deed.fr
  * 
@@ -24,12 +24,6 @@ class Modele {
 		$var = mysqli_real_escape_string($this->_db, $var);
 		return $var;
 	}
-	
-	// function __destruct ()
-	// {
-		
-	// }
 }
-
 
 ?>

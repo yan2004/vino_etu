@@ -58,6 +58,10 @@
 
 /* MOBILE FIRST */
 
+/* **************** */
+/* INTERFACE USAGER */
+/* **************** */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -72,13 +76,11 @@ main {
     /* margin-top: 80px; */
     display: flex;
     align-items: center;
-    /* test */
     flex-direction: column;
     width: 100%;
     margin: 80px auto 0 auto;
     box-sizing: border-box;
     padding: 0 3vw;
-    
 }
 .main-title{
     width: 100%;
@@ -89,8 +91,6 @@ main {
     justify-content: space-between;
     align-items: flex-start;
     align-items: center;
-    /* margin: 10px; */
-    /* margin-bottom: 5px; */
 }
 .main-title-welcome h1{
     display: flex;
@@ -100,7 +100,6 @@ main {
 .main-title-call-action{
     display: flex;
     justify-content: flex-end;
-    
 }
 h1{
     font-family: "PoiretOne-Regular";
@@ -236,7 +235,8 @@ nav .icon-burger .line {
     margin: 5px;
     border-radius: 3px;
 }
-/* barre de recherche */
+
+/* BARRE DE RECHERCHE */
 #recherche{
     position: relative;
     background-color: #FFFFFF;
@@ -262,7 +262,6 @@ nav .icon-burger .line {
 /* CELLIER */
 
 .cellier{
-    /* padding: 0 3vw; */
     width: 100%;
 }
 .bouteille{
@@ -271,7 +270,6 @@ nav .icon-burger .line {
     flex-direction: column;
     margin: 10px auto;
     width: 100%;
-    /* padding: 21px; */
     padding: 20px 10px;
     background-color: #C6D8D3;
     border-radius: 5px;
@@ -313,7 +311,6 @@ nav .icon-burger .line {
 }
 .description .nom{
     font-family: "Lora-BoldItalic";
-
 }
 .description p{
     margin: 3px;
@@ -406,8 +403,7 @@ footer p
 }
 
 
-/* FORMULAIRE MODIFICATION DE COMPTE */
-/* FORMULAIRE MODIFICATION DE BOUTEILLE DE CELLIER */
+/* FORMULAIRES */
 
 .compte, .ajouter, .modificationBtl, .formImport{
     margin: auto;
@@ -450,12 +446,6 @@ form h3{
     margin-right: 15px;
 	background-color: #4F646F;
 }
-
-
-
-
-/* AJOUTER BOUTEILLE  */
-
 .listeAutoComplete{
     margin: 0;
 }
@@ -478,7 +468,40 @@ form h3{
     background-position: 80px;
 }
 
-/* ADMIN PANEL */
+/* MODALE SUPPRIMER */
+.modal-container {
+    display: none;
+}
+.modal-container-display {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 15;
+}
+
+.modal-content {
+    background-color: #FFFFFF;
+    width: 60%;
+    max-width: 500px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 7px 7px 5px 0px rgba(88, 88, 88, 0.75);
+    border: 1px solid #4F646F;
+    position: relative;
+    z-index: 5;
+}
+.modal-content h3, .modal-container-usager-display h3{
+    color: #511730;
+}
+
+/* ******************************** */
+/* INTERFACE ADMIN */
+/* ******************************** */
 
 #rapportImportation{
     font-size: 0.5em;
@@ -510,61 +533,7 @@ form h3{
     margin-top: 25px;
 }
 
-
-/* MODAL FENÊTRE */
-.modal-container {
-    display: none;
-}
-
-.modal-container-display {
-    /* top:-40vh;
-    left: 0;
-    height: 0vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    position: relative; */
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 15;
-}
-
-.modal-content {
-    background-color: #FFFFFF;
-    /* margin-top: 30vh; */
-    /* width: 60vw; */
-    width: 60%;
-    max-width: 500px;
-    /* height: 30vh; */
-
-    /* padding: 0vh 5vw; */
-    padding: 20px;
-    text-align: center;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
-    box-shadow: 7px 7px 5px 0px rgba(88, 88, 88, 0.75);
-    border: 1px solid #4F646F;
-    position: relative;
-    z-index: 5;
-}
-.modal-content h3, .modal-container-usager-display h3{
-    color: #511730;
-}
-/* .modal-content h5{
-    margin: 3px;
-} */
-
-/* .modal-header p:last-child {
-    visibility: hidden;
-} */
-
-
-/* TABLE DE GÉRER USAGER PAR ADMIN */
+/* TABLE ADMIN (GÉRER USAGERS) */
 tbody {
     counter-reset:sectioncounter;
  }                      
@@ -572,9 +541,7 @@ tbody {
 .SortCLASS:before {
     content:counter(sectioncounter); 
     counter-increment:sectioncounter;
- 
- }
-
+}
  .gererUsager {
      display: flex;
      align-items: center;
@@ -584,60 +551,41 @@ tbody {
      margin-top: 20px;
      overflow: auto;
  }
-
  .tableUsager button{
-     /* margin: 5vh 2vw; */
-     /* width: 100%; */
      margin: 0;
  }
-
-
  .tableUsager table {
      border-collapse: collapse;
      font-size: 0.9em;
-     /* min-width: 80vw; */
      max-width: 100%;
      border-radius: 5px 5px 0 0;
      overflow: hidden;
      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
  }
- /* table{
-     width: 100%;
- } */
-
  .tableUsager table thead tr {
      background-color: #4F646F;
      color: #FFF;
      text-align: left;
  }
-
  .tableUsager table th,
  .tableUsager table td {
      padding: 10px 12px;
  }
-
  .tableUsager table tbody tr {
      border-bottom: 1px solid #c3d1d9;
  }
-
  .tableUsager table tbody tr:nth-of-type(even) {
      background-color: #f3f3f3;
  }
-
  .tableUsager table tbody tr:last-of-type {
      border-bottom: 2px solid #4F646F;
  }
-
  .tableUsager table tbody tr:hover {
-    /* font-weight: bold; */
-    /* color: #4F646F; */
     color: #C3979F;
  }
 
-/* Modale de supprimer l'usager */
+/* MODALE SUPPRIMER USAGER */
 #modaleUsager {
-    /* position: relative; */
-    /* width: 50vw; */
     width: 50vw;
     margin-left: 25vw;
     border: none;
@@ -651,58 +599,21 @@ tbody {
     align-items: center;
     justify-content: center;
     top: 0;
-    
 }
-#modale-focus {
-    /* position: absolute;
-    right: 5vw;
-    top: 0; */
-}
-
-.sauvegarderSupprimer {
-    /* position: absolute;
-    right: 5vw;
-    bottom: 0.3vh; */
-}
-
 .modal-container-usager {
     display: none;
 }
 
 .modal-container-usager-display{
-    /* width: 80vw; */
     width: 80%;
-    /* position: absolute; */
-    /* top:30vh;
-    left: 10vw; */
     z-index: 5;
     border-radius: 5px 5px 0 0;
     background-color: #f3f3f3;
     text-align: center;
-
     padding: 15px;
     box-shadow: 7px 7px 5px 0px rgba(88, 88, 88, 0.75);
     border: 1px solid #4F646F;
 }
-
-/* .modal-container-usager-display h5 {
-    padding: 2vh 2vw;
-    line-height: 2rem;
-} */
-
-.modal-container-usager-display button {
-    /* position: absolute; */
-    /* bottom: 1vh; */
-}
-
-.modal-container-usager-display button:first-of-type {
-    /* left: 20%; */
-}
-
-.modal-container-usager-display button:last-of-type {
-    /* right: 20%; */
-}
-
 
 /* AUTRES FORMATS */
 
@@ -788,7 +699,6 @@ tbody {
         padding: 35px;
     }
     .formImport{
-        /* align-items: flex-start; */
         max-width: 500px;
     }
     form button{
@@ -809,8 +719,6 @@ tbody {
         font-size: 1.2em;
     }
     .tableUsager button{
-        /* margin: 5vh 2vw; */
-        /* width: 100%; */
         padding: 5px 10px;
     }
     button{
@@ -827,10 +735,6 @@ tbody {
     main.admin{
         margin: 137px auto 30px auto;
         width: 80%;
-        
-        /* border-left: 1px solid rgb(128, 111, 119); */
-        /* border-right: 1px solid rgb(128, 111, 119); */
-        /* height: 100%; */
     }
     main{
         margin: 137px auto 30px auto;
@@ -854,20 +758,6 @@ tbody {
         width: 450px;
     }
     .bouteilles{
-        /* padding: 0;
-        margin: 0 auto;
-        max-width: 1800px;
-        width: 89%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start; */
-
-        /* max-width: 2340px; */
-        /* width: 100%; */
-        /* min-width: 1600px; */
-        /* justify-content: center; */
-
         padding: 0;
         margin: 0 auto;
         width: 90%;
@@ -875,24 +765,12 @@ tbody {
         flex-direction: row;
         flex-wrap: wrap;
         max-width: 1100px;
-        
-        
     }
     .bouteille{
-        /* padding: 15px;
-        width: 46%;
-        margin: 10px 10px;
-        min-width: 400px;
-        max-width: 500px; */
-
-        /* max-width: 750px; */
-        /* width: 33.33%; */
-
         padding: 15px;
         margin: 10px 10px;
         flex: 1 0 500px;
         box-sizing: border-box;
-        /* min-width: 400px; */
         max-width: calc(50% - 1em);
     }
     .tuile{
@@ -919,8 +797,6 @@ tbody {
     .tableUsager{
         font-size: 1.3em;
     }
-    
-
 }
 
 /* Super Large devices (desktops, 992px and up) */

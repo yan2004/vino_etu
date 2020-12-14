@@ -5,7 +5,6 @@
  */
 class Admin extends Modele 
 {
-
     public function getListeUsagers(){
         $rows    = Array();
         $requete = "SELECT * FROM vino__usager WHERE admin = 0";
@@ -28,7 +27,13 @@ class Admin extends Modele
 		return $rows;
     }
 
+    /**
+     * Fonction pour supprimer un usager de la bd
+     * @param int $idUsagerSupr id de l'usager
+	 * @return boolean si la requête a fonctionné ou non
+     */
     public function supprimerUsager($idUsagerSupr){
+
         // filtrer les donnees de l'usager
         $idUsagerSupr = $this->filtre($idUsagerSupr);
         
@@ -46,15 +51,12 @@ class Admin extends Modele
                 $res = $this->_db->query($requete);
                 return $res == 1;
             }
-
         }else{
             $requete = "DELETE FROM vino__usager WHERE id = ". $idUsagerSupr;
             $res = $this->_db->query($requete);
 			return $res == 1;
         }
         return false;
-
     }
-
 }
 ?>

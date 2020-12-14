@@ -12,7 +12,6 @@ const BaseURL = "http://localhost/projetWeb2/vino_etu/";
 
 window.addEventListener('DOMContentLoaded', function(){
 
-  
   // if(document.getElementById("btnImportation")){
   if(typeof formImport !== 'undefined'){
 
@@ -28,8 +27,6 @@ window.addEventListener('DOMContentLoaded', function(){
         "nbrPages": f.nbrPages.value,
         "nbrItems": f.nbrItems.value
       }
-  
-      // console.log(dataImport);
   
       let requete = new Request(BaseURL+"index.php?requete=importationSAQ", {method: 'POST', body: JSON.stringify(dataImport)});
       fetch(requete)
@@ -55,101 +52,100 @@ window.addEventListener('DOMContentLoaded', function(){
   /**
    * JS pour la page de gérer USAGER
    */
-  if(document.querySelectorAll('.btnAdminSupr'))
-  {
+  if(document.querySelectorAll('.btnAdminSupr')){
 
-         document.querySelectorAll(".btnAdminSupr").forEach(function(element){
-              element.addEventListener('click', usagerModal);
-         });
+    // évènement au clic sur tous les boutons "supprimer"
+    document.querySelectorAll(".btnAdminSupr").forEach(function(element){
+        element.addEventListener('click', usagerModal);
+    });
 
-         function usagerModal(evt){
-          let idUsagerSupr       = evt.target.dataset.id;
-          let courreilUsagerSupr = evt.target.dataset.courreil;
-          let dialogContainer    = document.getElementsByClassName('modal-container-usager')[0];
-          let dialogUsagerSupr   = document.getElementById('supprimerUs');
-          let modalOverlay       = document.querySelector("#modal-overlay");
+    function usagerModal(evt){
 
-          let html = `
-          <h3>SUPPRIMER L'USAGER </h3>
-          <p>Voulez-vous vraiment supprimer ${courreilUsagerSupr} ?</p>
-          <button value="annulerSupprimer" class="annulerSupprimer" data-id="${idUsagerSupr}">ANNULER</button>
-          <button value="sauvegarderSupprimer" class="sauvegarderSupprimer" data-id="${idUsagerSupr}">SUPPRIMER</button>
-              `;
-          dialogUsagerSupr.innerHTML = html;
-          dialogContainer.setAttribute("class", "modal-container-usager-display");
+      let idUsagerSupr       = evt.target.dataset.id;
+      let courreilUsagerSupr = evt.target.dataset.courreil;
+      let dialogContainer    = document.getElementsByClassName('modal-container-usager')[0];
+      let dialogUsagerSupr   = document.getElementById('supprimerUs');
+      let modalOverlay       = document.querySelector("#modal-overlay");
 
-          modalOverlay.setAttribute("class", "modal-overlay");
+      let html = `
+      <h3>SUPPRIMER L'USAGER </h3>
+      <p>Voulez-vous vraiment supprimer ${courreilUsagerSupr} ?</p>
+      <button value="annulerSupprimer" class="annulerSupprimer" data-id="${idUsagerSupr}">ANNULER</button>
+      <button value="sauvegarderSupprimer" class="sauvegarderSupprimer" data-id="${idUsagerSupr}">SUPPRIMER</button>
+          `;
+      dialogUsagerSupr.innerHTML = html;
+      dialogContainer.setAttribute("class", "modal-container-usager-display");
 
+      modalOverlay.setAttribute("class", "modal-overlay");
 
-          let modal             = document.querySelector('.modal-container-usager-display');
-          let btnModalAnnuler   = modal.querySelector('.annulerSupprimer');
-          let btnModalSupprimer = modal.querySelector('.sauvegarderSupprimer');
-    
-          // quand un modal, autre bouton non-cliquable
-          if(document.getElementById('supprimerUs').textContent.length > 0){
-              document.querySelectorAll(".btnAdminSupr").forEach(function(element){
-                element.setAttribute("disabled", true);
-              });
+      let modal             = document.querySelector('.modal-container-usager-display');
+      let btnModalAnnuler   = modal.querySelector('.annulerSupprimer');
+      let btnModalSupprimer = modal.querySelector('.sauvegarderSupprimer');
+
+      // quand un modal, autre bouton non-cliquable
+      if(document.getElementById('supprimerUs').textContent.length > 0){
+          document.querySelectorAll(".btnAdminSupr").forEach(function(element){
+            element.setAttribute("disabled", true);
+          });
+      }
+      
+      // confirmer de supprimer l'usager
+      btnModalSupprimer.addEventListener('click', confirmerSupprimer);
+
+      function confirmerSupprimer(evt){
+
+        let idUsagerSupr = evt.target.dataset.id;
+        let usagerSupprimer = document.querySelector(`tr[data-id='${idUsagerSupr}']`);
+        let data         = {'idUsagerSupr':  idUsagerSupr};
+
+        let requete      = new Request(BaseURL+"index.php?requete=sauvegarderSupprimer", {method: 'POST', body: JSON.stringify(data)});
+
+        fetch(requete)
+        .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              throw new Error('Erreur');
+            }
+        })
+        .then(response => {
+          if(response.success){
+            // supprimer l'usager du DOM
+            usagerSupprimer.remove();
+          }else{
+            throw response.msg;
           }
-          
-          // confirmer de supprimer l'usager
-          btnModalSupprimer.addEventListener('click', confirmerSupprimer);
+        })
+        .catch(error => {
+          console.error(error);
+        });
 
-          function confirmerSupprimer(evt){
-              let idUsagerSupr = evt.target.dataset.id;
-              let usagerSupprimer = document.querySelector(`tr[data-id='${idUsagerSupr}']`);
-              let data         = {'idUsagerSupr':  idUsagerSupr};
+        let modal = evt.target.parentElement.parentElement;
+        modal.setAttribute("class", "modal-container-usager");
 
-              let requete      = new Request(BaseURL+"index.php?requete=sauvegarderSupprimer", {method: 'POST', body: JSON.stringify(data)});
+        modalOverlay.setAttribute("class", "display--none");
 
-              fetch(requete)
-              .then(response => {
-                  if (response.status === 200) {
-                    return response.json();
-                  } else {
-                    throw new Error('Erreur');
-                  }
-              })
-              .then(response => {
-                if(response.success){
-                  // supprimer l'usager du DOM
-                  usagerSupprimer.remove();
-                }else{
-                  throw response.msg;
-                }
-              })
-              .catch(error => {
-                console.error(error);
-              });
+        document.querySelectorAll(".btnAdminSupr").forEach(function(element){
+          element.removeAttribute("disabled");
+        });
+      }
 
-              let modal = evt.target.parentElement.parentElement;
-              modal.setAttribute("class", "modal-container-usager");
+      // annuler de supprimer l'usager
+      btnModalAnnuler.addEventListener('click', annulerSupprimer)
 
-              modalOverlay.setAttribute("class", "display--none");
+      function annulerSupprimer(evt){
 
-              document.querySelectorAll(".btnAdminSupr").forEach(function(element){
-                element.removeAttribute("disabled");
-              });
-          }
+        evt.preventDefault();
+        let modal = evt.target.parentElement.parentElement;
+        modal.setAttribute("class", "modal-container-usager");
 
-         // annuler de supprimer l'usager
-         btnModalAnnuler.addEventListener('click', annulerSupprimer)
+        modalOverlay.setAttribute("class", "display--none");
 
-         function annulerSupprimer(evt){
-            evt.preventDefault();
-            let modal = evt.target.parentElement.parentElement;
-            modal.setAttribute("class", "modal-container-usager");
-
-            modalOverlay.setAttribute("class", "display--none");
-
-            document.querySelectorAll(".btnAdminSupr").forEach(function(element){
-              element.removeAttribute("disabled");
-            });
-         }
-
-        }
-        
+        document.querySelectorAll(".btnAdminSupr").forEach(function(element){
+          element.removeAttribute("disabled");
+        });
+      }
+    } 
   }
-    
 
 });
