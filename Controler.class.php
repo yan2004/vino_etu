@@ -12,6 +12,18 @@
 
 class Controler 
 {
+	// constantes pour les validations regex
+	const REGEX_COURRIEL	= '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
+	const REGEX_PASSWORD	= '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
+	const REGEX_NOM_PRENOM	= '/^[\u4e00-\u9fa5a-zà-ÿ\d \',\-"\.]{1,50}$/i';
+	const REGEX_PRIX		= '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
+	const REGEX_QUANTITE	= '/^(0|[1-9]\d*)$/';
+	const REGEX_DATE_ACHAT	= '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
+	// champs non obligatoires
+	const REGEX_NOTES_GARDE = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i';
+	const REGEX_MILLESIME	= '/^[1-2][0-9]{3}$/';
+
+
 	/**
 	 * Traite la requête
 	 * @return void
@@ -99,15 +111,8 @@ class Controler
 
 				// sauvegarde de l'usager authentifié
 				$_SESSION["courriel"] = $_COOKIE['courriel'];
-				
-				$responseObj = new stdClass();
-				$responseObj->success = true;
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
 
-				// ****************************************************************
-				// TODO : FAIRE UNE CONSTANTE AVEC L'URL DANS LE HAUT DU DOCUMENT
-				// POUR QUE ÇA SOIT PLUS ACCESSIBLE/FACILE À REPÉRER ET CHANGER
+				$this->sendResponseObject(true);
 
 				// $BaseURL = "http://localhost:8888/vino/vino_etu/";
 				$BaseURL = "http://localhost/projetWeb2/vino_etu/";
@@ -115,23 +120,16 @@ class Controler
 				header($url);
 				
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Combinaison invalide.";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Combinaison invalide.");
 			}
 
 		}else
 		{
-			//validations back end
+			// validations back end
 			if(isset($body->courriel) && isset($body->password) && !empty(trim($body->courriel)) && !empty(trim($body->password))){
 
 				// test regex
-				$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-				$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
-
-				if (preg_match($regexCourriel, $body->courriel) != 0 && preg_match($regexPassword, $body->password) != 0){
+				if (preg_match(self::REGEX_COURRIEL, $body->courriel) != 0 && preg_match(self::REGEX_PASSWORD, $body->password) != 0){
 
 					$valide = $auth->validerAuthentification($body->courriel, $body->password);
 
@@ -142,30 +140,16 @@ class Controler
 						setcookie("courriel", $body->courriel, time()+(60*60*24*30));
 						setcookie("password", $body->password, time()+(60*60*24*30));
 
-						$responseObj = new stdClass();
-						$responseObj->success = true;
-						$responseJSON = json_encode($responseObj);
-						echo $responseJSON;
+						$this->sendResponseObject(true);
+
 					}else{
-						$responseObj = new stdClass();
-						$responseObj->success = false;
-						$responseObj->msg = "Combinaison invalide.";
-						$responseJSON = json_encode($responseObj);
-						echo $responseJSON;
+						$this->sendResponseObject(false, "Combinaison invalide.");
 					}
 				}else{
-					$responseObj = new stdClass();
-					$responseObj->success = false;
-					$responseObj->msg = "";
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(false);
 				}
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false);
 			}
 		}
 	}
@@ -184,11 +168,7 @@ class Controler
 			&& !empty(trim($body->courriel)) && !empty(trim($body->nom)) && !empty(trim($body->prenom)) && !empty(trim($body->password))){
 
 			// test regex
-			$regexCourriel = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/i';
-			$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ\d \',\-"\.]{1,50}$/i';
-			$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
-
-			if (preg_match($regexCourriel, $body->courriel) && preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && preg_match($regexPassword, $body->password)){
+			if (preg_match(self::REGEX_COURRIEL, $body->courriel) && preg_match(self::REGEX_NOM_PRENOM, $body->nom) && preg_match(self::REGEX_NOM_PRENOM, $body->prenom) && preg_match(self::REGEX_PASSWORD, $body->password)){
 				$valide = $auth->creerCompte($body->courriel, $body->nom, $body->prenom, $body->password);
 
 				if($valide){
@@ -196,30 +176,15 @@ class Controler
 					setcookie("courriel", $body->courriel, time()+(60*60*24*30));
 					setcookie("password", $body->password, time()+(60*60*24*30));
 
-					$responseObj = new stdClass();
-					$responseObj->success = true;
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(true);
 				}else{
-					$responseObj = new stdClass();
-					$responseObj->success = false;
-					$responseObj->msg = "Ce courriel existe déjà.";
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(false, "Ce courriel existe déjà.");
 				}
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false);
 			}
 		}else{
-			$responseObj = new stdClass();
-			$responseObj->success = false;
-			$responseObj->msg = "";
-			$responseJSON = json_encode($responseObj);
-			echo $responseJSON;
+			$this->sendResponseObject(false);
 		}
 	}
 
@@ -323,54 +288,31 @@ class Controler
 			if(isset($body->id_bouteille) && isset($body->date_achat) && isset($body->prix) && isset($body->quantite)
 				&& !empty(trim($body->id_bouteille)) && !empty($body->date_achat) && !empty($body->prix)){
 
-				// test regex
-				$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
-				$regexQuantite = '/^(0|[1-9]\d*)$/';
-				$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
-				// champs non obligatoires
-				$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i';
-				$regexMillesime = '/^[1-2][0-9]{3}$/';
-
 				$champsOptValides = true;
 
 				// validation des champs non-obligatoires
-				if(isset($body->notes) && !empty($body->notes) && !preg_match($regexNotesGarde, $body->notes) || 
-				isset($body->garde) && !empty($body->garde) && !preg_match($regexNotesGarde, $body->garde) || 
-				isset($body->millesime) && !empty($body->millesime) && !preg_match($regexMillesime, $body->millesime)){
+				if(isset($body->notes) && !empty($body->notes) && !preg_match(self::REGEX_NOTES_GARDE, $body->notes) || 
+				isset($body->garde) && !empty($body->garde) && !preg_match(self::REGEX_NOTES_GARDE, $body->garde) || 
+				isset($body->millesime) && !empty($body->millesime) && !preg_match(self::REGEX_MILLESIME, $body->millesime)){
 					$champsOptValides = false;
 				}
 				
-				if(preg_match($regexPrix, $body->prix) && preg_match($regexQuantite, $body->quantite) && preg_match($regexDateAchat, $body->date_achat) && $champsOptValides){
+				if(preg_match(self::REGEX_PRIX, $body->prix) && preg_match(self::REGEX_QUANTITE, $body->quantite) && preg_match(self::REGEX_DATE_ACHAT, $body->date_achat) && $champsOptValides){
 
 					$bte = new Bouteille();
 
 					$resultat = $bte->ajouterBouteilleCellier($body);
 
 					if($resultat){
-						$responseObj = new stdClass();
-						$responseObj->success = true;
-						$responseJSON = json_encode($responseObj);
-						echo $responseJSON;
+						$this->sendResponseObject(true);
 					}else{
-						$responseObj = new stdClass();
-						$responseObj->success = false;
-						$responseObj->msg = "Impossible d'ajouter cette bouteille.";
-						$responseJSON = json_encode($responseObj);
-						echo $responseJSON;
+						$this->sendResponseObject(false, "Impossible d'ajouter cette bouteille.");
 					}
 				}else{
-					$responseObj = new stdClass();
-					$responseObj->success = false;
-					$responseObj->msg = "Un ou plusieurs champs invalides.";
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(false, "Un ou plusieurs champs invalides.");
 				}
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).");
 			}
 
 		}else{
@@ -428,53 +370,30 @@ class Controler
 		if(isset($object['nomBtl']) && isset($object['date_achat']) && isset($object['prix']) && isset($object['quantite'])
 			&& !empty($object['nomBtl']) && !empty($object['date_achat']) && !empty($object['prix'])){
 
-			// test regex
-			$regexPrix = '/^(0|00|[1-9]\d*)(\.[0-9]{2})$/';
-			$regexQuantite = '/^(0|[1-9]\d*)$/';
-			$regexDateAchat = '/^[1-2][0-9]{3}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/';
-			// champs non obligatoires
-			$regexNotesGarde = '/^[0-9a-zà-ÿ\'",\.\-;!)(?@#$%^&:*+_ ]{0,200}$/i';
-			$regexMillesime = '/^[1-2][0-9]{3}$/';
-
 			$champsOptValides = true;
 
 			// validation des champs non-obligatoires
-			if(isset($object['notes']) && !empty($object['notes']) && !preg_match($regexNotesGarde, $object['notes']) || 
-			isset($object['garde']) && !empty($object['garde']) && !preg_match($regexNotesGarde, $object['garde']) || 
-			isset($object['millesime']) && !empty($object['millesime']) && !preg_match($regexMillesime, $object['millesime'])){
+			if(isset($object['notes']) && !empty($object['notes']) && !preg_match(self::REGEX_NOTES_GARDE, $object['notes']) || 
+			isset($object['garde']) && !empty($object['garde']) && !preg_match(self::REGEX_NOTES_GARDE, $object['garde']) || 
+			isset($object['millesime']) && !empty($object['millesime']) && !preg_match(self::REGEX_MILLESIME, $object['millesime'])){
 				$champsOptValides = false;
 			}
 			
-			if(preg_match($regexPrix, $object['prix']) && preg_match($regexQuantite, $object['quantite']) && preg_match($regexDateAchat, $object['date_achat']) && $champsOptValides){
+			if(preg_match(self::REGEX_PRIX, $object['prix']) && preg_match(self::REGEX_QUANTITE, $object['quantite']) && preg_match(self::REGEX_DATE_ACHAT, $object['date_achat']) && $champsOptValides){
 
 				$bte = new Bouteille();
 				$resultat = $bte->modificationInfoBtl($object['nomBtl'],$object['btlIdPK'],$object['date_achat'],$object['garde'],$object['notes'],$object['prix'],$object['quantite'],$object['millesime']);
 				
 				if($resultat){
-					$responseObj = new stdClass();
-					$responseObj->success = true;
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(true);
 				}else{
-					$responseObj = new stdClass();
-					$responseObj->success = false;
-					$responseObj->msg = "Impossible de modifier cette bouteille.";
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(false, "Impossible de modifier cette bouteille.");
 				}
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Un ou plusieurs champs invalides.";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Un ou plusieurs champs invalides.");
 			}
 		}else{
-			$responseObj = new stdClass();
-			$responseObj->success = false;
-			$responseObj->msg = "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).";
-			$responseJSON = json_encode($responseObj);
-			echo $responseJSON;
+			$this->sendResponseObject(false, "Veuillez remplir les champs obligatoires (nom, date d'achat, prix et quantité).");
 		}
 	}
 
@@ -492,23 +411,12 @@ class Controler
 			$resultat = $bte->supprimerBouteilleCellier($body);
 
 			if($resultat){
-				$responseObj = new stdClass();
-				$responseObj->success = true;
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(true);
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Impossible de supprimer la bouteille.";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Impossible de supprimer la bouteille.");
 			}
 		}else{
-			$responseObj = new stdClass();
-			$responseObj->success = false;
-			$responseObj->msg = "Paramètres manquants.";
-			$responseJSON = json_encode($responseObj);
-			echo $responseJSON;
+			$this->sendResponseObject(false, "Paramètres manquants.");
 		}
 
 	}
@@ -535,48 +443,29 @@ class Controler
 
 		if(isset($_SESSION['courriel']) && isset($body->nom) && isset($body->prenom) && !empty($body->nom) && !empty($body->prenom)){
 
-			// test regex
-			$regexNomPrenom = '/^[\u4e00-\u9fa5a-zà-ÿ\d \',\-"\.]{1,50}$/i';
-			$regexPassword = '/^(?=.*[0-9])(?=.*[a-z])([a-z0-9!@#$%^&*;.,\-_\'"]{4,})$/i';
-
 			// cas par defaut si on a pas change le password
 			$passwordValide = true;
 
 			// le seul cas où la validation du password serait incorecte
-			if(isset($body->mot_de_passe) && !empty($body->mot_de_passe) && !preg_match($regexPassword, $body->mot_de_passe)){
+			if(isset($body->mot_de_passe) && !empty($body->mot_de_passe) && !preg_match(self::REGEX_PASSWORD, $body->mot_de_passe)){
 				$passwordValide = false;
 			}
 			
-			if(preg_match($regexNomPrenom, $body->nom) && preg_match($regexNomPrenom, $body->prenom) && $passwordValide){
+			if(preg_match(self::REGEX_NOM_PRENOM, $body->nom) && preg_match(self::REGEX_NOM_PRENOM, $body->prenom) && $passwordValide){
 
 				$usager = new Usager();
 				$resultat = $usager->sauvegardeModificationCompte($body->nom,$body->prenom, $body->mot_de_passe); 
 
 				if($resultat){
-					$responseObj = new stdClass();
-					$responseObj->success = true;
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(true);
 				}else{
-					$responseObj = new stdClass();
-					$responseObj->success = false;
-					$responseObj->msg = "Impossible de modifier les informations.";
-					$responseJSON = json_encode($responseObj);
-					echo $responseJSON;
+					$this->sendResponseObject(false, "Impossible de modifier les informations.");
 				}
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Paramètres Invalides.";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Paramètres Invalides.");
 			}
 		}else{
-			$responseObj = new stdClass();
-			$responseObj->success = false;
-			$responseObj->msg = "Paramètres manquants.";
-			$responseJSON = json_encode($responseObj);
-			echo $responseJSON;
+			$this->sendResponseObject(false, "Paramètres manquants.");
 		}
 	}
 
@@ -620,23 +509,12 @@ class Controler
 			$resultat = $usager->supprimerUsager($body->idUsagerSupr);
 				
 			if($resultat){
-				$responseObj = new stdClass();
-				$responseObj->success = true;
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(true);
 			}else{
-				$responseObj = new stdClass();
-				$responseObj->success = false;
-				$responseObj->msg = "Impossible de supprimer l'usager.";
-				$responseJSON = json_encode($responseObj);
-				echo $responseJSON;
+				$this->sendResponseObject(false, "Impossible de supprimer l'usager.");
 			}
 		}else{
-			$responseObj = new stdClass();
-			$responseObj->success = false;
-			$responseObj->msg = "Paramètres manquants.";
-			$responseJSON = json_encode($responseObj);
-			echo $responseJSON;
+			$this->sendResponseObject(false, "Paramètres manquants.");
 		}
 	}
 
@@ -660,8 +538,19 @@ class Controler
 			setcookie('password', NULL);
 			unset($_COOKIE['password']); 
 		}
-
 		$this->accueil();
+	}
+
+	/**
+	 * Fonction qui crée un objet de réponse et envoi le résultat du succès ou non de la validation
+	 */
+	private function sendResponseObject($succes, $msg = ""){
+
+		$responseObj = new stdClass();
+		$responseObj->success = $succes;
+		$responseObj->msg = $msg;
+		$responseJSON = json_encode($responseObj);
+		echo $responseJSON;
 	}
 }
 ?>
