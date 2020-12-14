@@ -311,6 +311,22 @@ nav .icon-burger .line {
     flex-direction: column;
     overflow-y: scroll;
 }
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track{
+    border:7px solid #626264;
+    box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb{
+    background: linear-gradient(
+        45deg,
+        #bed17b,
+        #C3979F
+    );
+    border-radius: 3px;
+}
+    
 .description .nom{
     font-family: "Lora-BoldItalic";
 
@@ -898,9 +914,28 @@ tbody {
     .tuile{
         height: 225px;
     }
+    /*
     .description{
         overflow-y: auto;
         overflow-x: hidden;
+    }*/
+    .description{
+        overflow-y: auto;
+    }
+    ::-webkit-scrollbar{
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track{
+        border:7px solid #626264;
+        box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.3);
+    }
+    ::-webkit-scrollbar-thumb{
+        background: linear-gradient(
+            45deg,
+            #bed17b,
+            #C3979F
+        );
+        border-radius: 3px;
     }
     span{
         font-size: 1em;
