@@ -238,16 +238,16 @@ nav .icon-burger .line {
 
 /* BARRE DE RECHERCHE */
 #recherche{
-    position: relative;
     background-color: #FFFFFF;
     margin: 0 15px 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #searchArrow{
     height: 22px;
-    position: absolute;
-    top: 2.2px;
-    right: 3px;
     cursor: pointer;
+    margin-right: 3px;
 }
 #searchArrow:hover, #searchArrow:active{
     opacity: 0.6;
@@ -255,7 +255,7 @@ nav .icon-burger .line {
 #searchInput{
     margin: 0;
     border: none;
-    width: 200px;
+    width: 180px;
     height: 25px;
 }
 
