@@ -114,8 +114,7 @@ class Controler
 
 				$this->sendResponseObject(true);
 
-				// $BaseURL = "http://localhost:8888/vino/vino_etu/";
-				$BaseURL = "http://localhost/projetWeb2/vino_etu/";
+				 $BaseURL = "http://localhost:8888/vino/vino_etu/";
 				$url     = "Location:".$BaseURL."index.php?requete=accueilUsager";
 				header($url);
 				
